@@ -5,7 +5,7 @@ import Login from '../screens/Login';
 // import ReviewDetails from '../screens/reviewDetails';
 
 const screens = {
-  
+
     Home: {
       screen: Home,
     },
