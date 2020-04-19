@@ -7,6 +7,9 @@ const screens = {
     Home: {
       screen: Home,
     },
+  	// Login: {
+    //   screen: Login,
+  	// },
     // ReviewDetails: {
     //   screen: ReviewDetails,
     // },
