@@ -1,11 +1,17 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
-import Home from '../screens/home';
+import Home from '../screens/Home';
+import Login from '../screens/Login';
 // import ReviewDetails from '../screens/reviewDetails';
 
 const screens = {
+  
     Home: {
       screen: Home,
+    },
+
+    Login: {
+      screen: Login,
     },
     // ReviewDetails: {
     //   screen: ReviewDetails,
