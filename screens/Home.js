@@ -11,10 +11,12 @@ export default function Home() {
 
     <View style={styles.home}>
         
+        <Text style={styles.text}>
+            HELLO HOME
+        </Text>
+        
         <Image source= {require('../assets/images/Kitchen.jpg')} style={styles.image}>
-            <Text style={styles.text}>
-                HELLO HOME
-            </Text>
+            
         </Image>
 
     </View>
