@@ -1,15 +1,24 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
-import Home from '../screens/home';
+import Home from '../screens/Home';
+import Login from '../screens/Login';
+import Registration from '../screens/Registration';
 // import ReviewDetails from '../screens/reviewDetails';
 
 const screens = {
+
     Home: {
       screen: Home,
     },
-  	// Login: {
-    //   screen: Login,
-  	// },
+  	
+  	Login: {
+      screen: Login,
+  	},
+  	
+  	Registration: {
+      screen: Registration,
+  	},
+    
     // ReviewDetails: {
     //   screen: ReviewDetails,
     // },

@@ -4,7 +4,7 @@ import backg from "../assets/images/backg.png" ;
 import lsdlogo from "../assets/images/lsdlogo.png" ;
 // const image = "./assets/lsdlogo.png" ;
 // import { Ionicons } from '@expo/vector-icons';
-// import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from "react-native-vector-icons/FontAwesome" ;
 
 // export default App = () => (
 
@@ -19,11 +19,11 @@ export const Login = props => {
             source={lsdlogo}
           />
           <View style={styles.inputbox}>
-            
+            <Icon style={styles.inputicon} name="font" size={30} color="gray" />
             <TextInput placeholder="Email Address" style={styles.inputtext} ></TextInput>
           </View>
           <View  style={styles.inputbox}>
-
+            <Icon style={styles.inputicon} name="font" size={30} color="gray" />
             <TextInput placeholder="Password" style={styles.inputtext} ></TextInput>
           </View>
         </View>
@@ -66,24 +66,37 @@ const styles = StyleSheet.create({
   },
   inputbox: {
     color: "grey",
-    paddingTop: '6%',
+    marginTop: '6%',
     flexDirection: "row",
-
-  },
-  inputtext: {
-    marginLeft: 5,
     backgroundColor: "white",
-    fontSize: 14,
-    borderWidth: 1,
     borderRadius: 6,
+    borderWidth: 1,
     borderColor: '#777',
-    width: '70%',
-    fontFamily: 'Roboto-Bold',
     shadowColor: '#000',
     shadowOffset: { width: 2, height: 4 },
     shadowOpacity: 0.9,
     shadowRadius: 6,
     elevation: 2,
+
+  },
+  inputicon: {
+    padding: 2,
+    
+  },
+  inputtext: {
+    marginLeft: 5,
+    // backgroundColor: "white",
+    fontSize: 14,
+    // borderWidth: 1,
+    // borderRadius: 6,
+    // borderColor: '#777',
+    width: '70%',
+    fontFamily: 'Roboto-Bold',
+    // shadowColor: '#000',
+    // shadowOffset: { width: 2, height: 4 },
+    // shadowOpacity: 0.9,
+    // shadowRadius: 6,
+    // elevation: 2,
 
   },
   stretch: {
