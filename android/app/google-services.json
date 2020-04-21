@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "987683094313",
+    "firebase_url": "https://lumssd.firebaseio.com",
+    "project_id": "lumssd",
+    "storage_bucket": "lumssd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:987683094313:android:bae562597fa28471530138",
+        "android_client_info": {
+          "package_name": "com.lsd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "987683094313-u0mdbkpheo3g43r3dptpqg9us4ao27p3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzOsznSkIvLkRDlHL64_q8_XLQxO8Je-8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "987683094313-u0mdbkpheo3g43r3dptpqg9us4ao27p3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

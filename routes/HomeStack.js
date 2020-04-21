@@ -2,8 +2,8 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import Home from '../screens/Home';
 import Login from '../screens/Login';
-import { color } from 'react-native-reanimated';
 import Registration from '../screens/Registration';
+import firebase from '@react-native-firebase/app';
 // import ReviewDetails from '../screens/reviewDetails';
 
 const screens = {
@@ -13,9 +13,13 @@ const screens = {
       
     },
   	
-  	Login: {
-      screen: Login,
-    },
+  	// Login: {
+    //   screen: Login,
+    // },
+
+    // Registration: {
+    //   screen: Registration
+    // }
   
   };
 

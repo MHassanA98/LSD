@@ -4,7 +4,7 @@ import backg from "../assets/images/backg.png" ;
 import lsdlogo from "../assets/images/lsdlogo.png" ;
 // const image = "./assets/lsdlogo.png" ;
 // import { Ionicons } from '@expo/vector-icons';
-import Icon from "react-native-vector-icons/FontAwesome" ;
+// import Icon from "react-native-vector-icons/FontAwesome" ;
 
 // export default App = () => (
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, ImageBackground, TextInput, TouchableOpacity, } from "react-native";
 import backg from "../assets/images/backg.png" ;
-import Icon from "react-native-vector-icons/FontAwesome" ;
+// import Icon from "react-native-vector-icons/FontAwesome" ;
 
 
 export const Registration = props => {
