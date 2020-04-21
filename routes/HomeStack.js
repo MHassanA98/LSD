@@ -3,6 +3,7 @@ import { createAppContainer } from 'react-navigation';
 import Home from '../screens/Home';
 import Login from '../screens/Login';
 import { color } from 'react-native-reanimated';
+import Registration from '../screens/Registration';
 // import ReviewDetails from '../screens/reviewDetails';
 
 const screens = {
@@ -11,8 +12,8 @@ const screens = {
       screen: Home,
       
     },
-
-    Login: {
+  	
+  	Login: {
       screen: Login,
     },
   
