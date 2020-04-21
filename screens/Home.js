@@ -1,57 +1,72 @@
   
 import React, { useState } from 'react';
-// import * as Font from 'expo-font';
 // import { AppLoading } from 'expo';
 // import Navigator from './route/NavigDraw'
-import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
+import { StyleSheet, Text, View, Image, ImageBackground, Dimensions, TouchableOpacity } from 'react-native';
 
 export default function Home() {
-    // const [fontsLoaded, setFontsLoaded] = useState(false);
+
   return(
 
     <View style={styles.home}>
-        
-        <Text style={styles.text}>
-            HELLO HOME
-        </Text>
-        
-        <Image source= {require('../assets/images/Kitchen.jpg')} style={styles.image}>
-            
-        </Image>
+        <TouchableOpacity style={styles.button} activeOpacity={0.8}> 
+            <ImageBackground source= {require('../assets/images/Kitchen.jpg')} style={styles.image}>
+                <View style={styles.textcontainer}>
+                <Text style={styles.text}>
+                        Kitchen
+                    </Text>
+                </View>
+            </ImageBackground>
+        </TouchableOpacity>
+
+
+        <TouchableOpacity style={styles.button} activeOpacity={0.8}>
+            <ImageBackground source= {require('../assets/images/Store.jpg')} style={styles.image}>
+                <View style={styles.textcontainer}>
+                <Text style={styles.text}>
+                        Store
+                    </Text>
+                </View>
+            </ImageBackground>
+        </TouchableOpacity>
+    
 
     </View>
-    // if (fontsLoaded) {
-    //   return (
-        // <Navigator />
-    //   );
-    // } else {
-    //   return (
-    //     <AppLoading 
-    //       startAsync={getFonts} 
-    //       onFinish={() => setFontsLoaded(true)} 
-    //     />
-    //   )
-    // }
+  
   )
   }
 
   const styles=StyleSheet.create({
     home: {
-        flex: 0,
-        backgroundColor:'red'
+        flex: 1,
+        backgroundColor:'#e8e8e8',
 
     },
     text: {
-        fontFamily: 'Roboto-Bold',
-        // fontWeight: 'bold',
-        paddingLeft: 16,
-        fontSize: 32
+        fontFamily: 'Roboto-MediumItalic',
+        color: '#d00f16',
+        marginLeft: 16,
+        fontSize: 45
     },
     image:{
+        justifyContent: 'flex-end',
+        resizeMode:'contain',
+        width: Dimensions.get('window').width,
+        height: Dimensions.get('window').height/2.5,
+        marginTop:10
+        
+    },
+
+    textcontainer:{
+        backgroundColor:'rgba(0,0,0,0.75)',
+        width: Dimensions.get('window').width,
+        height: 60,
         justifyContent: 'center',
-        alignItems: 'center'
-    }
+        marginBottom: 12
+    },
 
+    // button:{
 
+    // }
 
   })
