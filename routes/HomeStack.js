@@ -3,30 +3,57 @@ import { createAppContainer } from 'react-navigation';
 import Home from '../screens/Home';
 import Login from '../screens/Login';
 import Registration from '../screens/Registration';
-import Change_Password from '../screens/ChangePassword';
-import firebase from '@react-native-firebase/app';
+// import Change_Password from '../screens/ChangePassword';
+import React from 'react';
+import Kitchen from '../screens/Kitchen';
+import Store from '../screens/Store';
+import { Button } from 'react-native';
+// import firebase from '@react-native-firebase/app';
 // import ReviewDetails from '../screens/reviewDetails';
 
 const screens = {
-
-    // Home: {
-    //   screen: Home,
-      
-    // },
-
-    // Change_Password:{
-    //   screen: Change_Password
-    // }
-  	
-  	// Login: {
-    //   screen: Login,
-    // },
-
-    Registration: {
-      screen: Registration
-    }
   
-  };
+  Login: {
+    screen: Login,
+    navigationOptions:{
+      headerShown:false
+    }
+  },
+
+  Home: {
+    screen: Home,
+    navigationOptions:{
+      title: 'LSD',
+      headerLeft:() => null,
+      // gestureEnabled:true
+    }
+    
+  },
+
+  Kitchen:{
+    screen:Kitchen
+    
+  },
+
+  Store:{
+    screen:Store
+  },
+
+  // Change_Password:{
+  //   screen: Change_Password
+  // }
+  
+  
+
+  Registration: {
+    screen: Registration,
+    navigationOptions:{
+      title:null,
+      headerTransparent: true
+    }
+  }
+
+};
 
 // home stack navigator screens
 const HomeStack = createStackNavigator(screens, {
@@ -44,6 +71,8 @@ const HomeStack = createStackNavigator(screens, {
     shadowRadius: 1.50,
     elevation: 3,
   },
+
+  
     
   }
 });

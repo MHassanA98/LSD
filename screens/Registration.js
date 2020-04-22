@@ -15,7 +15,7 @@ function END(mail) {
 }
 
 
-export const Registration = props => {
+export const Registration = ({navigation}) => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -51,7 +51,9 @@ export const Registration = props => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => {console.log("kiu kar rahe ho yar")})
+      .then(() => {
+        navigation.navigate('Home')
+        console.log("kiu kar rahe ho yar")})
       .catch(error => errorMessageInputHandler)
 
     console.log(errorMessage)
@@ -170,7 +172,7 @@ const styles = StyleSheet.create({
   maincontainer: {
     alignItems: "center",
     justifyContent: "flex-end",
-    flex: 10,
+    flex: 6,
 
   },
   bigbuttontext: {

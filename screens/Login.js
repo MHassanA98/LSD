@@ -8,7 +8,15 @@ import Icon from "react-native-vector-icons/FontAwesome" ;
 
 // export default App = () => (
 
-export const Login = props => {
+export default function Login ({navigation}) {
+
+  const LoginPress = () =>{
+    navigation.push('Home');
+  }
+
+  const RegisterPress = () =>{
+    navigation.navigate('Registration');
+  }
 
   return (
     <View style={styles.container}>
@@ -19,11 +27,11 @@ export const Login = props => {
             source={lsdlogo}
           />
           <View style={styles.inputbox}>
-            <Icon style={styles.inputicon} name="font" size={30} color="gray" />
+            <Icon style={styles.inputicon} name="font" size={24} color="gray" />
             <TextInput placeholder="Email Address" style={styles.inputtext} ></TextInput>
           </View>
           <View  style={styles.inputbox}>
-            <Icon style={styles.inputicon} name="font" size={30} color="gray" />
+            <Icon style={styles.inputicon} name="font" size={24} color="gray" />
             <TextInput secureTextEntry placeholder="Password" style={styles.inputtext} ></TextInput>
           </View>
         </View>
@@ -32,13 +40,13 @@ export const Login = props => {
             <Text style={styles.buttontext}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.bigbutton}>
+        <TouchableOpacity style={styles.bigbutton} onPress={LoginPress}>
           <View style={styles.loginbutton}> 
             <Text style={styles.bigbuttontext}>Login</Text>
           </View>
         </TouchableOpacity>
         <View style={styles.clearbottombutton}> 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={RegisterPress}>
             <Text style={styles.buttontext}>New user? Sign up!</Text>
           </TouchableOpacity>
         </View>
@@ -80,7 +88,8 @@ const styles = StyleSheet.create({
 
   },
   inputicon: {
-    padding: 2,
+    paddingLeft:8 ,
+    alignSelf:'center'
     
   },
   inputtext: {
@@ -205,7 +214,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+// export default Login;
 
 
 

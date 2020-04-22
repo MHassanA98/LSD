@@ -2,51 +2,49 @@
 import React, { useState } from 'react';
 // import { AppLoading } from 'expo';
 // import Navigator from './route/NavigDraw'
-import { StyleSheet, Text, View, Image, ImageBackground, Dimensions, TouchableOpacity, Button, BackHandler } from 'react-native';
+import { StyleSheet, Text, View, Image, ImageBackground, Dimensions, TouchableOpacity, Button, ScrollView } from 'react-native';
 
-export default function Home({navigation}) {
-
-    const StorePress = () =>{
-        navigation.navigate('Store')
-    }
-    
-    const KitchenPress = () =>{
-        navigation.navigate('Kitchen')
-    }
-
-    // BackHandler.addEventListener('hardwareBackPress', function () {BackHandler.exitApp()});
-    // BackHandler.removeEventListener('hardwareBackPress', true);
-    
-    
+export default function Kitchen() {
 
   return(
 
-    <View style={styles.home}>
-        <TouchableOpacity style={styles.button} activeOpacity={0.8} onPress={KitchenPress}> 
+    <ScrollView style={styles.home}>
+        <TouchableOpacity style={styles.button} activeOpacity={0.8}> 
             <ImageBackground source= {require('../assets/images/Kitchen.jpg')} style={styles.image}>
                 <View style={styles.textcontainer}>
-                <Text style={styles.text}>
-                        Kitchen
+                    <Text style={styles.text}>
+                        Desi Food
                     </Text>
                 </View>
             </ImageBackground>
         </TouchableOpacity>
 
 
-        <TouchableOpacity style={styles.button} activeOpacity={0.8} onPress={StorePress}>
+        <TouchableOpacity style={styles.button} activeOpacity={0.8}>
             <ImageBackground source= {require('../assets/images/Store.jpg')} style={styles.image}>
                 <View style={styles.textcontainer}>
-                <Text style={styles.text}>
-                        Store
+                    <Text style={styles.text}>
+                        Fast Food
                     </Text>
                 </View>
             </ImageBackground>
         </TouchableOpacity>
+
+        <TouchableOpacity style={[styles.button,{marginBottom:10}]} activeOpacity={0.8}> 
+            <ImageBackground source= {require('../assets/images/Kitchen.jpg')} style={styles.image}>
+                <View style={styles.textcontainer}>
+                    <Text style={styles.text}>
+                       Fresh Juices
+                    </Text>
+                </View>
+            </ImageBackground>
+        </TouchableOpacity>
+
 
         {/* <Button title= 'Goto /> */}
     
 
-    </View>
+    </ScrollView>
   
   )
   }
