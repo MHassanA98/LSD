@@ -4,7 +4,7 @@ import backg from "../assets/images/backg.png" ;
 import lsdlogo from "../assets/images/lsdlogo.png" ;
 // const image = "./assets/lsdlogo.png" ;
 // import { Ionicons } from '@expo/vector-icons';
-// import Icon from "react-native-vector-icons/FontAwesome" ;
+import Icon from "react-native-vector-icons/FontAwesome" ;
 
 // export default App = () => (
 
@@ -24,7 +24,7 @@ export const Login = props => {
           </View>
           <View  style={styles.inputbox}>
             <Icon style={styles.inputicon} name="font" size={30} color="gray" />
-            <TextInput placeholder="Password" style={styles.inputtext} ></TextInput>
+            <TextInput secureTextEntry placeholder="Password" style={styles.inputtext} ></TextInput>
           </View>
         </View>
         <View style={styles.clearbutton}> 
@@ -130,7 +130,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     fontSize: 20,
     textAlign: "center",
-    paddingTop: '2%',
+    paddingTop: '1%',
+    paddingBottom: '1%',
 
     // opacity: 1,
 
@@ -167,6 +168,7 @@ const styles = StyleSheet.create({
   bigbutton: {
     // paddingTop: 10,
     paddingHorizontal: '23%',
+    paddingTop: '15%',
     // minHeight: '0%',
     // paddingVertical: 5,
     // paddingVertical: '5%',
@@ -185,7 +187,7 @@ const styles = StyleSheet.create({
 
   },
   loginbutton: {
-    paddingHorizontal: 15,
+    // paddingHorizontal: 15,
     backgroundColor: "#d00f16",
     borderRadius: 17,
     shadowColor: '#000',
@@ -193,7 +195,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.9,
     shadowRadius: 6,
     elevation: 2,
-    minHeight: '6%',
+    // minHeight: '6%',
     textAlign: "center",
 
     // alignItems: "center",

@@ -1,5 +1,6 @@
 import React from 'react'
 import {Text,View,TextInput,StyleSheet, Button, TouchableOpacity} from 'react-native'
+import Icon from "react-native-vector-icons/FontAwesome" ;
 
 
 //import CustomButton from '../screens/button' for later use 
