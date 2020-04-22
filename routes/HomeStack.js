@@ -3,23 +3,28 @@ import { createAppContainer } from 'react-navigation';
 import Home from '../screens/Home';
 import Login from '../screens/Login';
 import Registration from '../screens/Registration';
+import Change_Password from '../screens/ChangePassword';
 import firebase from '@react-native-firebase/app';
 // import ReviewDetails from '../screens/reviewDetails';
 
 const screens = {
 
-    Home: {
-      screen: Home,
+    // Home: {
+    //   screen: Home,
       
-    },
+    // },
+
+    // Change_Password:{
+    //   screen: Change_Password
+    // }
   	
   	// Login: {
     //   screen: Login,
     // },
 
-    // Registration: {
-    //   screen: Registration
-    // }
+    Registration: {
+      screen: Registration
+    }
   
   };
 
