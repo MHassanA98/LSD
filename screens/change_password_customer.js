@@ -1,10 +1,14 @@
 import React from 'react'
 import {Text,View,TextInput,StyleSheet, Button, TouchableOpacity} from 'react-native'
 
+
+//import CustomButton from '../screens/button' for later use 
+
 //brought to you by Shahzil 
 //Icons from the Top is missing 
 //Back handler has not been added
 //Respective Functions have been made to make adding functionality easier 
+//Removed touchopacity, because couldn't make that button work. Working on a seperate button module, once done will implement that 
 
 
 class Change_Password extends React.Component{
@@ -61,13 +65,11 @@ class Change_Password extends React.Component{
                             placeholderTextColor = 'black'
                             placeholder = 'Confirm Password'
                             onChangeText = {this.confirm_passwordHandler}
-                            />         
-                            <TouchableOpacity style={styles.bigbutton} onPress = {this.change_password_buttonhandler}>
-                                <View style={styles.loginbutton}> 
-                                    <Text style={styles.bigbuttontext}> Confirm </Text>
-                                </View>
-                            </TouchableOpacity>
-                     </View>
+                            />       
+                        <View style = {{marginTop:20, width: '50%', justifyContent: "center", marginLeft : 100}}>
+                         <Button style = {{marginTop: 35, width: '50%'}} title = "Confirm" color = "#d00f16" onPress = {this.change_password_buttonhandler}/>   
+                        </View>
+                        </View>
                 </View>
             )
     }
@@ -103,32 +105,7 @@ const styles = StyleSheet.create({
         fontSize: 15,
         fontFamily: 'Roboto-Bold',
     },
-
-    bigbuttontext: {
-        color: "white",
-        fontFamily: 'Roboto-Bold',
-        fontSize: 20,
-        textAlign: "center",
-        paddingTop: '2%',
-    },
     
-    bigbutton: {
-        paddingHorizontal: '23%',
-        flex: 2,
-    },
-      loginbutton: {
-        marginTop:40, 
-        paddingHorizontal: 15,
-        backgroundColor: "#d00f16",
-        borderRadius: 17,
-        shadowColor: '#000',
-        shadowOffset: { width: 2, height: 4 },
-        shadowOpacity: 0.9,
-        shadowRadius: 6,
-        elevation: 2,
-        minHeight: '6%',
-        textAlign: "center",
-      }
 })
 
 export default Change_Password
