@@ -15,11 +15,28 @@ function END(mail) {
 }
 
 
-export const Registration = ({navigation}) => {
+export const Registration = props => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState();
+
+  // var actionCodeSettings = {
+  //   // The URL to redirect to for sign-in completion. This is also the deep
+  //   // link for mobile redirects. The domain (www.example.com) for this URL
+  //   // must be whitelisted in the Firebase Console.
+  //   url: 'https://www.example.com/finishSignUp?cartId=1234',
+  //   iOS: {
+  //     bundleId: 'com.example.ios'
+  //   },
+  //   android: {
+  //     packageName: 'com.example.android',
+  //     installApp: true,
+  //     minimumVersion: '12'
+  //   },
+  //   // This must be true.
+  //   handleCodeInApp: true
+  // };
 
   const emailInputHandler = (inputEmail) => {
     setEmail(inputEmail);
@@ -36,32 +53,54 @@ export const Registration = ({navigation}) => {
   const handleSignUpPress = () => {
     meow = END(email)
     if (meow) {
-      this.handleSignUp()
-      console.log("WOW")
+      handleSignUp()
+      console.log("Signup")
     }
     else {
-      console.log("WTF?")
+      console.log("email ghalat")
     }
-    console.log(meow)
-    console.log(email, password)
 
   };
 
-  handleSignUp = () => {
-    firebase
+  async function handleSignUp() {
+    let meow1 = firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        navigation.navigate('Home')
-        console.log("kiu kar rahe ho yar")})
+      .then(() => {console.log("User created")})
       .catch(error => errorMessageInputHandler)
 
-    console.log(errorMessage)
+    let meow1w = await meow1
+
+    let meow2 = firebase
+      .auth().currentUser.sendEmailVerification()
+      .then(()=> {console.log("Verify Email")})
+      .catch(function(error) {console.log(error)})
+
+    let meow2w = await meow2
+
+    let meow3 = firebase
+      .auth().currentUser.emailVerified = true
+
+    let meow3w = await meow3
+
+    // var meow3 = firebase
+    //   .auth().currentUser.applyActionCode()
+    //   .then(()=> {console.log("Action code")})
+    //   .catch(function(error) {console.log(error)})
+    
+    console.log(firebase.auth().currentUser)
+    console.log(firebase.auth().currentUser.emailVerified)
+    console.log(meow1)
+    console.log(meow2)
+    // console.log(meow3)
+
+
+    // console.log(errorMessage)
   }
 
 
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <ImageBackground source={backg} style={styles.bgimage}>
         <View style={styles.maincontainer}>
           
@@ -95,7 +134,7 @@ export const Registration = ({navigation}) => {
           </View>
         </TouchableOpacity>
       </ImageBackground>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -172,7 +211,7 @@ const styles = StyleSheet.create({
   maincontainer: {
     alignItems: "center",
     justifyContent: "flex-end",
-    flex: 6,
+    flex: 10,
 
   },
   bigbuttontext: {

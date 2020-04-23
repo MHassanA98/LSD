@@ -8,15 +8,7 @@ import Icon from "react-native-vector-icons/FontAwesome" ;
 
 // export default App = () => (
 
-export default function Login ({navigation}) {
-
-  const LoginPress = () =>{
-    navigation.push('Home');
-  }
-
-  const RegisterPress = () =>{
-    navigation.navigate('Registration');
-  }
+export const Login = props => {
 
   return (
     <View style={styles.container}>
@@ -27,11 +19,11 @@ export default function Login ({navigation}) {
             source={lsdlogo}
           />
           <View style={styles.inputbox}>
-            <Icon style={styles.inputicon} name="font" size={24} color="gray" />
+            <Icon style={styles.inputicon} name="font" size={30} color="gray" />
             <TextInput placeholder="Email Address" style={styles.inputtext} ></TextInput>
           </View>
           <View  style={styles.inputbox}>
-            <Icon style={styles.inputicon} name="font" size={24} color="gray" />
+            <Icon style={styles.inputicon} name="font" size={30} color="gray" />
             <TextInput secureTextEntry placeholder="Password" style={styles.inputtext} ></TextInput>
           </View>
         </View>
@@ -40,13 +32,13 @@ export default function Login ({navigation}) {
             <Text style={styles.buttontext}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.bigbutton} onPress={LoginPress}>
+        <TouchableOpacity style={styles.bigbutton}>
           <View style={styles.loginbutton}> 
             <Text style={styles.bigbuttontext}>Login</Text>
           </View>
         </TouchableOpacity>
         <View style={styles.clearbottombutton}> 
-          <TouchableOpacity onPress={RegisterPress}>
+          <TouchableOpacity>
             <Text style={styles.buttontext}>New user? Sign up!</Text>
           </TouchableOpacity>
         </View>
@@ -88,8 +80,7 @@ const styles = StyleSheet.create({
 
   },
   inputicon: {
-    paddingLeft:8 ,
-    alignSelf:'center'
+    padding: 2,
     
   },
   inputtext: {
@@ -214,7 +205,7 @@ const styles = StyleSheet.create({
   },
 });
 
-// export default Login;
+export default Login;
 
 
 
