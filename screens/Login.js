@@ -5,10 +5,83 @@ import lsdlogo from "../assets/images/lsdlogo.png" ;
 // const image = "./assets/lsdlogo.png" ;
 // import { Ionicons } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/FontAwesome" ;
+import { firebase } from "@react-native-firebase/auth";
 
-// export default App = () => (
 
-export const Login = props => {
+function END(mail) {
+  return mail.endsWith('@lums.edu.pk')
+}
+
+
+// export const Login = ({navigation}) => {
+export default function Login({navigation}) {
+
+  // firebase.auth().currentUser.reload()
+
+  const LoginPress = () =>{
+    navigation.navigate('Home')
+  }
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [repassword, setRepassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [phone, setPhone] = useState("");
+  const [errorMessage, setErrorMessage] = useState();
+
+  const emailInputHandler = (inputEmail) => {
+    setEmail(inputEmail);
+  };
+
+  const passwordInputHandler = (inputPassword) => {
+    setPassword(inputPassword);
+  };
+
+  const errorMessageInputHandler = (inputError) => {
+    setErrorMessage(inputError);
+  };
+
+  const handleLoginPress = () => {
+    emaillums = END(email)
+    if (emaillums) {
+      // alert("Please enter your LUMS email.")
+      if (password.length < 8) {
+        alert("Please enter more than 8 characters for password.")
+      }
+      else {
+        handleLogin()
+        console.log("Signup")
+      }     
+    }
+    
+    else {
+      alert("Please enter your LUMS email.")
+      // console.log("email ghalat")
+      // firebase.auth().currentUser.reload()
+      // console.log(firebase.auth().currentUser)
+    }
+
+  };
+
+  async function handleLogin() {
+    if (!firebase.auth().currentUser.emailVerified) {
+      let meow2 = firebase.auth().currentUser.reload()
+      let meow2w = await meow2
+    }
+
+    let meow1 = firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {console.log("User logged in")})
+      .catch(function(error) {
+        console.log(error)
+        alert(error)
+        errorMessageInputHandler
+      })
+    let meow1w = await meow1
+
+  }
+
 
   return (
     <View style={styles.container}>
@@ -20,11 +93,11 @@ export const Login = props => {
           />
           <View style={styles.inputbox}>
             <Icon style={styles.inputicon} name="font" size={30} color="gray" />
-            <TextInput placeholder="Email Address" style={styles.inputtext} ></TextInput>
+            <TextInput placeholder="Email Address" style={styles.inputtext} onChangeText={emailInputHandler} value={email} ></TextInput>
           </View>
           <View  style={styles.inputbox}>
             <Icon style={styles.inputicon} name="font" size={30} color="gray" />
-            <TextInput secureTextEntry placeholder="Password" style={styles.inputtext} ></TextInput>
+            <TextInput secureTextEntry placeholder="Password" style={styles.inputtext} onChangeText={passwordInputHandler} value={password} ></TextInput>
           </View>
         </View>
         <View style={styles.clearbutton}> 
@@ -32,7 +105,7 @@ export const Login = props => {
             <Text style={styles.buttontext}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.bigbutton}>
+        <TouchableOpacity style={styles.bigbutton} onPress={handleLoginPress} >
           <View style={styles.loginbutton}> 
             <Text style={styles.bigbuttontext}>Login</Text>
           </View>
@@ -205,7 +278,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+// export default Login;
 
 
 
