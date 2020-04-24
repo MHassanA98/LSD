@@ -15,13 +15,26 @@ import {
 //   TouchableHighlight,
 //   BorderlessButton,
 // } from "react-native-gesture-handler";
+// import firebase from "@react-native-firebase/app";
 import Category from './PickerList.js';
 import SubCategory from './Subcategory.js';
+import firebase from "../assets/DatabaseConfig"
+import database from "@react-native-firebase/database"
 
 export default function AddItem() {
+
+  const pressHandler = () =>{
+
+    firebase.database().ref('/').set({
+      email:'21100191@lums.edu.pk',
+      name: "Hassan"
+    })
+
+  }
+
   return (
     <View style={styles.Screen}>
-      <View style={styles.TopBar}>
+      {/* <View style={styles.TopBar}>
         <TouchableOpacity style={styles.TopBarBack}>
           <Icon name="arrow-left" size={32} color="white" />
         </TouchableOpacity>
@@ -36,7 +49,7 @@ export default function AddItem() {
         <TouchableOpacity style={styles.TopBarSearch}>
           <Icon name="search" size={32} color="white" />
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       <View style={styles.RestScreen}>
         <View raised style={styles.firstbox}>
@@ -70,7 +83,7 @@ export default function AddItem() {
 
         <View style={styles.bigbutton}>
           <TouchableOpacity
-            onPress={() => alert('Confirmed!')}
+            onPress={pressHandler}
             style={styles.Confirmbutton}>
             <Text style={styles.bigbuttontext}>Confirm</Text>
           </TouchableOpacity>
@@ -84,6 +97,7 @@ const styles = StyleSheet.create({
   Screen: {
     // flexDirection: "column",
     height: '100%',
+    backgroundColor: "#e8e8e8"
   },
   TopBar: {
     padding: 20,
@@ -120,7 +134,7 @@ const styles = StyleSheet.create({
     // flex: 8,
     // width: 100,
     padding: 60,
-    backgroundColor: 'lightgrey',
+    // backgroundColor: 'lightgrey',
     height: '90%',
     justifyContent: 'center',
     alignItems: 'center',
