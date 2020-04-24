@@ -79,7 +79,9 @@ export default function Login({navigation}) {
         else {
           alert("Please verify email before logging in.")
         }
-        console.log("User logged in")})
+        console.log("User logged in")
+        console.log(firebase.auth().currentUser)
+      })
       .catch(function(error) {
         console.log(error)
         alert(error)

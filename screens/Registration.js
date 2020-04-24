@@ -96,7 +96,12 @@ export default function Registration({navigation}) {
     let meow1 = firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => {console.log("User created")})
+      .then(function(result) {
+        console.log("User created")
+        return result.user.updateProfile({
+          displayName: username
+        })
+      })
       .catch(function(error) {console.log(error)} )
       // .catch(error => errorMessageInputHandler)
     let meow1w = await meow1
