@@ -14,29 +14,30 @@ function END(mail) {
   return mail.endsWith('@lums.edu.pk')
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
-export const Registration = props => {
+
+// export const Registration = ({navigation}) => {
+export default function Registration({navigation}) {
+
+  // const SignUpPress = props =>{
+  //   // firebase.auth().onAuthStateChanged(user => {
+  //   //   navigation.navigate('Login')
+  //   // })
+  //   navigation.navigate('Login')
+  // }
+  const SignUpPress = () =>{
+    navigation.navigate('Login')
+  }
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [repassword, setRepassword] = useState("");
+  const [username, setUsername] = useState("");
+  const [phone, setPhone] = useState("");
   const [errorMessage, setErrorMessage] = useState();
-
-  // var actionCodeSettings = {
-  //   // The URL to redirect to for sign-in completion. This is also the deep
-  //   // link for mobile redirects. The domain (www.example.com) for this URL
-  //   // must be whitelisted in the Firebase Console.
-  //   url: 'https://www.example.com/finishSignUp?cartId=1234',
-  //   iOS: {
-  //     bundleId: 'com.example.ios'
-  //   },
-  //   android: {
-  //     packageName: 'com.example.android',
-  //     installApp: true,
-  //     minimumVersion: '12'
-  //   },
-  //   // This must be true.
-  //   handleCodeInApp: true
-  // };
 
   const emailInputHandler = (inputEmail) => {
     setEmail(inputEmail);
@@ -46,62 +47,108 @@ export const Registration = props => {
     setPassword(inputPassword);
   };
 
+  const repasswordInputHandler = (inputRepassword) => {
+    setRepassword(inputRepassword);
+  };
+
+  const phoneInputHandler = (inputPhone) => {
+    setPhone(inputPhone);
+  };
+
+  const usernameInputHandler = (inputUsername) => {
+    setUsername(inputUsername);
+  };
+
   const errorMessageInputHandler = (inputError) => {
     setErrorMessage(inputError);
   };
 
   const handleSignUpPress = () => {
-    meow = END(email)
-    if (meow) {
-      handleSignUp()
-      console.log("Signup")
+    emaillums = END(email)
+    if (emaillums) {
+      if (password.length >= 8) {
+        if (password == repassword) {
+          if (phone.length == 11) {
+            if (username) {
+              handleSignUp()
+              console.log("Signup")
+            }
+            else {
+              alert("Username cannot be empty")
+            }
+          }
+          else {
+            alert("Your Phone number must be 11 digits long.")
+          }
+        }
+        else {
+          alert("Your re-entered password doesnot match.")
+        }
+      }
+      else {
+        alert("Please enter more than 8 characters for password.")
+      }
     }
     else {
-      console.log("email ghalat")
+      alert("Please enter your LUMS email.")
+      // console.log("email ghalat")
+      // firebase.auth().currentUser.reload()
+      // console.log(firebase.auth().currentUser)
     }
 
   };
 
   async function handleSignUp() {
+
     let meow1 = firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
-      .then(() => {console.log("User created")})
-      .catch(error => errorMessageInputHandler)
-
+      .then(function(result) {
+        console.log("User created")
+        return result.user.updateProfile({
+          displayName: username
+        })
+      })
+      .catch(function(error) {console.log(error)} )
+      // .catch(error => errorMessageInputHandler)
     let meow1w = await meow1
 
     let meow2 = firebase
       .auth().currentUser.sendEmailVerification()
-      .then(()=> {console.log("Verify Email")})
-      .catch(function(error) {console.log(error)})
-
+      .then(()=> {
+        console.log("Verify Email")
+        SignUpPress()
+      } )
+      .catch(function(error) {console.log(error)} )
     let meow2w = await meow2
 
-    let meow3 = firebase
-      .auth().currentUser.emailVerified = true
+    console.log("Now Waiting for Verify")
 
-    let meow3w = await meow3
-
-    // var meow3 = firebase
-    //   .auth().currentUser.applyActionCode()
-    //   .then(()=> {console.log("Action code")})
-    //   .catch(function(error) {console.log(error)})
-    
-    console.log(firebase.auth().currentUser)
-    console.log(firebase.auth().currentUser.emailVerified)
-    console.log(meow1)
-    console.log(meow2)
-    // console.log(meow3)
+    // let meow3 = firebase
+    //   .auth()
+    //   .onAuthStateChanged(function(user) {
+    //     console.log(user)
+    //     // this.props.navigation.navigate('Login')
+    //   })
+    //   .catch(function(error) {console.log(error)} )
+    // let meow3w = await meow3
 
 
+    // console.log("really waiting")
+
+    // SignUpPress()
+
+
+
+    // console.log(firebase.auth().currentUser)
     // console.log(errorMessage)
   }
 
 
   return (
-    <ScrollView style={styles.container}>
-      <ImageBackground source={backg} style={styles.bgimage}>
+    // <ScrollView style={styles.container}>
+    <ImageBackground source={backg} style={styles.bgimage}>
+      <ScrollView style={styles.container}>
         <View style={styles.maincontainer}>
           
           <View style={styles.bigheading}> 
@@ -109,7 +156,7 @@ export const Registration = props => {
           </View>
           <View style={styles.inputbox}>
             <Icon style={styles.inputicon} name="font" size={30} color="gray" />
-            <TextInput placeholder="Email Address" style={styles.inputtext}  onChangeText={emailInputHandler} value={email} ></TextInput>
+            <TextInput placeholder="Email Address" style={styles.inputtext} onChangeText={emailInputHandler} value={email} ></TextInput>
           </View>
           <View  style={styles.inputbox}>
             <Icon style={styles.inputicon} name="rocket" size={30} color="gray" />
@@ -117,24 +164,25 @@ export const Registration = props => {
           </View>
           <View  style={styles.inputbox}>
             <Icon style={styles.inputicon} name="rocket" size={30} color="gray" />
-            <TextInput placeholder="Re-enter Password" style={styles.inputtext} ></TextInput>
+            <TextInput placeholder="Re-enter Password" style={styles.inputtext} onChangeText={repasswordInputHandler} value={repassword} ></TextInput>
           </View>
           <View  style={styles.inputbox}>
             <Icon style={styles.inputicon} name="rocket" size={30} color="gray" />
-            <TextInput placeholder="Username" style={styles.inputtext} ></TextInput>
+            <TextInput placeholder="Username" style={styles.inputtext} onChangeText={usernameInputHandler} value={username} ></TextInput>
           </View>
           <View  style={styles.inputbox}>
             <Icon style={styles.inputicon} name="rocket" size={30} color="gray" />
-            <TextInput placeholder="Phone Number" style={styles.inputtext} ></TextInput>
+            <TextInput placeholder="Phone Number" style={styles.inputtext} onChangeText={phoneInputHandler} value={phone} ></TextInput>
           </View>
         </View>
         <TouchableOpacity style={styles.bigbutton} onPress={handleSignUpPress}>
           <View style={styles.signupbutton}> 
-            <Text style={styles.bigbuttontext}>Sign up</Text>
+            <Text style={styles.bigbuttontext} >Sign up</Text>
           </View>
         </TouchableOpacity>
-      </ImageBackground>
-    </ScrollView>
+      </ScrollView>
+    </ImageBackground>
+    // </ScrollView>
   );
 };
 
@@ -155,6 +203,7 @@ const styles = StyleSheet.create({
   },
   bigheading: {
     // flex: 1,
+    paddingTop: "14%",
     justifyContent: "center",
 
   },
@@ -249,5 +298,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Registration;
+// export default Registration;
 

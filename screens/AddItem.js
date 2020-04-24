@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   StyleSheet,
@@ -32,6 +32,10 @@ export default function AddItem() {
 
   }
 
+  // const [clrVal, setClrVal] = useState('');
+  const [ProductName, setProductName] = useState('');
+  const [ProductPrice, setProductPrice] = useState('');
+  const [ProductQuantity, setProductQuantity] = useState('');
   return (
     <View style={styles.Screen}>
       {/* <View style={styles.TopBar}>
@@ -52,34 +56,50 @@ export default function AddItem() {
       </View> */}
 
       <View style={styles.RestScreen}>
-        <View raised style={styles.firstbox}>
+        <TouchableOpacity style={styles.viewstyle}>
           <Category />
-        </View>
+        </TouchableOpacity>
 
-        <TouchableOpacity raised style={styles.firstbox}>
+        <TouchableOpacity style={styles.viewstyle}>
           <SubCategory />
         </TouchableOpacity>
 
-        <View style={styles.TextInputbox}>
+        <TouchableOpacity style={{width: '100%'}}>
           <TextInput
+            style={styles.TextInputbox}
             // style={{fontSize: 12}}
             placeholder="Product Name"
             placeholderTextColor="black"
+            onChangeText={ProductName => setProductName(ProductName)}
+            defaultValue={ProductName}
+            // allowFontScalingrr
           />
-        </View>
+        </TouchableOpacity>
 
-        <View style={styles.TextInputbox}>
-          <TextInput placeholder="Product Price" placeholderTextColor="black" />
-        </View>
-
-        <View style={styles.TextInputbox}>
+        <TouchableOpacity style={{width: '100%'}}>
           <TextInput
-            placeholder="Product Quantity"
+            style={styles.TextInputbox}
+            placeholder="Product Price"
             placeholderTextColor="black"
-            value=""
+            onChangeText={ProductPrice => setProductPrice(ProductPrice)}
+            defaultValue={ProductPrice}
             keyboardType="numeric"
           />
-        </View>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={{width: '100%'}}>
+          <TextInput
+            style={styles.TextInputbox}
+            placeholder="Product Quantity"
+            placeholderTextColor="black"
+            // value=""
+            keyboardType="numeric"
+            onChangeText={ProductQuantity =>
+              setProductQuantity(ProductQuantity)
+            }
+            defaultValue={ProductQuantity}
+          />
+        </TouchableOpacity>
 
         <View style={styles.bigbutton}>
           <TouchableOpacity
@@ -133,8 +153,8 @@ const styles = StyleSheet.create({
   RestScreen: {
     // flex: 8,
     // width: 100,
-    padding: 60,
-    // backgroundColor: 'lightgrey',
+    padding: '15%',
+    backgroundColor: '#d3d3d3',
     height: '90%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -148,19 +168,20 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 10,
     height: 50,
-    padding: 30,
+    // padding: 30,
     alignItems: 'center',
     shadowColor: 'darkgrey',
     shadowOpacity: 20,
     // justifyContent: "center",
   },
   TextInputbox: {
-    width: '100%',
+    // width: '100%',
+    paddingHorizontal: 16,
     flexDirection: 'row',
     marginVertical: 10,
     borderColor: 'black',
     backgroundColor: 'white',
-    borderWidth: 0.5,
+    borderWidth: 0,
     borderRadius: 10,
     height: 50,
     // padding: 20,
@@ -172,7 +193,8 @@ const styles = StyleSheet.create({
   },
 
   Confirmbutton: {
-    padding: 10,
+    padding: '5%',
+    // marginVertical: 10,
     paddingHorizontal: 15,
     backgroundColor: '#d00f16',
     borderRadius: 20,
@@ -187,6 +209,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
+    elevation: 2,
   },
   bigbuttontext: {
     fontWeight: 'bold',
@@ -200,9 +223,26 @@ const styles = StyleSheet.create({
   },
   bigbutton: {
     // padding: '50%',
+    // marginVertical: 10,
     paddingHorizontal: '23%',
     flex: 2,
     alignItems: 'center',
     justifyContent: 'flex-end',
+  },
+  viewstyle: {
+    // padding: 30,
+    height: 50,
+    marginVertical: 10,
+    width: '100%',
+    alignItems: 'center',
+    borderColor: 'black',
+    backgroundColor: 'white',
+    borderWidth: 0,
+    borderRadius: 10,
+    // padding: 30,
+    // alignItems: 'center',
+    shadowColor: 'darkgrey',
+    shadowOpacity: 20,
+    elevation: 2,
   },
 });

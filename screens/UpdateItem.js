@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   StyleSheet,
@@ -16,9 +16,12 @@ import {
 // } from "react-native-gesture-handler"
 
 export default function UpdateItem() {
+  const [ProductName, setProductName] = useState('');
+  const [ProductPrice, setProductPrice] = useState('');
+  const [ProductQuantity, setProductQuantity] = useState('');
   return (
     <View style={styles.Screen}>
-      <View style={styles.TopBar}>
+      {/* <View style={styles.TopBar}>
         <TouchableOpacity style={styles.TopBarBack}>
           <Icon name="arrow-left" size={32} color="white" />
         </TouchableOpacity>
@@ -33,26 +36,40 @@ export default function UpdateItem() {
         <TouchableOpacity style={styles.TopBarSearch}>
           <Icon name="search" size={32} color="white" />
         </TouchableOpacity>
-      </View>
+      </View> */}
 
       <View style={styles.RestScreen}>
-        <View style={styles.TextInputbox}>
+        <View style={{width: '100%'}}>
           <TextInput
-            // style={{fontSize: 12}}
+            style={styles.TextInputbox}
             placeholder="Product Name"
             placeholderTextColor="black"
+            onChangeText={ProductName => setProductName(ProductName)}
+            defaultValue={ProductName}
+            // keyboardType="numeric"
           />
         </View>
 
-        <View style={styles.TextInputbox}>
-          <TextInput placeholder="Product Price" placeholderTextColor="black" />
+        <View style={{width: '100%'}}>
+          <TextInput
+            style={styles.TextInputbox}
+            placeholder="Product Price"
+            placeholderTextColor="black"
+            onChangeText={ProductPrice => setProductPrice(ProductPrice)}
+            defaultValue={ProductPrice}
+            keyboardType="numeric"
+          />
         </View>
 
-        <View style={styles.TextInputbox}>
+        <View style={{width: '100%'}}>
           <TextInput
-            placeholder="Product Quantity"
+            style={styles.TextInputbox}
+            placeholder="Product Price"
             placeholderTextColor="black"
-            value=""
+            onChangeText={ProductQuantity =>
+              setProductQuantity(ProductQuantity)
+            }
+            defaultValue={ProductQuantity}
             keyboardType="numeric"
           />
         </View>
@@ -118,7 +135,7 @@ const styles = StyleSheet.create({
   RestScreen: {
     // flex: 9,
     // width: 100,
-    padding: 60,
+    padding: '15%',
     backgroundColor: 'lightgrey',
     height: '90%',
     // justifyContent: 'center',
@@ -141,12 +158,13 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   TextInputbox: {
+    paddingHorizontal: 16,
     width: '100%',
     flexDirection: 'row',
     marginVertical: 10,
     borderColor: 'black',
     backgroundColor: 'white',
-    borderWidth: 0.5,
+    borderWidth: 0,
     borderRadius: 10,
     height: 50,
     // padding: 20,
