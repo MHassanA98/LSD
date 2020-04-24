@@ -80,7 +80,7 @@ export default function Login({navigation}) {
           alert("Please verify email before logging in.")
         }
         console.log("User logged in")
-        console.log(firebase.auth().currentUser)
+        // console.log(firebase.auth().currentUser)
       })
       .catch(function(error) {
         console.log(error)

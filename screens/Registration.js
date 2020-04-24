@@ -14,6 +14,10 @@ function END(mail) {
   return mail.endsWith('@lums.edu.pk')
 }
 
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 
 // export const Registration = ({navigation}) => {
 export default function Registration({navigation}) {
@@ -24,6 +28,9 @@ export default function Registration({navigation}) {
   //   // })
   //   navigation.navigate('Login')
   // }
+  const SignUpPress = () =>{
+    navigation.navigate('Login')
+  }
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -108,7 +115,10 @@ export default function Registration({navigation}) {
 
     let meow2 = firebase
       .auth().currentUser.sendEmailVerification()
-      .then(()=> {console.log("Verify Email")} )
+      .then(()=> {
+        console.log("Verify Email")
+        SignUpPress()
+      } )
       .catch(function(error) {console.log(error)} )
     let meow2w = await meow2
 
