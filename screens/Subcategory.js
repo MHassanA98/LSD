@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-import React, { Component } from "react";
-import { View } from "react-native";
-import {Picker} from "@react-native-community/picker";
-=======
 import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Picker} from '@react-native-community/picker';
->>>>>>> 2147cdd9e056ed0c89e09055b53094b4d726b2c8
 
 export default function SubCategory() {
   const [selectedValue, setSelectedValue] = useState('Choose a subcategory');

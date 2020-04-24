@@ -7,11 +7,16 @@ import Registration from '../screens/Registration';
 import React from 'react';
 import Kitchen from '../screens/Kitchen';
 import Store from '../screens/Store';
+import AddItem from '../screens/AddItem';
 import { Button } from 'react-native';
 // import firebase from '@react-native-firebase/app';
 // import ReviewDetails from '../screens/reviewDetails';
 
 const screens = {
+
+  AddItem: {
+    screen: AddItem,
+  },
   
   Login: {
     screen: Login,

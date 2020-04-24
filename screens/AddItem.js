@@ -19,16 +19,19 @@ import {
 import Category from './PickerList.js';
 import SubCategory from './Subcategory.js';
 import firebase from "../assets/DatabaseConfig"
-import database from "@react-native-firebase/database"
+// import database from "@react-native-firebase/database"
 
 export default function AddItem() {
 
   const pressHandler = () =>{
 
-    firebase.database().ref('/').set({
-      email:'21100191@lums.edu.pk',
-      name: "Hassan"
+    firebase.database().ref('/Inventory').set({
+      Name: ProductName,
+      Price: ProductPrice,
+      Qty: ProductQuantity
     })
+
+    // let AddWait= await Add
 
   }
 
@@ -36,6 +39,7 @@ export default function AddItem() {
   const [ProductName, setProductName] = useState('');
   const [ProductPrice, setProductPrice] = useState('');
   const [ProductQuantity, setProductQuantity] = useState('');
+
   return (
     <View style={styles.Screen}>
       {/* <View style={styles.TopBar}>
@@ -64,7 +68,7 @@ export default function AddItem() {
           <SubCategory />
         </TouchableOpacity>
 
-        <TouchableOpacity style={{width: '100%'}}>
+        {/* <TouchableOpacity style={{width: '100%'}}> */}
           <TextInput
             style={styles.TextInputbox}
             // style={{fontSize: 12}}
@@ -74,9 +78,9 @@ export default function AddItem() {
             defaultValue={ProductName}
             // allowFontScalingrr
           />
-        </TouchableOpacity>
+        {/* </TouchableOpacity> */}
 
-        <TouchableOpacity style={{width: '100%'}}>
+        {/* <TouchableOpacity style={{width: '100%'}}> */}
           <TextInput
             style={styles.TextInputbox}
             placeholder="Product Price"
@@ -85,9 +89,9 @@ export default function AddItem() {
             defaultValue={ProductPrice}
             keyboardType="numeric"
           />
-        </TouchableOpacity>
+        {/* </TouchableOpacity> */}
 
-        <TouchableOpacity style={{width: '100%'}}>
+        {/* <TouchableOpacity style={{width: '100%'}}> */}
           <TextInput
             style={styles.TextInputbox}
             placeholder="Product Quantity"
@@ -99,7 +103,7 @@ export default function AddItem() {
             }
             defaultValue={ProductQuantity}
           />
-        </TouchableOpacity>
+        {/* </TouchableOpacity> */}
 
         <View style={styles.bigbutton}>
           <TouchableOpacity
@@ -184,6 +188,7 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 10,
     height: 50,
+    width: '100%',
     // padding: 20,
     alignItems: 'center',
     // fontSize: 20,
