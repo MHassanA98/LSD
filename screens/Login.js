@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, View, ImageBackground, Image, TextInput, Button, TouchableOpacity, } from "react-native";
 import backg from "../assets/images/backg.png" ;
 import lsdlogo from "../assets/images/lsdlogo.png" ;
@@ -50,7 +50,7 @@ export default function Login({navigation}) {
       }
       else {
         handleLogin()
-        console.log("Signup")
+        console.log("Login")
       }     
     }
     
@@ -72,13 +72,22 @@ export default function Login({navigation}) {
     let meow1 = firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(() => {console.log("User logged in")})
+      .then(() => {
+        if (firebase.auth().currentUser.emailVerified) {
+          LoginPress()
+        }
+        else {
+          alert("Please verify email before logging in.")
+        }
+        console.log("User logged in")})
       .catch(function(error) {
         console.log(error)
         alert(error)
         errorMessageInputHandler
       })
     let meow1w = await meow1
+
+    // LoginPress()
 
   }
 

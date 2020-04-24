@@ -18,7 +18,10 @@ function END(mail) {
 // export const Registration = ({navigation}) => {
 export default function Registration({navigation}) {
 
-  // const SignUpPress = () =>{
+  // const SignUpPress = props =>{
+  //   // firebase.auth().onAuthStateChanged(user => {
+  //   //   navigation.navigate('Login')
+  //   // })
   //   navigation.navigate('Login')
   // }
 
@@ -94,16 +97,29 @@ export default function Registration({navigation}) {
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {console.log("User created")})
-      .catch(error => errorMessageInputHandler)
+      .catch(function(error) {console.log(error)} )
+      // .catch(error => errorMessageInputHandler)
     let meow1w = await meow1
 
     let meow2 = firebase
       .auth().currentUser.sendEmailVerification()
-      .then(()=> {console.log("Verify Email")})
-      .catch(function(error) {console.log(error)})
+      .then(()=> {console.log("Verify Email")} )
+      .catch(function(error) {console.log(error)} )
     let meow2w = await meow2
 
     console.log("Now Waiting for Verify")
+
+    // let meow3 = firebase
+    //   .auth()
+    //   .onAuthStateChanged(function(user) {
+    //     console.log(user)
+    //     // this.props.navigation.navigate('Login')
+    //   })
+    //   .catch(function(error) {console.log(error)} )
+    // let meow3w = await meow3
+
+
+    // console.log("really waiting")
 
     // SignUpPress()
 
