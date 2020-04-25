@@ -12,10 +12,10 @@ export default function Store() {
 
     <ScrollView style={styles.home}>
         <TouchableOpacity style={styles.button} activeOpacity={0.8}> 
-            <ImageBackground source= {require('../assets/images/Kitchen.jpg')} style={styles.image}>
+            <ImageBackground source= {require('../assets/images/Stationary.png')} style={styles.image}>
                 <View style={styles.textcontainer}>
                     <Text style={styles.text}>
-                        Desi Food
+                        Stationary
                     </Text>
                 </View>
             </ImageBackground>
@@ -23,20 +23,20 @@ export default function Store() {
 
 
         <TouchableOpacity style={styles.button} activeOpacity={0.8}>
-            <ImageBackground source= {require('../assets/images/Store.jpg')} style={styles.image}>
+            <ImageBackground source= {require('../assets/images/Beverages.png')} style={styles.image}>
                 <View style={styles.textcontainer}>
                     <Text style={styles.text}>
-                        Fast Food
+                        Beverages
                     </Text>
                 </View>
             </ImageBackground>
         </TouchableOpacity>
 
         <TouchableOpacity style={styles.button} activeOpacity={0.8}> 
-            <ImageBackground source= {require('../assets/images/Kitchen.jpg')} style={styles.image}>
+            <ImageBackground source= {require('../assets/images/Grooming.png')} style={styles.image}>
                 <View style={styles.textcontainer}>
                     <Text style={styles.text}>
-                        Desi Food
+                        Grooming
                     </Text>
                 </View>
             </ImageBackground>
@@ -44,30 +44,30 @@ export default function Store() {
 
 
         <TouchableOpacity style={styles.button} activeOpacity={0.8}>
-            <ImageBackground source= {require('../assets/images/Store.jpg')} style={styles.image}>
+            <ImageBackground source= {require('../assets/images/Grocery.png')} style={styles.image}>
                 <View style={styles.textcontainer}>
                     <Text style={styles.text}>
-                        Fast Food
+                        Grocery
                     </Text>
                 </View>
             </ImageBackground>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.button} activeOpacity={0.8}> 
-            <ImageBackground source= {require('../assets/images/Kitchen.jpg')} style={styles.image}>
+        {/* <TouchableOpacity style={styles.button} activeOpacity={0.8}> 
+            <ImageBackground source= {require('../assets/images/Electronics.png')} style={styles.image}>
                 <View style={styles.textcontainer}>
                     <Text style={styles.text}>
-                        Desi Food
+                        Electronics
                     </Text>
                 </View>
             </ImageBackground>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
         <TouchableOpacity style={[styles.button,{marginBottom:10}]} activeOpacity={0.8}> 
-            <ImageBackground source= {require('../assets/images/Kitchen.jpg')} style={styles.image}>
+            <ImageBackground source= {require('../assets/images/Electronics.png')} style={styles.image}>
                 <View style={styles.textcontainer}>
                     <Text style={styles.text}>
-                       Fresh Juices
+                       Electronis
                     </Text>
                 </View>
             </ImageBackground>

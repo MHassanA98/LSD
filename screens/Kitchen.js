@@ -10,7 +10,7 @@ export default function Kitchen() {
 
     <ScrollView style={styles.home}>
         <TouchableOpacity style={styles.button} activeOpacity={0.8}> 
-            <ImageBackground source= {require('../assets/images/Kitchen.jpg')} style={styles.image}>
+            <ImageBackground source= {require('../assets/images/Desifood.png')} style={styles.image}>
                 <View style={styles.textcontainer}>
                     <Text style={styles.text}>
                         Desi Food
@@ -21,7 +21,7 @@ export default function Kitchen() {
 
 
         <TouchableOpacity style={styles.button} activeOpacity={0.8}>
-            <ImageBackground source= {require('../assets/images/Store.jpg')} style={styles.image}>
+            <ImageBackground source= {require('../assets/images/Fastfood.png')} style={styles.image}>
                 <View style={styles.textcontainer}>
                     <Text style={styles.text}>
                         Fast Food
@@ -31,7 +31,7 @@ export default function Kitchen() {
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.button,{marginBottom:10}]} activeOpacity={0.8}> 
-            <ImageBackground source= {require('../assets/images/Kitchen.jpg')} style={styles.image}>
+            <ImageBackground source= {require('../assets/images/Juices.png')} style={styles.image}>
                 <View style={styles.textcontainer}>
                     <Text style={styles.text}>
                        Fresh Juices
