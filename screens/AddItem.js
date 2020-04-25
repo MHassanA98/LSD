@@ -6,9 +6,12 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  Keyboard
   // Button,
   // Picker,
 } from 'react-native';
+import {Picker} from '@react-native-community/picker';
+
 // import ModalDropdown from 'react-native-modal-dropdown';
 // import DropDownItem from "react-native-drop-down-item";
 // import {
@@ -16,29 +19,74 @@ import {
 //   BorderlessButton,
 // } from "react-native-gesture-handler";
 // import firebase from "@react-native-firebase/app";
-import Category from './PickerList.js';
-import SubCategory from './Subcategory.js';
+import Categoryy from './PickerList.js';
+// import SubCategory from './Subcategory.js';
 import firebase from "../assets/DatabaseConfig"
-// import database from "@react-native-firebase/database"
+import database from "@react-native-firebase/database"
 
 export default function AddItem() {
 
   const pressHandler = () =>{
+    if (Category==="Choose a category"){
+      alert("Please choose a category")
+      // return
+    }
+    else if (SubCategory==="Choose a subcategory"){
+      alert("Please choose a subcategory")
+      // return
+    }
+    else if (ProductPrice<0){
+      alert("Invalid product price")
+    }
+    else if (ProductPrice<0){
+      alert("Invalid product price")
+    }
+    else if (ProductQuantity<0){
+      alert("Invalid product quantity")
+    }
+    else{
+  
+      firebase.database().ref('/Inventory/'+Category+"/"+SubCategory).push({
+        Name: ProductName,
+        Price: ProductPrice,
+        Qty: ProductQuantity
+      })
 
-    firebase.database().ref('/Inventory').set({
-      Name: ProductName,
-      Price: ProductPrice,
-      Qty: ProductQuantity
-    })
+      setProductName('')
+      setProductPrice('')
+      setProductQuantity('')
+      setCategory('Choose a category')
+      setSubCategory('Choose a subcategory')
+
+      alert("Item added successfully")
+
+    }
+
+
+    // console.log(Category.getS)
 
     // let AddWait= await Add
 
   }
 
-  // const [clrVal, setClrVal] = useState('');
   const [ProductName, setProductName] = useState('');
   const [ProductPrice, setProductPrice] = useState('');
   const [ProductQuantity, setProductQuantity] = useState('');
+  const [Category, setCategory] = useState('Choose a category');
+  const[SubCategory,setSubCategory]= useState('Choose a subcategory');
+
+  const SubCat={
+    "Choose a category":["Choose a subcategory"],
+    "Kitchen":["Choose a subcategory","Desi", "Fast Food", "Fresh Juice"],
+    "Store":["Choose a subcategory","Stationary", "Beverages", "Grocery", "Grooming", "Electronics"]
+  }
+
+  const Cat=[
+    "Choose a category",
+    "Kitchen",
+    "Store",
+  ]
+
 
   return (
     <View style={styles.Screen}>
@@ -60,13 +108,49 @@ export default function AddItem() {
       </View> */}
 
       <View style={styles.RestScreen}>
-        <TouchableOpacity style={styles.viewstyle}>
-          <Category />
-        </TouchableOpacity>
+        <View style={styles.viewstyle}>
+        <Picker
+          selectedValue={Category}
+          style={styles.container}
+          // placeholder= "Choose a category"
+          // onPress={}
+          onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}>
 
-        <TouchableOpacity style={styles.viewstyle}>
-          <SubCategory />
-        </TouchableOpacity>
+          {/* <Picker.Item label="Choose a category" value="null" /> */}
+          {Cat.map((item,index)=>{
+            return ( <Picker.Item label={item} value={item} key={index} />)
+
+          })}
+          {/* <Picker.Item label="Choose a category" value="null" />
+          <Picker.Item label="Food" value="food" />
+          <Picker.Item label="Stationary" value="stationary" />
+          <Picker.Item label="Grocery" value="grocery" /> */}
+        </Picker>
+          {/* <Categoryy >{'Change'}</Categoryy> */}
+        </View>
+
+        <View style={styles.viewstyle}>
+
+          <Picker
+            selectedValue={SubCategory}
+            style={styles.container}
+            // placeholder= "Choose a category"
+            // onPress={}
+            onValueChange={(itemValue, itemIndex) => setSubCategory(itemValue)}>
+
+            {/* <Picker.Item label="Choose a category" value="null" /> */}
+            {SubCat[Category].map((item,index)=>{
+              return ( <Picker.Item label={item} value={item} key={index} />)
+
+            })}
+            {/* <Picker.Item label="Choose a category" value="null" />
+            <Picker.Item label="Food" value="food" />
+            <Picker.Item label="Stationary" value="stationary" />
+            <Picker.Item label="Grocery" value="grocery" /> */}
+          </Picker>
+
+          {/* <SubCategory /> */}
+        </View>
 
         {/* <TouchableOpacity style={{width: '100%'}}> */}
           <TextInput
@@ -88,6 +172,7 @@ export default function AddItem() {
             onChangeText={ProductPrice => setProductPrice(ProductPrice)}
             defaultValue={ProductPrice}
             keyboardType="numeric"
+            // onBlur={()=>{this.}}
           />
         {/* </TouchableOpacity> */}
 
@@ -118,6 +203,20 @@ export default function AddItem() {
 }
 
 const styles = StyleSheet.create({
+
+  container: {
+    flex: 1,
+    // paddingTop: 40,
+    // backgroundColor:'red',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexDirection: 'row',
+    marginVertical: 10,
+    width: '100%',
+    height: 50,
+    elevation: 2,
+  },
+
   Screen: {
     // flexDirection: "column",
     height: '100%',

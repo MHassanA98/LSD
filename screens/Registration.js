@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, ScrollView, ImageBackground, TextInput, TouchableOpacity, } from "react-native";
 import backg from "../assets/images/backg.png" ;
 import Icon from "react-native-vector-icons/FontAwesome" ;
+// import firebase from "../assets/DatabaseConfig" ;
 // import dist from "react-native-firebase" ;
 // import firebase from "react-native-firebase" ;
 // import firebase from "../node_modules/@react-native-firebase";

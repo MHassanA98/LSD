@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Picker} from '@react-native-community/picker';
 
-export default function Category() {
-  const [selectedValue, setSelectedValue] = useState('Choose a category');
+export default function Category({item}) {
+  const [selectedValue, setSelectedValue] = useState(item);
+
+
   return (
     // <TouchableOpacity raised style={styles.viewstyle}>
     <Picker

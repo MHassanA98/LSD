@@ -8,7 +8,6 @@ import lsdlogo from "../assets/images/lsdlogo.png" ;
 import Icon from "react-native-vector-icons/FontAwesome" ;
 import firebase from "@react-native-firebase/app" ;
 import auth from "@react-native-firebase/auth" ;
-import { NavigationActions } from "react-navigation";
 
 
 function END(mail) {
@@ -17,80 +16,43 @@ function END(mail) {
 
 
 // export const Login = ({navigation}) => {
-export default function Login({navigation}) {
+export default function Forgotpwemail({navigation}) {
 
   // firebase.auth().currentUser.reload()
 
-  const LoginPress = () =>{
-    navigation.navigate('Home')
+  const ConfirmPress = () =>{
+    navigation.navigate('Login')
+    // console.log("meow")
   }
 
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repassword, setRepassword] = useState("");
-  const [username, setUsername] = useState("");
-  const [phone, setPhone] = useState("");
   const [errorMessage, setErrorMessage] = useState();
 
   const emailInputHandler = (inputEmail) => {
     setEmail(inputEmail);
   };
 
-  const passwordInputHandler = (inputPassword) => {
-    setPassword(inputPassword);
-  };
-
   const errorMessageInputHandler = (inputError) => {
     setErrorMessage(inputError);
   };
 
-  const handleFpPress = () => {
-    navigation.navigate('Forgotpwemail')
-  }
-  
-  const handleSuPress = () => {
-    navigation.navigate('Registration')
-  }
-
-  const handleLoginPress = () => {
+  const handleConfirmPress = () => {
     emaillums = END(email)
-    if (emaillums) {
-      // alert("Please enter your LUMS email.")
-      if (password.length < 8) {
-        alert("Please enter more than 8 characters for password.")
-      }
-      else {
-        handleLogin()
-        console.log("Login")
-      }     
+    if (emaillums) {  
+      handleResetEmail()
+      console.log("Login")
     }
-    
     else {
       alert("Please enter your LUMS email.")
-      // console.log("email ghalat")
-      // firebase.auth().currentUser.reload()
-      // console.log(firebase.auth().currentUser)
     }
 
   };
 
-  async function handleLogin() {
-    if (!firebase.auth().currentUser.emailVerified) {
-      let meow2 = firebase.auth().currentUser.reload()
-      let meow2w = await meow2
-    }
-
-    let meow1 = firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
+  async function handleResetEmail() {
+    let meow1 = firebase.auth().sendPasswordResetEmail(email)
       .then(() => {
-        if (firebase.auth().currentUser.emailVerified) {
-          LoginPress()
-        }
-        else {
-          alert("Please verify email before logging in.")
-        }
-        console.log("User logged in")
+        ConfirmPress()
+        console.log("User sent pw reset email")
         // console.log(firebase.auth().currentUser)
       })
       .catch(function(error) {
@@ -108,35 +70,22 @@ export default function Login({navigation}) {
   return (
     <View style={styles.container}>
       <ImageBackground source={backg} style={styles.bgimage}>
+        
+        <View style={styles.topsentence}> 
+          <Text style={styles.toptext}>Forgot your password? That's fine! Confirm your email and we'll send you a code</Text>
+        </View>
+
         <View style={styles.maincontainer}>
-          <Image
-            style={styles.stretch}
-            source={lsdlogo}
-          />
           <View style={styles.inputbox}>
             <Icon style={styles.inputicon} name="font" size={30} color="gray" />
             <TextInput placeholder="Email Address" style={styles.inputtext} onChangeText={emailInputHandler} value={email} ></TextInput>
           </View>
-          <View  style={styles.inputbox}>
-            <Icon style={styles.inputicon} name="font" size={30} color="gray" />
-            <TextInput secureTextEntry placeholder="Password" style={styles.inputtext} onChangeText={passwordInputHandler} value={password} ></TextInput>
-          </View>
         </View>
-        <View style={styles.clearbutton}> 
-          <TouchableOpacity onPress={handleFpPress} >
-            <Text style={styles.buttontext}>Forgot Password?</Text>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity style={styles.bigbutton} onPress={handleLoginPress} >
-          <View style={styles.loginbutton}> 
-            <Text style={styles.bigbuttontext}>Login</Text>
+        <TouchableOpacity style={styles.bigbutton} onPress={handleConfirmPress} >
+          <View style={styles.confirmbutton}> 
+            <Text style={styles.bigbuttontext}>Confirm</Text>
           </View>
         </TouchableOpacity>
-        <View style={styles.clearbottombutton}> 
-          <TouchableOpacity onPress={handleSuPress} >
-            <Text style={styles.buttontext}>New user? Sign up!</Text>
-          </TouchableOpacity>
-        </View>
       </ImageBackground>
     </View>
   );
@@ -165,13 +114,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "white",
     borderRadius: 6,
-    borderWidth: 1,
+    // borderWidth: 1,
     borderColor: '#777',
     shadowColor: '#000',
     shadowOffset: { width: 2, height: 4 },
     shadowOpacity: 0.9,
     shadowRadius: 6,
-    elevation: 2,
+    elevation: 5,
 
   },
   inputicon: {
@@ -194,27 +143,20 @@ const styles = StyleSheet.create({
     // elevation: 2,
 
   },
-  stretch: {
-    width: '60%',
-    height: '40%',
-    resizeMode: "stretch",
-    // paddingBottom: 10,
-    // paddingEnd: 10,
-    // paddingTop: 0,
-  },
   maincontainer: {
     alignItems: "center",
     justifyContent: "flex-end",
-    flex: 6,
+    paddingBottom: "10%"
+    // flex: 6,
     // paddingLeft: '30%',
     // paddingTop: '30%',
 
   },
-  buttontext: {
+  toptext: {
     fontWeight: "bold",
     color: "#d00f16",
-    fontFamily: 'Roboto-Medium',
-    fontSize: 14,
+    fontFamily: 'Roboto-bold',
+    fontSize: 18,
 
     // opacity: 1,
 
@@ -231,25 +173,13 @@ const styles = StyleSheet.create({
     // opacity: 1,
 
   },
-  clearbutton: {
-    opacity: 0.8,
-    paddingTop: 5,
-    marginLeft: '57%',
-    marginRight: '13%',
-    flex: 1,
-    
-    // fontWeight: "bold",
-    // backgroundColor: 'rgba(52, 52, 52, 0.8)',
-    // backgroundColor: 'transparent',
-    // backgroundColor: "None",
-
-  },
-  clearbottombutton: {
-    opacity: 0.8,
-    // paddingTop: 1,
+  topsentence: {
+    // opacity: 0.8,
+    paddingTop: '35%',
     // paddingBottom: 1,
     justifyContent: "center",
-    marginLeft: '35%',
+    width: '70%',
+    marginLeft: '15%',
     // marginRight: '8%',
     flex: 1,
     alignItems: "baseline",
@@ -281,7 +211,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "None",
 
   },
-  loginbutton: {
+  confirmbutton: {
     // paddingHorizontal: 15,
     backgroundColor: "#d00f16",
     borderRadius: 17,
@@ -289,7 +219,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 2, height: 4 },
     shadowOpacity: 0.9,
     shadowRadius: 6,
-    elevation: 2,
+    elevation: 5,
     // minHeight: '6%',
     textAlign: "center",
 
@@ -302,27 +232,3 @@ const styles = StyleSheet.create({
 
 // export default Login;
 
-
-
-
-
-
-
-
-// import Header from "./components/header";
-// import StartGameScreen from "./screens/StartGameScreen";
-
-// export default function App() {
-//   return (
-//     <View style={styles.screen}>
-//       <Header title={"Guess a Number"} />
-//       <StartGameScreen />
-//     </View>
-//   );
-// }
-
-// const styles = StyleSheet.create({
-//   screen: {
-//     flex: 1
-//   }
-// });
