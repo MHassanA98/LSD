@@ -2,20 +2,18 @@ import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Picker} from '@react-native-community/picker';
 
-export default function Category({item}) {
-  const [selectedValue, setSelectedValue] = useState(item);
-
-
+export default function Category() {
+  const [selectedValue, setSelectedValue] = useState('Choose a category');
   return (
     // <TouchableOpacity raised style={styles.viewstyle}>
     <Picker
       selectedValue={selectedValue}
       style={styles.container}
       onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}>
-      <Picker.Item label="Choose a category" value="null" />
-      <Picker.Item label="Food" value="food" />
-      <Picker.Item label="Stationary" value="stationary" />
-      <Picker.Item label="Grocery" value="grocery" />
+      <Picker.Item label="Choose a Location" value="null" />
+      <Picker.Item label="M5" value="M5" />
+      <Picker.Item label="SDSB" value="SDSB" />
+      <Picker.Item label="Female Barrier" value="FB" />
     </Picker>
     // </TouchableOpacity>
   );
