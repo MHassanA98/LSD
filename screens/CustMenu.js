@@ -17,7 +17,10 @@ import {FlatList} from 'react-native-gesture-handler';
 //   BorderlessButton,
 // } from "react-native-gesture-handler"
 
-export default function CustMenu() {
+export default function CustMenu({navigation}) {  
+  
+  console.log("Customer: ", navigation.getParam('Sub'))
+
   const [product, setProduct] = useState([
     {name: 'pencil', price: '40', quantity: 0},
     {name: 'ruler', price: '50', quantity: 0},
@@ -32,6 +35,9 @@ export default function CustMenu() {
     {name: 'car', price: '11', quantity: 0},
     {name: 'box', price: '12', quantity: 0},
   ]);
+
+  // console.log(product[0].name)
+
   //   const onAdd = () => setProd;
   // const onMin = () => setProduct(prev => prev - 1)
   function onMin(props) {

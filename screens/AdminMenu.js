@@ -17,7 +17,11 @@ import {FlatList} from 'react-native-gesture-handler';
 //   BorderlessButton,
 // } from "react-native-gesture-handler"
 
-export default function AdminMenu() {
+
+export default function AdminMenu({navigation}) {
+  
+  console.log("Admin: ", navigation.getParam('Sub'))
+
   const [product, setProduct] = useState([
     {name: 'pencil', price: '40'},
     {name: 'ruler', price: '50'},
