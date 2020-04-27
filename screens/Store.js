@@ -10,11 +10,11 @@ import database from "@react-native-firebase/database" ;
 export default function Store({navigation}) {
     // const [product, setProduct] = useState([ {name: 'ribbon'} ]);
     const [SubCat, setSubCat] = useState([ 
-        {Sub: 'Stationery'}, 
-        {Sub: 'Beverages'}, 
-        {Sub: 'Grooming'}, 
-        {Sub: 'Grocery'}, 
-        {Sub: 'Electronics'}, 
+        {Sub: 'Stationery', Cat: 'Store'}, 
+        {Sub: 'Beverages', Cat: 'Store'}, 
+        {Sub: 'Grooming', Cat: 'Store'}, 
+        {Sub: 'Grocery', Cat: 'Store'}, 
+        {Sub: 'Electronics', Cat: 'Store'}, 
     ]);
 
     const handleStationary = () => {

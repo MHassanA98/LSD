@@ -11,32 +11,62 @@ import {
   // Picker,
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import { NavigationEvents } from 'react-navigation';
 // import DropDownItem from "react-native-drop-down-item";
 // import {
 //   TouchableHighlight,
 //   BorderlessButton,
 // } from "react-native-gesture-handler"
+import firebase from "../assets/DatabaseConfig" ;
+import auth from "@react-native-firebase/auth" ;
+import database from "@react-native-firebase/database" ;
+
 
 export default function CustMenu({navigation}) {  
+
+  const handleAddPress = () => {
+    navigation.navigate('AddItem')
+  }
   
-  console.log("Customer: ", navigation.getParam('Sub'))
+  // console.log("\n Customer: ", navigation.getParam('Sub'), navigation.getParam('Cat'))
 
   const [product, setProduct] = useState([
-    {name: 'pencil', price: '40', quantity: 0},
-    {name: 'ruler', price: '50', quantity: 0},
-    {name: 'sharpener', price: '5', quantity: 0},
-    {name: 'eraser', price: '4', quantity: 0},
-    {name: 'pen', price: '54', quantity: 0},
-    {name: 'marker', price: '22', quantity: 0},
-    {name: 'tape', price: '44', quantity: 0},
-    {name: 'ribbon', price: '22', quantity: 0},
-    {name: 'pillow', price: '21', quantity: 0},
-    {name: 'toy', price: '10', quantity: 0},
-    {name: 'car', price: '11', quantity: 0},
-    {name: 'box', price: '12', quantity: 0},
+    // {name: 'meow', price: 0, quantity: 0},
   ]);
 
-  // console.log(product[0].name)
+  // setProduct([])
+
+  // componentWillMount() {
+  //   setProduct()
+  // }
+  // window.onload = function(){
+  //   setProduct([])
+  // }
+
+  // function onscreenload() {
+  // console.log("MEOW")
+  mydb = firebase.database().ref('/Inventory/'+navigation.getParam('Cat')+'/'+navigation.getParam('Sub'))
+  mydb.once("value")
+    .then(function(snapshot) {
+      // product = []
+      snapshot.forEach(function(childsnapshot) {
+        let newprod = {name: childsnapshot.key, price: childsnapshot.child("Price").val(), quantity: childsnapshot.child("Qty").val()}
+        // console.log(newprod)
+        product.push(newprod)
+      })
+    })
+  // }
+
+  // mydb = firebase.database().ref('/Inventory/'+navigation.getParam('Cat')+'/'+navigation.getParam('Sub'))
+  // mydb.once("value")
+  //   .then(function(snapshot) {
+  //     // product = []
+  //     snapshot.forEach(function(childsnapshot) {
+  //       let newprod = {name: childsnapshot.key, price: childsnapshot.child("Price").val(), quantity: childsnapshot.child("Qty").val()}
+  //       // console.log(newprod)
+  //       product.push(newprod)
+  //     })
+  //   })
 
   //   const onAdd = () => setProd;
   // const onMin = () => setProduct(prev => prev - 1)
@@ -46,7 +76,8 @@ export default function CustMenu({navigation}) {
   //   const onAdd = () => setProduct(prev => prev + 1);
 
   return (
-    <View style={styles.Screen}>
+    <View style={styles.Screen} >
+      {/* <NavigationEvents onDidFocus={() => {onscreenload()}} /> */}
       <View style={{width: '100%', height: 460, marginVertical: 12}}>
         <FlatList
           data={product}
@@ -93,8 +124,8 @@ export default function CustMenu({navigation}) {
           paddingTop: 15,
           paddingLeft: 12,
         }}>
-        <TouchableOpacity style={styles.plusbutton}>
-          <Icon name="plus" color="white" />
+        <TouchableOpacity style={styles.plusbutton} onPress={handleAddPress} >
+          <Icon name="plus" color="white"/>
         </TouchableOpacity>
       </View>
     </View>

@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, ImageBackground, Image, TextInput, Button, TouchableOpacity, } from "react-native";
 import backg from "../assets/images/backg.png" ;
 import lsdlogo from "../assets/images/lsdlogo.png" ;
-// import firebase from "../assets/DatabaseConfig" ;
+import firebase from "../assets/DatabaseConfig" ;
 // const image = "./assets/lsdlogo.png" ;
 // import { Ionicons } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/FontAwesome" ;
-import firebase from "@react-native-firebase/app" ;
-import auth from "@react-native-firebase/auth" ;
+// import firebase from "@react-native-firebase/app" ;
+// import auth from "@react-native-firebase/auth" ;
 
 
 function END(mail) {
@@ -77,7 +77,7 @@ export default function Forgotpwemail({navigation}) {
 
         <View style={styles.maincontainer}>
           <View style={styles.inputbox}>
-            <Icon style={styles.inputicon} name="font" size={30} color="gray" />
+            <Icon style={styles.inputicon} name="envelope-o" size={30} color="#d00f16" />
             <TextInput placeholder="Email Address" style={styles.inputtext} onChangeText={emailInputHandler} value={email} ></TextInput>
           </View>
         </View>
@@ -124,7 +124,8 @@ const styles = StyleSheet.create({
 
   },
   inputicon: {
-    padding: 2,
+    paddingTop: '2%',
+    paddingLeft: '2%',
     
   },
   inputtext: {
