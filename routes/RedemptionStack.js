@@ -9,7 +9,8 @@ import Store from '../screens/Store';
 import AdminMenu from '../screens/AdminMenu';
 import CustMenu from '../screens/CustMenu';
 import Pending_Order_Admin from '../screens/Pending_Order_Admin';
-import ShoppingCart from '../screens/Shopping_cart'
+import PendingOrdersList from '../screens/PendingOrdersList';
+import RedemptionPoints from '../screens/RedemptionPoints';
 // import Subcategory from '../screens/Subcategory';
 import Customer_Profile from '../screens/Customer_Profile';
 import change_password_customer from '../screens/change_password_customer';
@@ -17,78 +18,83 @@ import change_password_customer from '../screens/change_password_customer';
 // import Change_Password from '../screens/ChangePassword';
 import React from 'react';
 import { Button } from 'react-native';
-import Checkout from '../screens/Checkout'
 // import firebase from '@react-native-firebase/app';
 // import ReviewDetails from '../screens/reviewDetails';
 
 const screens = {
 
-  // Home: {
-  //   screen: Home,
-  //   navigationOptions:{
-  //     title: 'LSD',
-  //     headerLeft:() => null,
-  //     // gestureEnabled:true
-  //   }
-  // },
-
-  // Login: {
-  //   screen: Login,
-  //   navigationOptions:{
-  //     headerShown:false
-  //   }
-  // },
-
-  // Registration: {
-  //   screen: Registration,
-  //   navigationOptions:{
-  //     title:null,
-  //     headerTransparent: true
-  //   }
-  // },
-
-  // Forgotpwemail: {
-  //   screen: Forgotpwemail,
-  //   navigationOptions:{
-  //     title:null,
-  //     headerTransparent: true
-  //   }
-  // },
-
-  Home: {
-    screen: Home,
-    navigationOptions:{
-      title: 'LSD',
-      headerLeft:() => null,
-      // gestureEnabled:true
+    RedemptionPoints:{
+        screen: RedemptionPoints
     }
-  },
 
-  Kitchen:{
-    screen:Kitchen
+
+//   Home: {
+//     screen: Home,
+//     navigationOptions:{
+//       title: 'LSD',
+//       headerLeft:() => null,
+//       // gestureEnabled:true
+//     }
+//   },
+
+//   Login: {
+//     screen: Login,
+//     navigationOptions:{
+//       headerShown:false
+//     }
+//   },
+
+//   Registration: {
+//     screen: Registration,
+//     navigationOptions:{
+//       title:null,
+//       headerTransparent: true
+//     }
+//   },
+
+//   Forgotpwemail: {
+//     screen: Forgotpwemail,
+//     navigationOptions:{
+//       title:null,
+//       headerTransparent: true
+//     }
+//   },
+
+//   Home: {
+//     screen: Home,
+//     navigationOptions:{
+//       title: 'LSD',
+//       headerLeft:() => null,
+//       // gestureEnabled:true
+//     }
+//   },
+
+//   Kitchen:{
+//     screen:Kitchen
     
-  },
+//   },
 
-  Store:{
-    screen:Store
-  },
+//   Store:{
+//     screen:Store
+//   },
 
-  CustMenu:{
-    screen:CustMenu
-  },
+//   CustMenu:{
+//     screen:CustMenu
+//   },
 
-  // AdminMenu:{
-  //   screen:AdminMenu
-  // },
+//   AdminMenu:{
+//     screen:AdminMenu
+//   },
 
-  ShoppingCart:{
-    screen:ShoppingCart
-  },
+//   AddItem:{
+//       screen: AddItem
+//   },
 
-  Checkout:{
-    screen:Checkout
-  }
+//   UpdateItem:{
+//       screen:UpdateItem
+//   }
 
+  
 
   // Customer_Profile: {
   //     screen: Customer_Profile,
@@ -104,7 +110,7 @@ const screens = {
 };
 
 // home stack navigator screens
-const HomeStack = createStackNavigator(screens, {
+const RedemptionStack = createStackNavigator(screens, {
   defaultNavigationOptions: {
     headerTintColor: '#444',
     headerStyle: { 
@@ -126,4 +132,4 @@ const HomeStack = createStackNavigator(screens, {
 });
 
 // export default createAppContainer(HomeStack);
-export default HomeStack
+export default RedemptionStack

@@ -2,14 +2,14 @@
 import React, { useState } from 'react';
 // import * as Font from 'expo-font';
 // import { AppLoading } from 'expo';
-import StackNavigator from './routes/HomeStack'
+import Navigator from './routes/Switch'
 import { StyleSheet, Text, View, Image, ImageBackground } from 'react-native';
-
+import 'react-native-gesture-handler'
 export default function App() {
     // const [fontsLoaded, setFontsLoaded] = useState(false);
   return(
 
-    <StackNavigator/>
+    <Navigator/>
 
     // <View style={styles.home}>
     //     <Text style={styles.text}>

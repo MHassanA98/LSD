@@ -22,7 +22,7 @@ export default function Login({navigation}) {
   // firebase.auth().currentUser.reload()
 
   const LoginPress = () =>{
-    navigation.navigate('Home')
+    navigation.navigate('AdminDrawer')
   }
 
   const [email, setEmail] = useState("");

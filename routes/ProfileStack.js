@@ -9,15 +9,14 @@ import Store from '../screens/Store';
 import AdminMenu from '../screens/AdminMenu';
 import CustMenu from '../screens/CustMenu';
 import Pending_Order_Admin from '../screens/Pending_Order_Admin';
-import ShoppingCart from '../screens/Shopping_cart'
 // import Subcategory from '../screens/Subcategory';
-import Customer_Profile from '../screens/Customer_Profile';
-import change_password_customer from '../screens/change_password_customer';
+import CustomerProfile from '../screens/Customer_Profile';
+import ChangePassword from '../screens/change_password_customer';
+// import Customer from '../screens/Customer';
 // import Forgotpw from '../screens/Forgotpw';
 // import Change_Password from '../screens/ChangePassword';
 import React from 'react';
 import { Button } from 'react-native';
-import Checkout from '../screens/Checkout'
 // import firebase from '@react-native-firebase/app';
 // import ReviewDetails from '../screens/reviewDetails';
 
@@ -32,63 +31,62 @@ const screens = {
   //   }
   // },
 
-  // Login: {
-  //   screen: Login,
-  //   navigationOptions:{
-  //     headerShown:false
-  //   }
-  // },
-
-  // Registration: {
-  //   screen: Registration,
-  //   navigationOptions:{
-  //     title:null,
-  //     headerTransparent: true
-  //   }
-  // },
-
-  // Forgotpwemail: {
-  //   screen: Forgotpwemail,
-  //   navigationOptions:{
-  //     title:null,
-  //     headerTransparent: true
-  //   }
-  // },
-
-  Home: {
-    screen: Home,
-    navigationOptions:{
-      title: 'LSD',
-      headerLeft:() => null,
-      // gestureEnabled:true
-    }
+  CustomerProfile:{
+      screen: CustomerProfile
   },
 
-  Kitchen:{
-    screen:Kitchen
+  ChangePassword:{
+      screen:ChangePassword
+  }
+
+//   Login: {
+//     screen: Login,
+//     navigationOptions:{
+//       headerShown:false
+//     }
+//   },
+
+//   Registration: {
+//     screen: Registration,
+//     navigationOptions:{
+//       title:null,
+//       headerTransparent: true
+//     }
+//   },
+
+//   Forgotpwemail: {
+//     screen: Forgotpwemail,
+//     navigationOptions:{
+//       title:null,
+//       headerTransparent: true
+//     }
+//   },
+
+  // Home: {
+  //   screen: Home,
+  //   navigationOptions:{
+  //     title: 'LSD',
+  //     headerLeft:() => null,
+  //     // gestureEnabled:true
+  //   }
+  // },
+
+  // Kitchen:{
+  //   screen:Kitchen
     
-  },
+  // },
 
-  Store:{
-    screen:Store
-  },
+  // Store:{
+  //   screen:Store
+  // },
 
-  CustMenu:{
-    screen:CustMenu
-  },
+  // CustMenu:{
+  //   screen:CustMenu
+  // },
 
   // AdminMenu:{
   //   screen:AdminMenu
   // },
-
-  ShoppingCart:{
-    screen:ShoppingCart
-  },
-
-  Checkout:{
-    screen:Checkout
-  }
-
 
   // Customer_Profile: {
   //     screen: Customer_Profile,
@@ -104,7 +102,7 @@ const screens = {
 };
 
 // home stack navigator screens
-const HomeStack = createStackNavigator(screens, {
+const ProfileStack = createStackNavigator(screens, {
   defaultNavigationOptions: {
     headerTintColor: '#444',
     headerStyle: { 
@@ -126,4 +124,4 @@ const HomeStack = createStackNavigator(screens, {
 });
 
 // export default createAppContainer(HomeStack);
-export default HomeStack
+export default ProfileStack
