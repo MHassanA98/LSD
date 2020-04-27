@@ -6,6 +6,7 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  Alert,
   Keyboard
   // Button,
   // Picker,
@@ -46,8 +47,7 @@ export default function AddItem() {
     }
     else{
   
-      firebase.database().ref('/Inventory/'+Category+"/"+SubCategory).push({
-        Name: ProductName,
+      firebase.database().ref('/Inventory/'+Category+"/"+SubCategory+"/"+ProductName).set({
         Price: ProductPrice,
         Qty: ProductQuantity
       })
@@ -60,14 +60,56 @@ export default function AddItem() {
 
       alert("Item added successfully")
 
+      // firebase.database().ref('/Inventory/'+Category+"/"+SubCategory+"/"+ProductName)
+      //   .once("value")
+      //     .then((snapshot)=>{
+      //       snapshot.exists() ? 
+      //     })
+
+
+
     }
+
+  }
+
+    // const ReplaceAlert=()=>{
+
+    //   Alert.alert(
+    //     "Product exists",
+    //     "Do you want to replace the product"
+    //   )
+
+
+
+
+
+    // }
+
+    // const ItemAdded=()=>{
+
+    //   firebase.database().ref('/Inventory/'+Category+"/"+SubCategory+"/"+ProductName).set({
+    //     Price: ProductPrice,
+    //     Qty: ProductQuantity
+    //   })
+
+    //   setProductName('')
+    //   setProductPrice('')
+    //   setProductQuantity('')
+    //   setCategory('Choose a category')
+    //   setSubCategory('Choose a subcategory')
+
+    //   alert("Item added successfully")
+
+
+
+    // }
 
 
     // console.log(Category.getS)
 
     // let AddWait= await Add
 
-  }
+  
 
   const [ProductName, setProductName] = useState('');
   const [ProductPrice, setProductPrice] = useState('');
