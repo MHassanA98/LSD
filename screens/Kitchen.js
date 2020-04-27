@@ -3,14 +3,71 @@ import React, { useState } from 'react';
 // import { AppLoading } from 'expo';
 // import Navigator from './route/NavigDraw'
 import { StyleSheet, Text, View, Image, ImageBackground, Dimensions, TouchableOpacity, Button, ScrollView } from 'react-native';
+import firebase from "../assets/DatabaseConfig" ;
+import auth from "@react-native-firebase/auth" ;
+import database from "@react-native-firebase/database" ;
 
-export default function Kitchen() {
+export default function Kitchen({navigation}) {
+
+    const [SubCat, setSubCat] = useState([ 
+        {Sub: 'Desifood'}, 
+        {Sub: 'Fastfood'}, 
+        {Sub: 'Juices'}, 
+    ]);
+
+    const handleDesifood = () => {
+        // setSubCat("Stationery")
+        email = firebase.auth().currentUser.email
+        mydb = firebase.database().ref('/Users/'+email.substr(0,8))
+        mydb.once("value")
+            .then(function(snapshot) {
+                custflag = snapshot.child("Customerflag").val()
+                if (custflag) {
+                    navigation.navigate('CustMenu', SubCat[0])
+                }
+                else {
+                    navigation.navigate('AdminMenu', SubCat[0])
+                }
+            })
+    }
+
+    const handleFastfood = () => {
+        // setSubCat("Stationery")
+        email = firebase.auth().currentUser.email
+        mydb = firebase.database().ref('/Users/'+email.substr(0,8))
+        mydb.once("value")
+            .then(function(snapshot) {
+                custflag = snapshot.child("Customerflag").val()
+                if (custflag) {
+                    navigation.navigate('CustMenu', SubCat[1])
+                }
+                else {
+                    navigation.navigate('AdminMenu', SubCat[1])
+                }
+            })
+    }
+
+    const handleJuices = () => {
+        // setSubCat("Stationery")
+        email = firebase.auth().currentUser.email
+        mydb = firebase.database().ref('/Users/'+email.substr(0,8))
+        mydb.once("value")
+            .then(function(snapshot) {
+                custflag = snapshot.child("Customerflag").val()
+                if (custflag) {
+                    navigation.navigate('CustMenu', SubCat[2])
+                }
+                else {
+                    navigation.navigate('AdminMenu', SubCat[2])
+                }
+            })
+    }
 
   return(
 
     <ScrollView style={styles.home}>
-        <TouchableOpacity style={styles.button} activeOpacity={0.8}> 
-            <ImageBackground source= {require('../assets/images/Kitchen.jpg')} style={styles.image}>
+        <TouchableOpacity style={styles.button} activeOpacity={0.8} onPress={handleDesifood} > 
+            <ImageBackground source= {require('../assets/images/Desifood.png')} style={styles.image}>
                 <View style={styles.textcontainer}>
                     <Text style={styles.text}>
                         Desi Food
@@ -20,8 +77,8 @@ export default function Kitchen() {
         </TouchableOpacity>
 
 
-        <TouchableOpacity style={styles.button} activeOpacity={0.8}>
-            <ImageBackground source= {require('../assets/images/Store.jpg')} style={styles.image}>
+        <TouchableOpacity style={styles.button} activeOpacity={0.8} onPress={handleFastfood} >
+            <ImageBackground source= {require('../assets/images/Fastfood.png')} style={styles.image}>
                 <View style={styles.textcontainer}>
                     <Text style={styles.text}>
                         Fast Food
@@ -30,8 +87,8 @@ export default function Kitchen() {
             </ImageBackground>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.button,{marginBottom:10}]} activeOpacity={0.8}> 
-            <ImageBackground source= {require('../assets/images/Kitchen.jpg')} style={styles.image}>
+        <TouchableOpacity style={[styles.button,{marginBottom:10}]} activeOpacity={0.8} onPress={handleJuices} > 
+            <ImageBackground source= {require('../assets/images/Juices.png')} style={styles.image}>
                 <View style={styles.textcontainer}>
                     <Text style={styles.text}>
                        Fresh Juices

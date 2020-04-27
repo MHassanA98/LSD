@@ -2,21 +2,18 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, ScrollView, ImageBackground, TextInput, TouchableOpacity, } from "react-native";
 import backg from "../assets/images/backg.png" ;
 import Icon from "react-native-vector-icons/FontAwesome" ;
-// import firebase from "../assets/DatabaseConfig" ;
+import firebase from "../assets/DatabaseConfig" ;
 // import dist from "react-native-firebase" ;
 // import firebase from "react-native-firebase" ;
 // import firebase from "../node_modules/@react-native-firebase";
 // import * as firebase from "../node_modules/@react-native-firebase" ;
-import firebase from "@react-native-firebase/app" ;
+// import firebase from "@react-native-firebase/app" ;
 import auth from "@react-native-firebase/auth" ;
+import database from "@react-native-firebase/database" ;
 
 
 function END(mail) {
   return mail.endsWith('@lums.edu.pk')
-}
-
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 
@@ -66,7 +63,7 @@ export default function Registration({navigation}) {
 
   const handleSignUpPress = () => {
     emaillums = END(email)
-    if (emaillums) {
+    if (emaillums && (email.length==20)) {
       if (password.length >= 8) {
         if (password == repassword) {
           if (phone.length == 11) {
@@ -117,6 +114,15 @@ export default function Registration({navigation}) {
     let meow2 = firebase
       .auth().currentUser.sendEmailVerification()
       .then(()=> {
+        firebase.database().ref('/Users/'+email.substr(0,8)).set({
+          Username: username,
+          Useremail: email,
+          Phonenumber: phone,
+          Customerflag: true,
+          Redemptionpoints: 0,
+          BanStatus: false,
+          // ChangeRate: 10,
+        })
         console.log("Verify Email")
         SignUpPress()
       } )
@@ -133,14 +139,8 @@ export default function Registration({navigation}) {
     //   })
     //   .catch(function(error) {console.log(error)} )
     // let meow3w = await meow3
-
-
     // console.log("really waiting")
-
     // SignUpPress()
-
-
-
     // console.log(firebase.auth().currentUser)
     // console.log(errorMessage)
   }

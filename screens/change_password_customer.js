@@ -1,7 +1,7 @@
 import React from 'react'
 import {Text,View,TextInput,StyleSheet, Button, TouchableOpacity} from 'react-native'
-import Icon from "react-native-vector-icons/FontAwesome" ;
-
+//import Icon from "react-native-vector-icons/FontAwesome" ;
+import Icon from "react-native-vector-icons/Feather" ;
 
 //import CustomButton from '../screens/button' for later use 
 
@@ -52,23 +52,41 @@ class Change_Password extends React.Component{
                     
                     {/*Password Change Form*/}
                     <View style = {styles.body}>
-                        <TextInput style = {styles.textbox}
-                            placeholderTextColor = 'black'
-                            placeholder = 'Current Password'
-                            onChangeText = {this.old_passwordHandler}
+                        <View style = {styles.iconstyle}>
+                            <Icon name = 'key' color = '#d00f16' size = {120} style = {{transform: [{rotateX: '360deg'}], transform: [{rotate : '90deg'}]}} />    
+                        </View>
+                        <View style = {styles.textbox}>
+                            <TextInput style = {{fontSize: 18, marginLeft:15}}
+                                placeholderTextColor = 'black'
+                                placeholder = 'Current Password'
+                                onChangeText = {this.old_passwordHandler}
                             />
-                        <TextInput style = {styles.textbox}
-                            placeholderTextColor = 'black'
-                            placeholder = 'New Password'
-                            onChangeText = {this.new_passwordHandler}
+                        </View>
+                        <View style = {styles.textbox}>
+                            <TextInput style = {{fontSize: 18, marginLeft:15}}
+                                placeholderTextColor = 'black'
+                                placeholder = 'New Password'
+                                onChangeText = {this.new_passwordHandler}
                             />
-                        <TextInput style = {styles.textbox}
-                            placeholderTextColor = 'black'
-                            placeholder = 'Confirm Password'
-                            onChangeText = {this.confirm_passwordHandler}
-                            />       
-                        <View style = {{marginTop:20, width: '50%', justifyContent: "center", marginLeft : 100}}>
-                         <Button style = {{marginTop: 35, width: '50%'}} title = "Confirm" color = "#d00f16" onPress = {this.change_password_buttonhandler}/>   
+                        </View>
+                        <View style = {styles.textbox}>
+                            <TextInput style = {{fontSize: 18, marginLeft:15}}
+                                placeholderTextColor = 'black'
+                                placeholder = 'Confirm Password'
+                                onChangeText = {this.confirm_passwordHandler}
+                            />
+                        </View>
+                        <View
+                            style={{
+                            marginTop: 20,
+                            width: '50%',
+                            justifyContent: 'center'
+                            }}>
+                            <TouchableOpacity
+                            onPress={() => alert('Confirmed!')}
+                            style={styles.Confirmbutton}>
+                            <Text style={styles.bigbuttontext}>Confirm</Text>
+                            </TouchableOpacity>
                         </View>
                         </View>
                 </View>
@@ -93,20 +111,55 @@ const styles = StyleSheet.create({
         width:'100%', 
         height: '100%',
         backgroundColor: '#e8e8e8', 
-        marginTop:50
+        marginTop:50,
+        alignItems: 'center'
     },
     textbox:{
-        marginTop:40,
-        marginLeft:35,
+        marginTop:30,
         width:'80%',
         justifyContent:'center',
-        alignItems: 'center',
         borderBottomWidth:0, 
         backgroundColor:'white',
-        fontSize: 15,
-        fontFamily: 'Roboto-Bold',
+        fontSize: 18
     },
+    iconstyle: {
+        marginTop: 30,
+        borderRadius: 180,
+        height: 120,
+        width: 120,
+        backgroundColor: '#e8e8e8',
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      Confirmbutton: {
+        padding: '5%',
+        // marginVertical: 10,
+        paddingHorizontal: 15,
+        backgroundColor: '#d00f16',
+        borderRadius: 20,
+        width: 200,
+        height: 40,
+        shadowColor: '#000',
+        shadowOffset: {width: 2, height: 4},
+        shadowOpacity: 0.9,
+        shadowRadius: 6,
+        elevation: 2,
+        // minHeight: '6%',
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+        elevation: 2,
+      },
+      bigbuttontext: {
+        fontWeight: 'bold',
+        color: 'white',
+        fontFamily: 'Roboto-Bold',
+        fontSize: 20,
+        textAlign: 'center',
+        paddingTop: '2%',
     
+        // opacity: 1,
+      }
 })
 
 export default Change_Password

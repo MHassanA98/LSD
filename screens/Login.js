@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, ImageBackground, Image, TextInput, Button, TouchableOpacity, } from "react-native";
 import backg from "../assets/images/backg.png" ;
 import lsdlogo from "../assets/images/lsdlogo.png" ;
-// import firebase from "../assets/DatabaseConfig" ;
+import firebase from "../assets/DatabaseConfig" ;
 // const image = "./assets/lsdlogo.png" ;
 // import { Ionicons } from '@expo/vector-icons';
 import Icon from "react-native-vector-icons/FontAwesome" ;
-import firebase from "@react-native-firebase/app" ;
+// import firebase from "@react-native-firebase/app" ;
 import auth from "@react-native-firebase/auth" ;
-import { NavigationActions } from "react-navigation";
+import database from "@react-native-firebase/database" ;
 
 
 function END(mail) {
@@ -53,24 +53,66 @@ export default function Login({navigation}) {
   }
 
   const handleLoginPress = () => {
-    emaillums = END(email)
-    if (emaillums) {
-      // alert("Please enter your LUMS email.")
-      if (password.length < 8) {
-        alert("Please enter more than 8 characters for password.")
-      }
-      else {
-        handleLogin()
-        console.log("Login")
-      }     
-    }
-    
-    else {
-      alert("Please enter your LUMS email.")
-      // console.log("email ghalat")
-      // firebase.auth().currentUser.reload()
-      // console.log(firebase.auth().currentUser)
-    }
+    // myuser=""
+    // banstat = true
+    mydb = firebase.database().ref('/Users/'+email.substr(0,8))
+    mydb.once("value")
+      .then(function(snapshot) {
+        // myuser = snapshot.child("BanStatus").val()
+        banstat = snapshot.child("BanStatus").val()
+        // console.log(banstatcheck)
+        // this.banstat = banstatcheck
+        console.log(banstat)
+
+        if (!banstat) {
+          emaillums = END(email)
+          if (emaillums) {
+            // alert("Please enter your LUMS email.")
+            if (password.length < 8) {
+              alert("Please enter more than 8 characters for password.")
+            }
+            else {
+              handleLogin()
+              console.log("Login")
+            }     
+          }
+          else {
+            alert("Please enter your LUMS email.")
+            // console.log("email ghalat")
+            // firebase.auth().currentUser.reload()
+            // console.log(firebase.auth().currentUser)
+          }
+        }
+        else {
+          alert("You are banned for misconduct.")
+          
+        }
+
+      });
+    // console.log(myuser)
+    // if (!banstat) {
+    //   emaillums = END(email)
+    //   if (emaillums) {
+    //     // alert("Please enter your LUMS email.")
+    //     if (password.length < 8) {
+    //       alert("Please enter more than 8 characters for password.")
+    //     }
+    //     else {
+    //       handleLogin()
+    //       console.log("Login")
+    //     }     
+    //   }
+    //   else {
+    //     alert("Please enter your LUMS email.")
+    //     // console.log("email ghalat")
+    //     // firebase.auth().currentUser.reload()
+    //     // console.log(firebase.auth().currentUser)
+    //   }
+    // }
+    // else {
+    //   alert("You are banned for misconduct.")
+      
+    // }
 
   };
 
