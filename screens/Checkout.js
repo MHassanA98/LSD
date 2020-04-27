@@ -121,7 +121,7 @@ class Checkout extends React.Component {
 
           <Text
             style={{
-              fontStyle: 'Roboto',
+              fontFamily: 'Roboto',
               fontSize: 15,
               marginLeft: 50,
               marginTop: 30,
@@ -130,11 +130,11 @@ class Checkout extends React.Component {
           </Text>
 
           <View style={styles.textbox1}>
-            <View style={{flexDirection: 'row'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Icon
                 name="money"
                 color="#d00f16"
-                size={32}
+                size={24}
                 style={{paddingHorizontal: 5}}
               />
               <Text style={{fontSize: 18, marginLeft: 20, padding: 5}}>

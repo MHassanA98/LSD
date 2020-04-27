@@ -59,23 +59,23 @@ class Customer_Profile extends React.Component {
         {/*Password Change Form*/}
         <View style={styles.body}>
           <View style={styles.textbox}>
-            <Icon name="user" color="#d00f16" size={32} />
-            <Text style={{fontSize: 18, marginLeft: 43}}>Customer Name</Text>
+            <Icon name="user" color="#d00f16" size={24} />
+            <Text style={{fontSize: 18, marginLeft: 33}}>Customer Name</Text>
           </View>
 
           <View style={styles.textbox}>
-            <Icon name="envelope-o" color="#d00f16" size={32} />
-            <Text style={{fontSize: 18, marginLeft: 35}}>Email</Text>
+            <Icon name="envelope-o" color="#d00f16" size={24} />
+            <Text style={{fontSize: 18, marginLeft: 25}}>Email</Text>
           </View>
 
           <View style={styles.textbox}>
-            <Icon name="phone" color="#d00f16" size={32} />
-            <Text style={{fontSize: 18, marginLeft: 40}}>Phone Number</Text>
+            <Icon name="phone" color="#d00f16" size={24} />
+            <Text style={{fontSize: 18, marginLeft: 30}}>Phone Number</Text>
           </View>
 
           <View style={styles.textbox}>
-            <Icon name="credit-card" color="#d00f16" size={32} />
-            <Text style={{fontSize: 18, marginLeft: 30}}>
+            <Icon name="credit-card" color="#d00f16" size={24} />
+            <Text style={{fontSize: 18, marginLeft: 20}}>
               Redemption Points
             </Text>
           </View>
@@ -124,6 +124,7 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#d00f16',
     marginTop: 30,
+    marginRight: 10,
     // alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'center',
@@ -131,8 +132,9 @@ const styles = StyleSheet.create({
   body: {
     width: '100%',
     height: '100%',
+    borderRadius: 20,
     backgroundColor: '#e8e8e8',
-    marginTop: 50,
+    marginTop: 40,
   },
   textbox: {
     flexDirection: 'row',
@@ -141,7 +143,7 @@ const styles = StyleSheet.create({
     marginLeft: '10%',
     width: '80%',
     height: '8%',
-    borderRadius: 2,
+    borderRadius: 5,
     alignItems: 'center',
     paddingHorizontal: 10,
     // justifyContent: 'center',
