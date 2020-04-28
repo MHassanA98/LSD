@@ -120,7 +120,7 @@ export default function AddItem({navigation}) {
   const SubCat={
     "Choose a category":["Choose a subcategory"],
     "Kitchen":["Choose a subcategory","Desi", "Fast Food", "Fresh Juice"],
-    "Store":["Choose a subcategory","Stationary", "Beverages", "Grocery", "Grooming", "Electronics"]
+    "Store":["Choose a subcategory","Stationery", "Beverages", "Grocery", "Grooming", "Electronics"]
   }
 
   const Cat=[
