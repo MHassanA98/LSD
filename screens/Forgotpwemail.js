@@ -77,7 +77,7 @@ export default function Forgotpwemail({navigation}) {
 
         <View style={styles.maincontainer}>
           <View style={styles.inputbox}>
-            <Icon style={styles.inputicon} name="envelope-o" size={30} color="#d00f16" />
+            <Icon style={styles.inputicon} name="envelope-o" size={24} color="#d00f16" />
             <TextInput placeholder="Email Address" style={styles.inputtext} onChangeText={emailInputHandler} value={email} ></TextInput>
           </View>
         </View>
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
 
   },
   inputicon: {
-    paddingTop: '2%',
+    paddingTop: '3%',
     paddingLeft: '2%',
     
   },

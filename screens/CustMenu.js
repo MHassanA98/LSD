@@ -23,10 +23,6 @@ import database from "@react-native-firebase/database" ;
 
 
 export default function CustMenu({navigation}) {  
-
-  const handleAddPress = () => {
-    navigation.navigate('AddItem')
-  }
   
   // console.log("\n Customer: ", navigation.getParam('Sub'), navigation.getParam('Cat'))
 
@@ -50,7 +46,7 @@ export default function CustMenu({navigation}) {
     .then(function(snapshot) {
       // product = []
       snapshot.forEach(function(childsnapshot) {
-        let newprod = {name: childsnapshot.key, price: childsnapshot.child("Price").val(), quantity: childsnapshot.child("Qty").val()}
+        let newprod = {name: childsnapshot.key, price: childsnapshot.child("Price").val(), quantity: 0}
         // console.log(newprod)
         product.push(newprod)
       })
@@ -117,7 +113,7 @@ export default function CustMenu({navigation}) {
           )}
         />
       </View>
-      <View
+      {/* <View
         style={{
           flexDirection: 'row',
           justifyContent: 'flex-end',
@@ -127,7 +123,7 @@ export default function CustMenu({navigation}) {
         <TouchableOpacity style={styles.plusbutton} onPress={handleAddPress} >
           <Icon name="plus" color="white"/>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </View>
   );
 }
