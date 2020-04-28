@@ -1,5 +1,6 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
+import Icon from "react-native-vector-icons/MaterialIcons"
 import Login from '../screens/Login';
 import Registration from '../screens/Registration';
 import Forgotpwemail from '../screens/Forgotpwemail';
@@ -16,7 +17,7 @@ import change_password_customer from '../screens/change_password_customer';
 // import Forgotpw from '../screens/Forgotpw';
 // import Change_Password from '../screens/ChangePassword';
 import React from 'react';
-import { Button } from 'react-native';
+import { Button,TouchableOpacity } from 'react-native';
 import Checkout from '../screens/Checkout'
 // import firebase from '@react-native-firebase/app';
 // import ReviewDetails from '../screens/reviewDetails';
@@ -57,10 +58,24 @@ const screens = {
 
   Home: {
     screen: Home,
-    navigationOptions:{
-      title: 'LSD',
-      headerLeft:() => null,
-      // gestureEnabled:true
+    navigationOptions:({navigation})=>{
+
+      return{
+        title: 'Home',
+        headerTintColor:'white',
+        headerLeft:() => (
+          <TouchableOpacity
+            onPress={() => navigation.toggleDrawer()}
+            // title="Info"
+            // color="#e8e8e8"
+            style={{paddingLeft:16}}
+          >
+            <Icon name='menu' size={28} color={'white'}/>
+
+
+          </TouchableOpacity>
+        ),
+      }
     }
   },
 
@@ -82,11 +97,17 @@ const screens = {
   // },
 
   ShoppingCart:{
-    screen:ShoppingCart
+    screen:ShoppingCart,
+    navigationOptions:{
+      headerRight:()=>null
+    }
   },
 
   Checkout:{
-    screen:Checkout
+    screen:Checkout,
+    navigationOptions:{
+      headerRight:()=>null
+    }
   }
 
 
@@ -105,25 +126,71 @@ const screens = {
 
 // home stack navigator screens
 const HomeStack = createStackNavigator(screens, {
-  defaultNavigationOptions: {
-    headerTintColor: '#444',
-    headerStyle: { 
-    backgroundColor: '#d00f16', 
-    height: 60,
-    shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.9,
-    shadowRadius: 1.50,
-    elevation: 3,
-  },
+  defaultNavigationOptions: ({navigation})=>{
+
+    return {
+
+      headerTintColor: '#ffffff',
+      headerStyle: { 
+        backgroundColor: '#d00f16', 
+        height: 60,
+        shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+          },
+        shadowOpacity: 0.9,
+        shadowRadius: 1.50,
+        elevation: 3,
+      },
+
+      headerRight:() => (
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ShoppingCart')}
+          // title="Info"
+          // color="#e8e8e8"
+          style={{paddingRight:16}}
+        >
+          <Icon name='shopping-cart' size={28} color={'white'}/>
+
+
+        </TouchableOpacity>
+      ),
+
+    }
+  }
+  //   headerTintColor: '#444',
+  //   headerStyle: { 
+  //     backgroundColor: '#d00f16', 
+  //     height: 60,
+  //     shadowColor: "black",
+  //     shadowOffset: {
+  //         width: 0,
+  //         height: 2,
+  //       },
+  //     shadowOpacity: 0.9,
+  //     shadowRadius: 1.50,
+  //     elevation: 3,
+    
+  //   headerRight:() => (
+  //     <TouchableOpacity
+  //       onPress={() => navigation.toggleDrawer()}
+  //       // title="Info"
+  //       // color="#e8e8e8"
+  //       style={{paddingLeft:16}}
+  //     >
+  //       <Icon name='shopping_cart' size={28} color={'white'}/>
+
+
+  //     </TouchableOpacity>
+  //   ),
+
+  // },
 
   
     
   }
-});
+);
 
 // export default createAppContainer(HomeStack);
 export default HomeStack

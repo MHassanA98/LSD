@@ -27,6 +27,7 @@ import CustomerStack from './CustomerStack';
 import HomeStack from './HomeStack';
 import CustomerOrderStack from './CustomerOrderStack';
 import ProfileStack from './ProfileStack';
+import Shopping from '../screens/Shopping_cart';
 
 // import firebase from '@react-native-firebase/app';
 // import ReviewDetails from '../screens/reviewDetails';
@@ -44,6 +45,10 @@ const Stacks = {
     Profile:{
         screen:ProfileStack
     },
+
+    // Shopping_cart:{
+    //     screen:Shopping
+    // }
     // RedemptionStack:{
     //     screen:RedemptionStack
     // },

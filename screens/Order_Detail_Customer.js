@@ -48,10 +48,10 @@ class Order_Detail_Customer extends React.Component{
         return(
                 <View style= {styles.container}>
                     
-                    {/*Heading Container*/}
+                    {/* Heading Container
                     <View style= {styles.heading}>
                         <Text style = {{marginLeft: 50,fontSize:35, color: 'white'}}> OrderID {this.state.Order_ID} </Text>
-                    </View>
+                    </View> */}
                     
                     {/*Main Body*/}
                     <View style = {styles.body}> 

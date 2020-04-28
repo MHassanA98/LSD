@@ -18,7 +18,7 @@ import {
 export default function RedemptionPoints() {
   return (
     <View style={styles.Screen}>
-      <View style={styles.TopBar}>
+      {/* <View style={styles.TopBar}>
         <TouchableOpacity style={styles.TopBarBack}>
           <Icon name="arrow-left" size={32} color="white" />
         </TouchableOpacity>
@@ -29,7 +29,7 @@ export default function RedemptionPoints() {
             Redemption Points
           </Text>
         </View>
-      </View>
+      </View> */}
 
       <View style={styles.RestScreen}>
         <View style={styles.TextInputbox}>
@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
   Screen: {
     // flexDirection: "column",
     height: '100%',
+    backgroundColor:'#e8e8e8'
     // flex: '20%',
   },
   TopBar: {
@@ -102,7 +103,7 @@ const styles = StyleSheet.create({
     // flex: 9,
     // width: 100,
     padding: 60,
-    backgroundColor: 'lightgrey',
+    backgroundColor: '#e8e8e8',
     height: '90%',
     // justifyContent: 'center',
     alignItems: 'center',

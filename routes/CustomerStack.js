@@ -1,5 +1,6 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import Login from '../screens/Login';
 import Registration from '../screens/Registration';
 import Forgotpwemail from '../screens/Forgotpwemail';
@@ -16,7 +17,7 @@ import Customer from '../screens/Customers';
 // import Forgotpw from '../screens/Forgotpw';
 // import Change_Password from '../screens/ChangePassword';
 import React from 'react';
-import { Button } from 'react-native';
+import { Button,TouchableOpacity } from 'react-native';
 // import firebase from '@react-native-firebase/app';
 // import ReviewDetails from '../screens/reviewDetails';
 
@@ -32,7 +33,26 @@ const screens = {
   // },
 
   Customer:{
-      screen:Customer
+      screen:Customer,
+      navigationOptions:({navigation})=>{
+
+        return{
+          title: 'Home',
+          headerTintColor:'white',
+          headerLeft:() => (
+            <TouchableOpacity
+              onPress={() => navigation.toggleDrawer()}
+              // title="Info"
+              // color="#e8e8e8"
+              style={{paddingLeft:16}}
+            >
+              <Icon name='menu' size={28} color={'white'}/>
+  
+  
+            </TouchableOpacity>
+          ),
+        }
+      }
   }
 
 //   Login: {

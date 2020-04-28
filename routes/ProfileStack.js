@@ -1,5 +1,6 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
+import Icon from "react-native-vector-icons/MaterialIcons"
 import Login from '../screens/Login';
 import Registration from '../screens/Registration';
 import Forgotpwemail from '../screens/Forgotpwemail';
@@ -16,7 +17,7 @@ import ChangePassword from '../screens/change_password_customer';
 // import Forgotpw from '../screens/Forgotpw';
 // import Change_Password from '../screens/ChangePassword';
 import React from 'react';
-import { Button } from 'react-native';
+import { Button, TouchableOpacity } from 'react-native';
 // import firebase from '@react-native-firebase/app';
 // import ReviewDetails from '../screens/reviewDetails';
 
@@ -32,7 +33,27 @@ const screens = {
   // },
 
   CustomerProfile:{
-      screen: CustomerProfile
+      screen: CustomerProfile,
+      navigationOptions:({navigation})=>{
+
+        return{
+          title: 'My Profile',
+          headerTransparent:true,
+          headerTintColor:'white',
+          headerLeft:() => (
+            <TouchableOpacity
+              onPress={() => navigation.toggleDrawer()}
+              // title="Info"
+              // color="#e8e8e8"
+              style={{paddingLeft:16}}
+            >
+              <Icon name='menu' size={28} color={'white'}/>
+  
+  
+            </TouchableOpacity>
+          ),
+        }
+      }
   },
 
   ChangePassword:{
@@ -104,7 +125,7 @@ const screens = {
 // home stack navigator screens
 const ProfileStack = createStackNavigator(screens, {
   defaultNavigationOptions: {
-    headerTintColor: '#444',
+    headerTintColor: '#fff',
     headerStyle: { 
     backgroundColor: '#d00f16', 
     height: 60,

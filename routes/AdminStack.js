@@ -18,6 +18,8 @@ import React from 'react';
 import { Button } from 'react-native';
 import AddItem from '../screens/AddItem'
 import UpdateItem from '../screens/UpdateItem'
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 // import firebase from '@react-native-firebase/app';
 // import ReviewDetails from '../screens/reviewDetails';
 
@@ -57,9 +59,26 @@ const screens = {
 
   Home: {
     screen: Home,
-    navigationOptions:{
-      title: 'LSD',
-      headerLeft:() => null,
+    navigationOptions:({navigation})=>{
+
+      return{
+        title: 'LSD',
+        headerTintColor:'white',
+        headerLeft:() => (
+          <TouchableOpacity
+            onPress={() => navigation.toggleDrawer()}
+            // title="Info"
+            // color="#e8e8e8"
+            style={{paddingLeft:16}}
+          >
+            <Icon name='menu' size={28} color={'white'}/>
+
+
+          </TouchableOpacity>
+        ),
+      }
+    }
+      
       // gestureEnabled:true
       // headerLeft: () => (
       //   <Button
@@ -68,9 +87,9 @@ const screens = {
       //     color="#e8e8e8"
       //   />)
       
-      }
+      },
       
-    },
+    // },
     
 
   Kitchen:{
@@ -87,15 +106,18 @@ const screens = {
 //   },
 
   AdminMenu:{
-    screen:AdminMenu
+    screen:AdminMenu,
+    HeaderTitle:"Items"
   },
 
   AddItem:{
-      screen: AddItem
+      screen: AddItem,
+      HeaderTitle:"Add an item"
   },
 
   UpdateItem:{
-      screen:UpdateItem
+      screen:UpdateItem,
+      HeaderTitle:"Item Name"
   }
 
 
@@ -116,7 +138,7 @@ const screens = {
 // home stack navigator screens
 const AdminStack = createStackNavigator(screens, {
   defaultNavigationOptions: {
-    headerTintColor: '#444',
+    headerTintColor: '#ffffff',
     headerStyle: { 
     backgroundColor: '#d00f16', 
     height: 60,
