@@ -25,7 +25,7 @@ import Categoryy from './PickerList.js';
 import firebase from "../assets/DatabaseConfig"
 import database from "@react-native-firebase/database"
 
-export default function AddItem() {
+export default function AddItem({navigation}) {
 
   const pressHandler = () =>{
     if (Category==="Choose a category"){

@@ -16,26 +16,47 @@ import {FlatList} from 'react-native-gesture-handler';
 //   TouchableHighlight,
 //   BorderlessButton,
 // } from "react-native-gesture-handler"
+import firebase from "../assets/DatabaseConfig" ;
+import auth from "@react-native-firebase/auth" ;
+import database from "@react-native-firebase/database" ;
 
 
 export default function AdminMenu({navigation}) {
+
+  const handleAddPress = () => {
+    navigation.navigate('AddItem')
+  }
   
-  console.log("Admin: ", navigation.getParam('Sub'))
+  // console.log("Admin: ", navigation.getParam('Sub'), navigation.getParam('Cat'))
 
   const [product, setProduct] = useState([
-    {name: 'pencil', price: '40'},
-    {name: 'ruler', price: '50'},
-    {name: 'sharpener', price: '5'},
-    {name: 'eraser', price: '4'},
-    {name: 'pen', price: '54'},
-    {name: 'marker', price: '22'},
-    {name: 'tape', price: '44'},
-    {name: 'ribbon', price: '22'},
-    {name: 'pillow', price: '21'},
-    {name: 'toy', price: '10'},
-    {name: 'car', price: '11'},
-    {name: 'box', price: '12'},
+    // {name: 'pencil', price: 10, quantity: 2},
+    // {name: 'ruler', price: '50'},
+    // {name: 'sharpener', price: '5'},
+    // {name: 'eraser', price: '4'},
+    // {name: 'pen', price: '54'},
+    // {name: 'marker', price: '22'},
+    // {name: 'tape', price: '44'},
+    // {name: 'ribbon', price: '22'},
+    // {name: 'pillow', price: '21'},
+    // {name: 'toy', price: '10'},
+    // {name: 'car', price: '11'},
+    // {name: 'box', price: '12'},
   ]);
+
+  mydb = firebase.database().ref('/Inventory/'+navigation.getParam('Cat')+'/'+navigation.getParam('Sub'))
+  mydb.once("value")
+    .then(function(snapshot) {
+      // product = []
+      snapshot.forEach(function(childsnapshot) {
+        let newprod = {name: childsnapshot.key, price: childsnapshot.child("Price").val(), quantity: childsnapshot.child("Qty").val()}
+        // console.log(newprod)
+        product.push(newprod)
+      })
+    })
+
+
+
   return (
     <View style={styles.Screen}>
       <View style={{width: '100%', height: 460, marginVertical: 12}}>
@@ -78,7 +99,7 @@ export default function AdminMenu({navigation}) {
           paddingTop: 15,
           paddingLeft: 12,
         }}>
-        <TouchableOpacity style={styles.plusbutton}>
+        <TouchableOpacity style={styles.plusbutton} onPress={handleAddPress} >
           <Icon name="plus" color="white" />
         </TouchableOpacity>
       </View>

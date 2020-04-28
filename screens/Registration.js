@@ -156,24 +156,24 @@ export default function Registration({navigation}) {
               <Text style={styles.headingtext}>Get on board!</Text>
           </View>
           <View style={styles.inputbox}>
-            <Icon style={styles.inputicon} name="font" size={30} color="gray" />
+            <Icon style={styles.inputicon} name="envelope-o" size={24} color="#d00f16" />
             <TextInput placeholder="Email Address" style={styles.inputtext} onChangeText={emailInputHandler} value={email} ></TextInput>
           </View>
           <View  style={styles.inputbox}>
-            <Icon style={styles.inputicon} name="rocket" size={30} color="gray" />
+            <Icon style={styles.inputicon2} name="lock" size={24} color="#d00f16" />
             <TextInput secureTextEntry placeholder="Password" style={styles.inputtext} onChangeText={passwordInputHandler} value={password} ></TextInput>
           </View>
           <View  style={styles.inputbox}>
-            <Icon style={styles.inputicon} name="rocket" size={30} color="gray" />
+            <Icon style={styles.inputicon2} name="unlock-alt" size={24} color="#d00f16" />
             <TextInput placeholder="Re-enter Password" style={styles.inputtext} onChangeText={repasswordInputHandler} value={repassword} ></TextInput>
           </View>
           <View  style={styles.inputbox}>
-            <Icon style={styles.inputicon} name="rocket" size={30} color="gray" />
+            <Icon style={styles.inputicon} name="user-o" size={24} color="#d00f16" />
             <TextInput placeholder="Username" style={styles.inputtext} onChangeText={usernameInputHandler} value={username} ></TextInput>
           </View>
           <View  style={styles.inputbox}>
-            <Icon style={styles.inputicon} name="rocket" size={30} color="gray" />
-            <TextInput placeholder="Phone Number" style={styles.inputtext} onChangeText={phoneInputHandler} value={phone} ></TextInput>
+            <Icon style={styles.inputicon} name="phone" size={24} color="#d00f16" />
+            <TextInput placeholder="Phone Number" style={styles.inputtext} keyboardType="numeric" onChangeText={phoneInputHandler} value={phone} ></TextInput>
           </View>
         </View>
         <TouchableOpacity style={styles.bigbutton} onPress={handleSignUpPress}>
@@ -233,12 +233,19 @@ const styles = StyleSheet.create({
 
   },
   inputicon: {
-    padding: 2,
+    paddingTop: '3%',
+    paddingLeft: '2%',
     // color: "grey",
     // paddingTop: '6%',
     // flexDirection: "row",
     // flex: 1,
 
+  },
+  inputicon2: {
+    paddingTop: '3%',
+    paddingLeft: '3%',
+    paddingRight: '1%',
+    
   },
   inputtext: {
     marginLeft: 5,

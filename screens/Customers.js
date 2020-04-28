@@ -7,6 +7,7 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  TouchableHighlight,
   // Button,
   // Picker,
 } from 'react-native';
@@ -18,6 +19,13 @@ import {FlatList} from 'react-native-gesture-handler';
 // } from "react-native-gesture-handler"
 
 export default function Customers() {
+  const [ban, setban] = useState(false);
+
+  function isban(ban) {
+    setban(!ban);
+  }
+  // function changeclr(ban){
+  // }
   const [cust, setcust] = useState([
     {name: 'jawadg01', email: 'abcde@ab.com1'},
     {name: 'jawadg02', email: 'abcde@ab.com2'},
@@ -32,6 +40,7 @@ export default function Customers() {
     {name: 'jawadg011', email: 'abcde@ab.com11'},
     {name: 'jawadg012', email: 'abcde@ab.com12'},
   ]);
+
   return (
     <View style={styles.Screen}>
       <View style={{width: '100%'}}>
@@ -45,9 +54,11 @@ export default function Customers() {
                 <Text style={styles.boxfont}>{item.email}</Text>
               </View>
 
-              <View style={{justifyContent: 'center'}}>
-                <Icon name="ban" size={24} color="black" />
-              </View>
+              <TouchableOpacity
+                style={{justifyContent: 'center'}}
+                onPress={() => isban(ban)}>
+                <Icon name="ban" size={24} color={ban ? 'black' : 'red'} />
+              </TouchableOpacity>
             </TouchableOpacity>
           )}
         />

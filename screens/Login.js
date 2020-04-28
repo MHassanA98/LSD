@@ -9,6 +9,7 @@ import Icon from "react-native-vector-icons/FontAwesome" ;
 // import firebase from "@react-native-firebase/app" ;
 import auth from "@react-native-firebase/auth" ;
 import database from "@react-native-firebase/database" ;
+import { NavigationEvents } from 'react-navigation';
 
 
 function END(mail) {
@@ -22,7 +23,20 @@ export default function Login({navigation}) {
   // firebase.auth().currentUser.reload()
 
   const LoginPress = () =>{
-    navigation.navigate('AdminDrawer')
+
+    let emailcheck = firebase.auth().currentUser.email
+      mydb = firebase.database().ref('/Users/'+emailcheck.substr(0,8))
+      mydb.once("value")
+        .then(function(snapshot) {
+          let custflag = snapshot.child("Customerflag").val()
+          if (custflag) {
+            navigation.navigate('AdminDrawer')
+          }
+          else {
+            navigation.navigate('CustomerDrawer')
+          }
+        })
+    // navigation.navigate('Home')
   }
 
   const [email, setEmail] = useState("");
@@ -143,12 +157,19 @@ export default function Login({navigation}) {
     let meow1w = await meow1
 
     // LoginPress()
-
   }
+
+  // function loginexists() {
+  //   if (firebase.auth().currentUser.email != null) {
+  //     LoginPress()
+
+  //   }
+  // }
 
 
   return (
     <View style={styles.container}>
+      {/* <NavigationEvents onDidFocus={() => {loginexists()}} /> */}
       <ImageBackground source={backg} style={styles.bgimage}>
         <View style={styles.maincontainer}>
           <Image
@@ -156,11 +177,11 @@ export default function Login({navigation}) {
             source={lsdlogo}
           />
           <View style={styles.inputbox}>
-            <Icon style={styles.inputicon} name="font" size={30} color="gray" />
+            <Icon style={styles.inputicon} name="envelope-o" size={24} color="#d00f16" />
             <TextInput placeholder="Email Address" style={styles.inputtext} onChangeText={emailInputHandler} value={email} ></TextInput>
           </View>
           <View  style={styles.inputbox}>
-            <Icon style={styles.inputicon} name="font" size={30} color="gray" />
+            <Icon style={styles.inputicon2} name="lock" size={24} color="#d00f16" />
             <TextInput secureTextEntry placeholder="Password" style={styles.inputtext} onChangeText={passwordInputHandler} value={password} ></TextInput>
           </View>
         </View>
@@ -217,7 +238,14 @@ const styles = StyleSheet.create({
 
   },
   inputicon: {
-    padding: 2,
+    paddingTop: '3%',
+    paddingLeft: '2%',
+    
+  },
+  inputicon2: {
+    paddingTop: '3%',
+    paddingLeft: '3%',
+    paddingRight: '1%',
     
   },
   inputtext: {
