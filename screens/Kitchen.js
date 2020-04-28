@@ -11,8 +11,8 @@ export default function Kitchen({navigation}) {
 
     const [SubCat, setSubCat] = useState([ 
         {Sub: 'Desi', Cat: 'Kitchen'}, 
-        {Sub: 'Fastfood', Cat: 'Kitchen'}, 
-        {Sub: 'Juices', Cat: 'Kitchen'}, 
+        {Sub: 'Fast Food', Cat: 'Kitchen'}, 
+        {Sub: 'Fresh Juice', Cat: 'Kitchen'}, 
     ]);
 
     const handleDesifood = () => {

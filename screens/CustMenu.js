@@ -24,7 +24,7 @@ import database from "@react-native-firebase/database" ;
 
 export default function CustMenu({navigation}) {  
   
-  // console.log("\n Customer: ", navigation.getParam('Sub'), navigation.getParam('Cat'))
+  console.log(" Customer: ", navigation.getParam('Sub'), navigation.getParam('Cat'))
 
   const [product, setProduct] = useState([
     // {name: 'meow', price: 0, quantity: 0},
