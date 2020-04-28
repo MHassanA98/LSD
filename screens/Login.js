@@ -30,10 +30,10 @@ export default function Login({navigation}) {
         .then(function(snapshot) {
           let custflag = snapshot.child("Customerflag").val()
           if (custflag) {
-            navigation.navigate('AdminDrawer')
+            navigation.navigate('CustomerDrawer')
           }
           else {
-            navigation.navigate('CustomerDrawer')
+            navigation.navigate('AdminDrawer')
           }
         })
     // navigation.navigate('Home')
@@ -73,7 +73,7 @@ export default function Login({navigation}) {
     mydb.once("value")
       .then(function(snapshot) {
         // myuser = snapshot.child("BanStatus").val()
-        banstat = snapshot.child("BanStatus").val()
+        let banstat = snapshot.child("BanStatus").val()
         // console.log(banstatcheck)
         // this.banstat = banstatcheck
         console.log(banstat)
