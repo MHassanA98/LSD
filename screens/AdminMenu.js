@@ -32,7 +32,7 @@ export default function AdminMenu({navigation}) {
   
   // console.log("Admin: ", navigation.getParam('Sub'), navigation.getParam('Cat'))
 
-  const [product, setProduct] = useState([
+  const [product, setProduct] = useState([ ]);
     // {name: 'pencil', price: 10, quantity: 2},
     // {name: 'ruler', price: '50'},
     // {name: 'sharpener', price: '5'},
@@ -45,24 +45,26 @@ export default function AdminMenu({navigation}) {
     // {name: 'toy', price: '10'},
     // {name: 'car', price: '11'},
     // {name: 'box', price: '12'},
-  ]);
+  // ]);
 
-  mydb = firebase.database().ref('/Inventory/'+navigation.getParam('Cat')+'/'+navigation.getParam('Sub'))
-  mydb.once("value")
-    .then(function(snapshot) {
-      // product = []
-      snapshot.forEach(function(childsnapshot) {
-        let newprod = {name: childsnapshot.key, price: childsnapshot.child("Price").val(), quantity: childsnapshot.child("Qty").val()}
-        // console.log(newprod)
-        product.push(newprod)
+  function onscreenload() {
+    mydb = firebase.database().ref('/Inventory/'+navigation.getParam('Cat')+'/'+navigation.getParam('Sub'))
+    mydb.once("value")
+      .then(function(snapshot) {
+        // product = []
+        let prodarr = []
+        snapshot.forEach(function(childsnapshot) {
+          let newprod = {name: childsnapshot.key, price: childsnapshot.child("Price").val(), quantity: childsnapshot.child("Qty").val()}
+          // console.log(newprod)
+          prodarr.push(newprod)
+        })
+        setProduct(prodarr)
       })
-    })
-
-
+  }
 
   return (
     <View style={styles.Screen}>
-    {/* <NavigationEvents onDidFocus={() => {onscreenload()}} /> */}
+    <NavigationEvents onDidFocus={() => {onscreenload()}} />
       <View style={{width: '100%', height: 460, marginVertical: 12}}>
         <FlatList
           data={product}
