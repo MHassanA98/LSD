@@ -11,6 +11,7 @@ import {
   // Picker,
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import { NavigationEvents } from 'react-navigation';
 // import DropDownItem from "react-native-drop-down-item";
 // import {
 //   TouchableHighlight,
@@ -59,6 +60,7 @@ export default function AdminMenu({navigation}) {
 
   return (
     <View style={styles.Screen}>
+    {/* <NavigationEvents onDidFocus={() => {onscreenload()}} /> */}
       <View style={{width: '100%', height: 460, marginVertical: 12}}>
         <FlatList
           data={product}

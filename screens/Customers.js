@@ -9,6 +9,7 @@ import {
   // Picker,
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import { NavigationEvents } from 'react-navigation';
 // import DropDownItem from "react-native-drop-down-item";
 // import {
 //   TouchableHighlight,
@@ -19,18 +20,18 @@ import auth from "@react-native-firebase/auth" ;
 import database from "@react-native-firebase/database" ;
 
 
-function wait(timeout) {
-  return new Promise(resolve => {
-    setTimeout(resolve, timeout);
-  });
-}
+// function wait(timeout) {
+//   return new Promise(resolve => {
+//     setTimeout(resolve, timeout);
+//   });
+// }
 
 
 export default function Customers({navigation}) {
   
 
   const [cust, setcust] = useState([ //[
-    {name: 'jawadg01', email: 'abcde@ab.com1', banstat: 0},
+    {name: 'example', email: 'example@lums.edu.pk', banstat: true},
     // {name: 'jawadg02', email: 'abcde@ab.com2', banstat: 0},
   ]);
 
@@ -39,25 +40,26 @@ export default function Customers({navigation}) {
   // }
   // setcust([])
 
-  console.log("db access")
-  mydb = firebase.database().ref('/Users')
-  mydb.once("value")
-    .then(function(snapshot) {
-      // product = []
-      snapshot.forEach(function(childsnapshot) {
-        let customer = {name: childsnapshot.child("Username").val(), email: childsnapshot.child("Useremail").val(), banstat: childsnapshot.child("BanStatus").val()}
-        // console.log(childsnapshot.child("BanStatus"))
-        cust.push(customer)
-        console.log(customer)
+  function onscreenload() {
+    console.log("db access")
+    mydb = firebase.database().ref('/Users')
+    mydb.once("value")
+      .then(function(snapshot) {
+        // product = []
+        snapshot.forEach(function(childsnapshot) {
+          let customer = {name: childsnapshot.child("Username").val(), email: childsnapshot.child("Useremail").val(), banstat: childsnapshot.child("BanStatus").val()}
+          // console.log(childsnapshot.child("BanStatus"))
+          cust.push(customer)
+          // console.log(customer)
+        })
       })
-    })
-  // }
+  }
 
   return (
     <View style={styles.Screen}>
+    <NavigationEvents onDidFocus={() => {onscreenload()}} />
       <View style={{width: '100%'}}>
         <FlatList
-          // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
           data={cust}
           keyExtractor={item => item.name}
           renderItem={({item}) => (
