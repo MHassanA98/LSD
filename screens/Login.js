@@ -76,7 +76,7 @@ export default function Login({navigation}) {
         let banstat = snapshot.child("BanStatus").val()
         // console.log(banstatcheck)
         // this.banstat = banstatcheck
-        console.log(banstat)
+        // console.log(banstat)
 
         if (!banstat) {
           emaillums = END(email)
@@ -87,7 +87,7 @@ export default function Login({navigation}) {
             }
             else {
               handleLogin()
-              console.log("Login")
+              // console.log("Login")
             }     
           }
           else {
@@ -146,11 +146,11 @@ export default function Login({navigation}) {
         else {
           alert("Please verify email before logging in.")
         }
-        console.log("User logged in")
+        // console.log("User logged in")
         // console.log(firebase.auth().currentUser)
       })
       .catch(function(error) {
-        console.log(error)
+        // console.log(error)
         alert(error)
         errorMessageInputHandler
       })
@@ -159,17 +159,17 @@ export default function Login({navigation}) {
     // LoginPress()
   }
 
-  // function loginexists() {
-  //   if (firebase.auth().currentUser.email != null) {
-  //     LoginPress()
+  function loginexists() {
+    if (firebase.auth().currentUser.email != null) {
+      LoginPress()
 
-  //   }
-  // }
+    }
+  }
 
 
   return (
     <View style={styles.container}>
-      {/* <NavigationEvents onDidFocus={() => {loginexists()}} /> */}
+      <NavigationEvents onDidFocus={() => {loginexists()}} />
       <ImageBackground source={backg} style={styles.bgimage}>
         <View style={styles.maincontainer}>
           <Image

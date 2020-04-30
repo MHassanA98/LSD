@@ -2,12 +2,9 @@ import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {
   StyleSheet,
-  ScrollView,
   Text,
   View,
   TouchableOpacity,
-  TextInput,
-  TouchableHighlight,
   // Button,
   // Picker,
 } from 'react-native';
@@ -17,36 +14,52 @@ import {FlatList} from 'react-native-gesture-handler';
 //   TouchableHighlight,
 //   BorderlessButton,
 // } from "react-native-gesture-handler"
+import firebase from "../assets/DatabaseConfig" ;
+import auth from "@react-native-firebase/auth" ;
+import database from "@react-native-firebase/database" ;
 
-export default function Customers() {
-  const [ban, setban] = useState(false);
 
-  function isban(ban) {
-    setban(!ban);
-  }
-  // function changeclr(ban){
-  // }
-  const [cust, setcust] = useState([
-    {name: 'jawadg01', email: 'abcde@ab.com1'},
-    {name: 'jawadg02', email: 'abcde@ab.com2'},
-    {name: 'jawadg03', email: 'abcde@ab.com3'},
-    {name: 'jawadg04', email: 'abcde@ab.com4'},
-    {name: 'jawadg05', email: 'abcde@ab.com5'},
-    {name: 'jawadg06', email: 'abcde@ab.com6'},
-    {name: 'jawadg07', email: 'abcde@ab.com7'},
-    {name: 'jawadg08', email: 'abcde@ab.com8'},
-    {name: 'jawadg09', email: 'abcde@ab.com9'},
-    {name: 'jawadg010', email: 'abcde@ab.com10'},
-    {name: 'jawadg011', email: 'abcde@ab.com11'},
-    {name: 'jawadg012', email: 'abcde@ab.com12'},
+function wait(timeout) {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
+}
+
+
+export default function Customers({navigation}) {
+  
+
+  const [cust, setcust] = useState([ //[
+    {name: 'jawadg01', email: 'abcde@ab.com1', banstat: 0},
+    // {name: 'jawadg02', email: 'abcde@ab.com2', banstat: 0},
   ]);
+
+  // function onscreenload() {
+    // console.log("\n\nmeow\n")
+  // }
+  // setcust([])
+
+  console.log("db access")
+  mydb = firebase.database().ref('/Users')
+  mydb.once("value")
+    .then(function(snapshot) {
+      // product = []
+      snapshot.forEach(function(childsnapshot) {
+        let customer = {name: childsnapshot.child("Username").val(), email: childsnapshot.child("Useremail").val(), banstat: childsnapshot.child("BanStatus").val()}
+        // console.log(childsnapshot.child("BanStatus"))
+        cust.push(customer)
+        console.log(customer)
+      })
+    })
+  // }
 
   return (
     <View style={styles.Screen}>
       <View style={{width: '100%'}}>
         <FlatList
+          // refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
           data={cust}
-          keyExtractor={item => item.email}
+          keyExtractor={item => item.name}
           renderItem={({item}) => (
             <TouchableOpacity raised style={styles.TextInputbox}>
               <View style={{flexDirection: 'column'}}>
@@ -55,9 +68,8 @@ export default function Customers() {
               </View>
 
               <TouchableOpacity
-                style={{justifyContent: 'center'}}
-                onPress={() => isban(ban)}>
-                <Icon name="ban" size={24} color={ban ? 'black' : 'red'} />
+                style={{justifyContent: 'center'}} >
+                <Icon name="ban" size={24} color={item.banstat ? 'black' : 'red'} />
               </TouchableOpacity>
             </TouchableOpacity>
           )}
