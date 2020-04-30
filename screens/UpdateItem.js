@@ -17,62 +17,86 @@ import {
 import firebase from "../assets/DatabaseConfig"
 import database from "@react-native-firebase/database"
 
-export default function UpdateItem() {
-  const [ProductName, setProductName] = useState('');
-  const [ProductPrice, setProductPrice] = useState('');
-  const [ProductQuantity, setProductQuantity] = useState('');
+export default function UpdateItem({navigation}) {
+
+
+  console.log(navigation.getParam('ITEM').name)
+
+  const [ProductName, setProductName] = useState(navigation.getParam('ITEM').name);
+  const [ProductPrice, setProductPrice] = useState(navigation.getParam('ITEM').price);
+  const [ProductQuantity, setProductQuantity] = useState(navigation.getParam('ITEM').quantity);
   
   
-  const PricepressHandler = () =>{
+  const pressHandler = () =>{
     
-    // if (ProductName.length<1){
-    //   alert("Invalid product name")
-    // }
-    if (ProductPrice<0){
+    if (ProductName==''){
+      alert("Name field cannot be empty")
+    }
+    else if (ProductPrice==''){
+      alert("Price field cannot be empty")
+    }
+    else if (ProductQuantity=='')
+    {
+      alert('Quantity field cannot be empty')
+    }
+    else if (ProductPrice<0){
       alert("Price must be greater than 0")
     }
-    // else if (ProductQuantity<0){
-    //   alert("Invalid product quantity")
-    // }
-    else{
-
-      
-
-    }
-  }
-
-  const QtypressHandler = () =>{
-    
-    // if (ProductName.length<1){
-    //   alert("Invalid product name")
-    // }
-    // if (ProductPrice<0){
-    //   alert("Invalid product price")
-    // }
-    if (ProductQuantity<0){
+    else if (ProductQuantity<0){
       alert("Quantity must be greater than 0")
     }
     else{
+      console.log("sadasd")
+
+      firebase.database().ref('/Inventory/'+navigation.getParam('CAT')+"/"+navigation.getParam('SUB')+"/"+navigation.getParam('ITEM').name)
+      .update({
+        Price:ProductPrice,
+        Qty:ProductQuantity
+      })
+      .then(()=>{
+        alert("Item successfully updated")
+      })
+      .catch(()=>{
+        alert("Please check your internet connection")
+      })
+
+
 
     }
   }
 
-  const NamepressHandler = () =>{
+  // const QtypressHandler = () =>{
     
-    if (ProductName.length<1){
-      alert("Name field cannot be empty")
-    }
-    // if (ProductPrice<0){
-    //   alert("Invalid product price")
-    // }
-    // else if (ProductQuantity<0){
-    //   alert("Invalid product quantity")
-    // }
-    else{
+  //   // if (ProductName.length<1){
+  //   //   alert("Invalid product name")
+  //   // }
+  //   // if (ProductPrice<0){
+  //   //   alert("Invalid product price")
+  //   // }
+  //   if (ProductQuantity<0){
+  //     alert("Quantity must be greater than 0")
+  //   }
+  //   else{
+
+  //   }
+  // }
+
+  // const NamepressHandler = () =>{
+    
+  //   if (ProductName.length<1){
+  //     alert("Name field cannot be empty")
+  //   }
+  //   // if (ProductPrice<0){
+  //   //   alert("Invalid product price")
+  //   // }
+  //   // else if (ProductQuantity<0){
+  //   //   alert("Invalid product quantity")
+  //   // }
+  //   else{
 
 
-    }
-  }
+  //   }
+  // }
 
 
   return (
@@ -102,17 +126,18 @@ export default function UpdateItem() {
             placeholderTextColor="black"
             onChangeText={ProductName => setProductName(ProductName)}
             defaultValue={ProductName}
+            editable={false}
             // keyboardType="numeric"
           />
         </View>
 
-        <View style={styles.bigbutton}>
+        {/* <View style={styles.bigbutton}>
           <TouchableOpacity
             onPress={() => alert('Confirmed!')}
             style={styles.Confirmbutton}>
             <Text style={styles.bigbuttontext}>Confirm</Text>
           </TouchableOpacity>
-        </View> 
+        </View>  */}
 
         <View style={{width: '100%'}}>
           <TextInput
@@ -125,13 +150,13 @@ export default function UpdateItem() {
           />
         </View>
 
-        <View style={styles.bigbutton}>
+        {/* <View style={styles.bigbutton}>
           <TouchableOpacity
             onPress={() => alert('Confirmed!')}
             style={styles.Confirmbutton}>
             <Text style={styles.bigbuttontext}>Confirm</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
 
         <View style={{width: '100%'}}>
           <TextInput
@@ -148,7 +173,7 @@ export default function UpdateItem() {
 
         <View style={styles.bigbutton}>
           <TouchableOpacity
-            onPress={() => alert('Confirmed!')}
+            onPress={pressHandler}
             style={styles.Confirmbutton}>
             <Text style={styles.bigbuttontext}>Confirm</Text>
           </TouchableOpacity>
