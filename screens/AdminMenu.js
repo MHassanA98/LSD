@@ -24,6 +24,8 @@ import database from "@react-native-firebase/database" ;
 
 export default function AdminMenu({navigation}) {
 
+  // console.log(navigation.getParam())
+
   const handleAddPress = () => {
     navigation.navigate('AddItem')
   }
@@ -83,7 +85,7 @@ export default function AdminMenu({navigation}) {
                   justifyContent: 'space-between',
                   paddingHorizontal: 10,
                 }}>
-                <TouchableOpacity style={styles.Confirmbutton}>
+                <TouchableOpacity style={styles.Confirmbutton} onPress={()=>{navigation.navigate('UpdateItem')}}>
                   <Text style={styles.boxfont}>UPDATE</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.Confirmbutton}>

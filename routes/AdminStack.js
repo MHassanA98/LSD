@@ -117,7 +117,10 @@ const screens = {
 
   UpdateItem:{
       screen:UpdateItem,
-      HeaderTitle:"Item Name"
+      navigationOptions:{
+              title:"Item name"
+            }
+      // title:"Item Name"
   }
 
 

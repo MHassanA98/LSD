@@ -36,8 +36,8 @@ export default function AddItem({navigation}) {
       alert("Please choose a subcategory")
       // return
     }
-    else if (ProductPrice<0){
-      alert("Invalid product price")
+    else if (ProductName.length<1){
+      alert("Invalid product name")
     }
     else if (ProductPrice<0){
       alert("Invalid product price")
@@ -47,62 +47,92 @@ export default function AddItem({navigation}) {
     }
     else{
   
-      firebase.database().ref('/Inventory/'+Category+"/"+SubCategory+"/"+ProductName).set({
-        Price: ProductPrice,
-        Qty: ProductQuantity
-      })
+      // firebase.database().ref('/Inventory/'+Category+"/"+SubCategory+"/"+ProductName).set({
+      //   Price: ProductPrice,
+      //   Qty: ProductQuantity
+      // })
 
-      setProductName('')
-      setProductPrice('')
-      setProductQuantity('')
-      setCategory('Choose a category')
-      setSubCategory('Choose a subcategory')
+      // setProductName('')
+      // setProductPrice('')
+      // setProductQuantity('')
+      // setCategory('Choose a category')
+      // setSubCategory('Choose a subcategory')
 
-      alert("Item added successfully")
+      // alert("Item added successfully")
 
-      // firebase.database().ref('/Inventory/'+Category+"/"+SubCategory+"/"+ProductName)
-      //   .once("value")
-      //     .then((snapshot)=>{
-      //       snapshot.exists() ? 
-      //     })
-
-
+      firebase.database().ref('/Inventory/'+Category+"/"+SubCategory+"/"+ProductName)
+        .once("value")
+          .then((snapshot)=>{
+            console.log("HERERE")
+            // console.log(value)
+            console.log(snapshot.exists())
+            if (snapshot.exists())
+            {
+              console.log("EXISTS")
+              ReplaceAlert()
+            } 
+            
+            else{
+              ItemAdded()
+              console.log("NOT EXISTS")
+            }
+          })
 
     }
 
   }
 
-    // const ReplaceAlert=()=>{
+    function ReplaceAlert(){
 
-    //   Alert.alert(
-    //     "Product exists",
-    //     "Do you want to replace the product"
-    //   )
+      console.log("ALERT")
 
+      Alert.alert(
+        "Product already exists",
+        'Replace '+JSON.stringify(ProductName),
+        [
+          
+          {
+            text:"Cancel",
+            // style:"destructive"
+            type:"destructive"
 
+          },
 
+          {
+            text:"Confirm",
+            onPress:()=>ItemAdded()
+          }
 
+        ],
 
-    // }
+        {cancelable:false}
+      )
 
-    // const ItemAdded=()=>{
+    }
 
-    //   firebase.database().ref('/Inventory/'+Category+"/"+SubCategory+"/"+ProductName).set({
-    //     Price: ProductPrice,
-    //     Qty: ProductQuantity
-    //   })
+    function ItemAdded(){
 
-    //   setProductName('')
-    //   setProductPrice('')
-    //   setProductQuantity('')
-    //   setCategory('Choose a category')
-    //   setSubCategory('Choose a subcategory')
+      console.log("ADD")
 
-    //   alert("Item added successfully")
+      firebase.database().ref('/Inventory/'+Category+"/"+SubCategory+"/"+ProductName)
+      .set({
+        Price: ProductPrice,
+        Qty: ProductQuantity
+      })
+      .then(()=>{
+          setProductName('')
+          setProductPrice('')
+          setProductQuantity('')
+          setCategory('Choose a category')
+          setSubCategory('Choose a subcategory')
+    
+          alert("Item added successfully")
+        }
+      )
+      .catch(alert("Add item failed. Please check your internet connection"))
+     
 
-
-
-    // }
+    }
 
 
     // console.log(Category.getS)

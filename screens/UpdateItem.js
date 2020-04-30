@@ -14,11 +14,67 @@ import {
 //   TouchableHighlight,
 //   BorderlessButton,
 // } from "react-native-gesture-handler"
+import firebase from "../assets/DatabaseConfig"
+import database from "@react-native-firebase/database"
 
 export default function UpdateItem() {
   const [ProductName, setProductName] = useState('');
   const [ProductPrice, setProductPrice] = useState('');
   const [ProductQuantity, setProductQuantity] = useState('');
+  
+  
+  const PricepressHandler = () =>{
+    
+    // if (ProductName.length<1){
+    //   alert("Invalid product name")
+    // }
+    if (ProductPrice<0){
+      alert("Price must be greater than 0")
+    }
+    // else if (ProductQuantity<0){
+    //   alert("Invalid product quantity")
+    // }
+    else{
+
+      
+
+    }
+  }
+
+  const QtypressHandler = () =>{
+    
+    // if (ProductName.length<1){
+    //   alert("Invalid product name")
+    // }
+    // if (ProductPrice<0){
+    //   alert("Invalid product price")
+    // }
+    if (ProductQuantity<0){
+      alert("Quantity must be greater than 0")
+    }
+    else{
+
+    }
+  }
+
+  const NamepressHandler = () =>{
+    
+    if (ProductName.length<1){
+      alert("Name field cannot be empty")
+    }
+    // if (ProductPrice<0){
+    //   alert("Invalid product price")
+    // }
+    // else if (ProductQuantity<0){
+    //   alert("Invalid product quantity")
+    // }
+    else{
+
+
+    }
+  }
+
+
   return (
     <View style={styles.Screen}>
       {/* <View style={styles.TopBar}>
@@ -50,6 +106,14 @@ export default function UpdateItem() {
           />
         </View>
 
+        <View style={styles.bigbutton}>
+          <TouchableOpacity
+            onPress={() => alert('Confirmed!')}
+            style={styles.Confirmbutton}>
+            <Text style={styles.bigbuttontext}>Confirm</Text>
+          </TouchableOpacity>
+        </View> 
+
         <View style={{width: '100%'}}>
           <TextInput
             style={styles.TextInputbox}
@@ -59,6 +123,14 @@ export default function UpdateItem() {
             defaultValue={ProductPrice}
             keyboardType="numeric"
           />
+        </View>
+
+        <View style={styles.bigbutton}>
+          <TouchableOpacity
+            onPress={() => alert('Confirmed!')}
+            style={styles.Confirmbutton}>
+            <Text style={styles.bigbuttontext}>Confirm</Text>
+          </TouchableOpacity>
         </View>
 
         <View style={{width: '100%'}}>
