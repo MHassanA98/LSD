@@ -103,33 +103,55 @@ export default function Registration({navigation}) {
       .createUserWithEmailAndPassword(email, password)
       .then(function(result) {
         console.log("User created")
+
+        firebase.auth().currentUser.sendEmailVerification()
+        .then(()=> {
+          firebase.database().ref('/Users/'+email.substr(0,8)).set({
+            Username: username,
+            Useremail: email,
+            Phonenumber: phone,
+            Customerflag: true,
+            Redemptionpoints: 0,
+            BanStatus: false,
+            // ChangeRate: 10,
+          })
+          console.log("Verify Email")
+          SignUpPress()
+        } )
+        .catch(function(error) {console.log(error)} )
+
+        console.log("Now Waiting for Verify")
+
         return result.user.updateProfile({
           displayName: username
         })
       })
-      .catch(function(error) {console.log(error)} )
+      .catch(function(error) {
+        console.log(error)
+        // alert(error) 
+      })
       // .catch(error => errorMessageInputHandler)
     let meow1w = await meow1
 
-    let meow2 = firebase
-      .auth().currentUser.sendEmailVerification()
-      .then(()=> {
-        firebase.database().ref('/Users/'+email.substr(0,8)).set({
-          Username: username,
-          Useremail: email,
-          Phonenumber: phone,
-          Customerflag: true,
-          Redemptionpoints: 0,
-          BanStatus: false,
-          // ChangeRate: 10,
-        })
-        console.log("Verify Email")
-        SignUpPress()
-      } )
-      .catch(function(error) {console.log(error)} )
-    let meow2w = await meow2
+    // let meow2 = firebase
+    //   .auth().currentUser.sendEmailVerification()
+    //   .then(()=> {
+    //     firebase.database().ref('/Users/'+email.substr(0,8)).set({
+    //       Username: username,
+    //       Useremail: email,
+    //       Phonenumber: phone,
+    //       Customerflag: true,
+    //       Redemptionpoints: 0,
+    //       BanStatus: false,
+    //       // ChangeRate: 10,
+    //     })
+    //     console.log("Verify Email")
+    //     SignUpPress()
+    //   } )
+    //   .catch(function(error) {console.log(error)} )
+    // let meow2w = await meow2
 
-    console.log("Now Waiting for Verify")
+    // console.log("Now Waiting for Verify")
 
     // let meow3 = firebase
     //   .auth()

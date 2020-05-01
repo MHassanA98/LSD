@@ -131,39 +131,42 @@ export default function Login({navigation}) {
   };
 
   async function handleLogin() {
-    if (!firebase.auth().currentUser.emailVerified) {
-      let meow2 = firebase.auth().currentUser.reload()
-      let meow2w = await meow2
-    }
+    // if (!firebase.auth().currentUser.emailVerified) {
+    //   let meow2 = firebase.auth().currentUser.reload()
+    //   let meow2w = await meow2
+    // }
 
-    let meow1 = firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        if (firebase.auth().currentUser.emailVerified) {
-          LoginPress()
-        }
-        else {
-          alert("Please verify email before logging in.")
-        }
-        // console.log("User logged in")
-        // console.log(firebase.auth().currentUser)
-      })
-      .catch(function(error) {
-        // console.log(error)
-        alert(error)
-        errorMessageInputHandler
-      })
-    let meow1w = await meow1
+    firebase
+    .auth()
+    .signInWithEmailAndPassword(email, password)
+    .then(() => {
+      if (firebase.auth().currentUser.emailVerified) {
+        LoginPress()
+      }
+      else {
+        firebase.auth().currentUser.reload()
+        alert("Please verify email before logging in.")
+      }
+      // console.log("User logged in")
+      // console.log(firebase.auth().currentUser)
+    })
+    .catch(function(error) {
+      // console.log(error)
+      alert(error)
+      // errorMessageInputHandler
+    })
+    
 
     // LoginPress()
   }
 
   function loginexists() {
-    if (firebase.auth().currentUser.email != null) {
-      LoginPress()
-
-    }
+    meow = firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        // console.log(user)
+        LoginPress()
+      }
+    })
   }
 
 
