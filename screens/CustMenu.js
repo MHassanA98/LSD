@@ -11,19 +11,17 @@ import {
   // Picker,
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import { NavigationEvents } from 'react-navigation';
+import {NavigationEvents} from 'react-navigation';
 // import DropDownItem from "react-native-drop-down-item";
 // import {
 //   TouchableHighlight,
 //   BorderlessButton,
 // } from "react-native-gesture-handler"
-import firebase from "../assets/DatabaseConfig" ;
-import auth from "@react-native-firebase/auth" ;
-import database from "@react-native-firebase/database" ;
+import firebase from '../assets/DatabaseConfig';
+import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 
-
-export default function CustMenu({navigation}) {  
-  
+export default function CustMenu({navigation}) {
   // console.log(" Customer: ", navigation.getParam('Sub'), navigation.getParam('Cat'))
 
   const [product, setProduct] = useState([
@@ -41,16 +39,26 @@ export default function CustMenu({navigation}) {
 
   // function onscreenload() {
   // console.log("MEOW")
-  mydb = firebase.database().ref('/Inventory/'+navigation.getParam('Cat')+'/'+navigation.getParam('Sub'))
-  mydb.once("value")
-    .then(function(snapshot) {
-      // product = []
-      snapshot.forEach(function(childsnapshot) {
-        let newprod = {name: childsnapshot.key, price: childsnapshot.child("Price").val(), quantity: 0}
-        // console.log(newprod)
-        product.push(newprod)
-      })
-    })
+  mydb = firebase
+    .database()
+    .ref(
+      '/Inventory/' +
+        navigation.getParam('Cat') +
+        '/' +
+        navigation.getParam('Sub'),
+    );
+  mydb.once('value').then(function(snapshot) {
+    // product = []
+    snapshot.forEach(function(childsnapshot) {
+      let newprod = {
+        name: childsnapshot.key,
+        price: childsnapshot.child('Price').val(),
+        quantity: 0,
+      };
+      // console.log(newprod)
+      product.push(newprod);
+    });
+  });
   // }
 
   // mydb = firebase.database().ref('/Inventory/'+navigation.getParam('Cat')+'/'+navigation.getParam('Sub'))
@@ -72,7 +80,7 @@ export default function CustMenu({navigation}) {
   //   const onAdd = () => setProduct(prev => prev + 1);
 
   return (
-    <View style={styles.Screen} >
+    <View style={styles.Screen}>
       {/* <NavigationEvents onDidFocus={() => {onscreenload()}} /> */}
       <View style={{width: '100%', height: 460, marginVertical: 12}}>
         <FlatList
@@ -140,7 +148,7 @@ const styles = StyleSheet.create({
     // flexDirection: "column",
     height: '100%',
     padding: '10%',
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#e8e8e8',
 
     // flex: '20%',
   },
@@ -183,7 +191,7 @@ const styles = StyleSheet.create({
     // flex: 8,
     // width: 100,
     paddingTop: 50,
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#e8e8e8',
     height: '560',
     // justifyContent: 'center',
     // padding: 40,

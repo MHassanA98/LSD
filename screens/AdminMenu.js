@@ -11,60 +11,72 @@ import {
   // Picker,
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import { NavigationEvents } from 'react-navigation';
+import {NavigationEvents} from 'react-navigation';
 // import DropDownItem from "react-native-drop-down-item";
 // import {
 //   TouchableHighlight,
 //   BorderlessButton,
 // } from "react-native-gesture-handler"
-import firebase from "../assets/DatabaseConfig" ;
-import auth from "@react-native-firebase/auth" ;
-import database from "@react-native-firebase/database" ;
-
+import firebase from '../assets/DatabaseConfig';
+import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 
 export default function AdminMenu({navigation}) {
-
   // console.log(navigation.getParam('Sub'))
 
   const handleAddPress = () => {
-    navigation.navigate('AddItem')
-  }
-  
+    navigation.navigate('AddItem');
+  };
+
   // console.log("Admin: ", navigation.getParam('Sub'), navigation.getParam('Cat'))
 
-  const [product, setProduct] = useState([ ]);
-    // {name: 'pencil', price: 10, quantity: 2},
-    // {name: 'ruler', price: '50'},
-    // {name: 'sharpener', price: '5'},
-    // {name: 'eraser', price: '4'},
-    // {name: 'pen', price: '54'},
-    // {name: 'marker', price: '22'},
-    // {name: 'tape', price: '44'},
-    // {name: 'ribbon', price: '22'},
-    // {name: 'pillow', price: '21'},
-    // {name: 'toy', price: '10'},
-    // {name: 'car', price: '11'},
-    // {name: 'box', price: '12'},
+  const [product, setProduct] = useState([]);
+  // {name: 'pencil', price: 10, quantity: 2},
+  // {name: 'ruler', price: '50'},
+  // {name: 'sharpener', price: '5'},
+  // {name: 'eraser', price: '4'},
+  // {name: 'pen', price: '54'},
+  // {name: 'marker', price: '22'},
+  // {name: 'tape', price: '44'},
+  // {name: 'ribbon', price: '22'},
+  // {name: 'pillow', price: '21'},
+  // {name: 'toy', price: '10'},
+  // {name: 'car', price: '11'},
+  // {name: 'box', price: '12'},
   // ]);
 
   function onscreenload() {
-    mydb = firebase.database().ref('/Inventory/'+navigation.getParam('Cat')+'/'+navigation.getParam('Sub'))
-    mydb.once("value")
-      .then(function(snapshot) {
-        // product = []
-        let prodarr = []
-        snapshot.forEach(function(childsnapshot) {
-          let newprod = {name: childsnapshot.key, price: childsnapshot.child("Price").val(), quantity: childsnapshot.child("Qty").val()}
-          // console.log(newprod)
-          prodarr.push(newprod)
-        })
-        setProduct(prodarr)
-      })
+    mydb = firebase
+      .database()
+      .ref(
+        '/Inventory/' +
+          navigation.getParam('Cat') +
+          '/' +
+          navigation.getParam('Sub'),
+      );
+    mydb.once('value').then(function(snapshot) {
+      // product = []
+      let prodarr = [];
+      snapshot.forEach(function(childsnapshot) {
+        let newprod = {
+          name: childsnapshot.key,
+          price: childsnapshot.child('Price').val(),
+          quantity: childsnapshot.child('Qty').val(),
+        };
+        // console.log(newprod)
+        prodarr.push(newprod);
+      });
+      setProduct(prodarr);
+    });
   }
 
   return (
     <View style={styles.Screen}>
-    <NavigationEvents onDidFocus={() => {onscreenload()}} />
+      <NavigationEvents
+        onDidFocus={() => {
+          onscreenload();
+        }}
+      />
       <View style={{width: '100%', height: 460, marginVertical: 12}}>
         <FlatList
           data={product}
@@ -87,7 +99,15 @@ export default function AdminMenu({navigation}) {
                   justifyContent: 'space-between',
                   paddingHorizontal: 10,
                 }}>
-                <TouchableOpacity style={styles.Confirmbutton} onPress={()=>{navigation.navigate('UpdateItem',{CAT:navigation.getParam('Cat'),SUB:navigation.getParam('Sub'),ITEM:item})}}>
+                <TouchableOpacity
+                  style={styles.Confirmbutton}
+                  onPress={() => {
+                    navigation.navigate('UpdateItem', {
+                      CAT: navigation.getParam('Cat'),
+                      SUB: navigation.getParam('Sub'),
+                      ITEM: item,
+                    });
+                  }}>
                   <Text style={styles.boxfont}>UPDATE</Text>
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.Confirmbutton}>
@@ -105,7 +125,7 @@ export default function AdminMenu({navigation}) {
           paddingTop: 15,
           paddingLeft: 12,
         }}>
-        <TouchableOpacity style={styles.plusbutton} onPress={handleAddPress} >
+        <TouchableOpacity style={styles.plusbutton} onPress={handleAddPress}>
           <Icon name="plus" color="white" />
         </TouchableOpacity>
       </View>
@@ -125,7 +145,7 @@ const styles = StyleSheet.create({
     // flexDirection: "column",
     height: '100%',
     padding: '10%',
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#e8e8e8',
 
     // flex: '20%',
   },
@@ -168,7 +188,7 @@ const styles = StyleSheet.create({
     // flex: 8,
     // width: 100,
     paddingTop: 50,
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#e8e8e8',
     height: '560',
     // justifyContent: 'center',
     // padding: 40,

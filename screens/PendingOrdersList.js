@@ -82,7 +82,7 @@ const styles = StyleSheet.create({
     // flexDirection: "column",
     height: '100%',
     padding: '10%',
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#e8e8e8',
 
     // flex: '20%',
   },
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
     // flex: 8,
     // width: 100,
     padding: '15%',
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#e8e8e8',
     height: '90%',
     justifyContent: 'center',
     alignItems: 'center',

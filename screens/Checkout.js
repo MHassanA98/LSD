@@ -160,7 +160,7 @@ const styles = StyleSheet.create({
   container: {
     // flex: 1,
     width: '100%',
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#e8e8e8',
     alignItems: 'center',
     padding: '10%',
     marginVertical: 10,
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
   body: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#e8e8e8',
     // marginVertical: 10,
     // marginTop: 50,
   },
