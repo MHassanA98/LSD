@@ -6,6 +6,9 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  TouchableWithoutFeedback, 
+  ScrollView, 
+  Keyboard
   // Button,
   // Picker,
 } from 'react-native';
@@ -100,7 +103,10 @@ export default function UpdateItem({navigation}) {
 
 
   return (
-    <View style={styles.Screen}>
+    <TouchableWithoutFeedback onPress = {() =>{
+      Keyboard.dismiss()
+      }}>
+    <ScrollView style={styles.Screen}>
       {/* <View style={styles.TopBar}>
         <TouchableOpacity style={styles.TopBarBack}>
           <Icon name="arrow-left" size={32} color="white" />
@@ -179,7 +185,8 @@ export default function UpdateItem({navigation}) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </ScrollView>
+    </TouchableWithoutFeedback>
   );
 }
 

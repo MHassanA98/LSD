@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, ImageBackground, Image, TextInput, Button, TouchableOpacity, } from "react-native";
+import { StyleSheet, Text, View, ImageBackground, Image, TextInput, Button, TouchableOpacity, Keyboard, TouchableWithoutFeedback} from "react-native";
 import backg from "../assets/images/backg.png" ;
 import lsdlogo from "../assets/images/lsdlogo.png" ;
 import firebase from "../assets/DatabaseConfig" ;
@@ -169,8 +169,17 @@ export default function Login({navigation}) {
     })
   }
 
+  //This doesnot allow to input more than one character at a time 
+  /*const DismissKeyboard = ({children}) => (
+    <TouchableWithoutFeedback onPress = {()=> Keyboard.dismiss}>
+      {children}
+    </TouchableWithoutFeedback>  
+  )*/
 
   return (
+    <TouchableWithoutFeedback onPress = {() =>{
+      Keyboard.dismiss()
+    }}>
     <View style={styles.container}>
       <NavigationEvents onDidFocus={() => {loginexists()}} />
       <ImageBackground source={backg} style={styles.bgimage}>
@@ -205,6 +214,7 @@ export default function Login({navigation}) {
         </View>
       </ImageBackground>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 

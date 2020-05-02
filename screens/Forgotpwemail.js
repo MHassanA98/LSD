@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, ImageBackground, Image, TextInput, Button, TouchableOpacity, } from "react-native";
+import { StyleSheet, Text, View, ImageBackground, Image, TextInput, Button, TouchableOpacity, TouchableWithoutFeedback, Keyboard} from "react-native";
 import backg from "../assets/images/backg.png" ;
 import lsdlogo from "../assets/images/lsdlogo.png" ;
 import firebase from "../assets/DatabaseConfig" ;
@@ -68,6 +68,9 @@ export default function Forgotpwemail({navigation}) {
 
 
   return (
+    <TouchableWithoutFeedback onPress = {() =>{
+      Keyboard.dismiss()
+    }}>
     <View style={styles.container}>
       <ImageBackground source={backg} style={styles.bgimage}>
         
@@ -88,6 +91,7 @@ export default function Forgotpwemail({navigation}) {
         </TouchableOpacity>
       </ImageBackground>
     </View>
+    </TouchableWithoutFeedback>
   );
 };
 

@@ -8,6 +8,8 @@ import {
   TextInput,
   Alert,
   Keyboard,
+  TouchableWithoutFeedback,
+  ScrollView
   // Button,
   // Picker,
 } from 'react-native';
@@ -143,7 +145,10 @@ export default function AddItem({navigation}) {
   const Cat = ['Choose a category', 'Kitchen', 'Store'];
 
   return (
-    <View style={styles.Screen}>
+    <TouchableWithoutFeedback onPress = {() =>{
+      Keyboard.dismiss()
+    }}>
+    <ScrollView style={styles.screen}>
       {/* <View style={styles.TopBar}>
         <TouchableOpacity style={styles.TopBarBack}>
           <Icon name="arrow-left" size={32} color="white" />
@@ -243,7 +248,8 @@ export default function AddItem({navigation}) {
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </ScrollView>
+    </TouchableWithoutFeedback>
   );
 }
 

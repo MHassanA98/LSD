@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, ScrollView, ImageBackground, TextInput, TouchableOpacity, } from "react-native";
+import { StyleSheet, Text, View, ScrollView, ImageBackground, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard} from "react-native";
 import backg from "../assets/images/backg.png" ;
 import Icon from "react-native-vector-icons/FontAwesome" ;
 import firebase from "../assets/DatabaseConfig" ;
@@ -171,6 +171,9 @@ export default function Registration({navigation}) {
   return (
     // <ScrollView style={styles.container}>
     <ImageBackground source={backg} style={styles.bgimage}>
+      <TouchableWithoutFeedback onPress = {() =>{
+      Keyboard.dismiss()
+      }}>
       <ScrollView style={styles.container}>
         <View style={styles.maincontainer}>
           
@@ -204,6 +207,7 @@ export default function Registration({navigation}) {
           </View>
         </TouchableOpacity>
       </ScrollView>
+      </TouchableWithoutFeedback>
     </ImageBackground>
     // </ScrollView>
   );
