@@ -7,7 +7,9 @@ import {
   TouchableOpacity,
   TextInput,
   Alert,
-  Keyboard
+  Keyboard,
+  TouchableWithoutFeedback,
+  ScrollView
   // Button,
   // Picker,
 } from 'react-native';
@@ -22,31 +24,24 @@ import {Picker} from '@react-native-community/picker';
 // import firebase from "@react-native-firebase/app";
 import Categoryy from './PickerList.js';
 // import SubCategory from './Subcategory.js';
-import firebase from "../assets/DatabaseConfig"
-import database from "@react-native-firebase/database"
+import firebase from '../assets/DatabaseConfig';
+import database from '@react-native-firebase/database';
 
 export default function AddItem({navigation}) {
-
-  const pressHandler = () =>{
-    if (Category==="Choose a category"){
-      alert("Please choose a category")
+  const pressHandler = () => {
+    if (Category === 'Choose a category') {
+      alert('Please choose a category');
       // return
-    }
-    else if (SubCategory==="Choose a subcategory"){
-      alert("Please choose a subcategory")
+    } else if (SubCategory === 'Choose a subcategory') {
+      alert('Please choose a subcategory');
       // return
-    }
-    else if (ProductName.length<1){
-      alert("Invalid product name")
-    }
-    else if (ProductPrice<0){
-      alert("Invalid product price")
-    }
-    else if (ProductQuantity<0){
-      alert("Invalid product quantity")
-    }
-    else{
-  
+    } else if (ProductName.length < 1) {
+      alert('Invalid product name');
+    } else if (ProductPrice < 0) {
+      alert('Invalid product price');
+    } else if (ProductQuantity < 0) {
+      alert('Invalid product quantity');
+    } else {
       // firebase.database().ref('/Inventory/'+Category+"/"+SubCategory+"/"+ProductName).set({
       //   Price: ProductPrice,
       //   Qty: ProductQuantity
@@ -60,108 +55,100 @@ export default function AddItem({navigation}) {
 
       // alert("Item added successfully")
 
-      firebase.database().ref('/Inventory/'+Category+"/"+SubCategory+"/"+ProductName)
-        .once("value")
-          .then((snapshot)=>{
-            console.log("HERERE")
-            // console.log(value)
-            console.log(snapshot.exists())
-            if (snapshot.exists())
-            {
-              console.log("EXISTS")
-              ReplaceAlert()
-            } 
-            
-            else{
-              ItemAdded()
-              console.log("NOT EXISTS")
-            }
-          })
-
+      firebase
+        .database()
+        .ref('/Inventory/' + Category + '/' + SubCategory + '/' + ProductName)
+        .once('value')
+        .then(snapshot => {
+          console.log('HERERE');
+          // console.log(value)
+          console.log(snapshot.exists());
+          if (snapshot.exists()) {
+            console.log('EXISTS');
+            ReplaceAlert();
+          } else {
+            ItemAdded();
+            console.log('NOT EXISTS');
+          }
+        });
     }
+  };
 
+  function ReplaceAlert() {
+    console.log('ALERT');
+
+    Alert.alert(
+      'Product already exists',
+      'Replace ' + JSON.stringify(ProductName),
+      [
+        {
+          text: 'Cancel',
+          // style:"destructive"
+          type: 'destructive',
+        },
+
+        {
+          text: 'Confirm',
+          onPress: () => ItemAdded(),
+        },
+      ],
+
+      {cancelable: false},
+    );
   }
 
-    function ReplaceAlert(){
+  function ItemAdded() {
+    console.log('ADD');
 
-      console.log("ALERT")
-
-      Alert.alert(
-        "Product already exists",
-        'Replace '+JSON.stringify(ProductName),
-        [
-          
-          {
-            text:"Cancel",
-            // style:"destructive"
-            type:"destructive"
-
-          },
-
-          {
-            text:"Confirm",
-            onPress:()=>ItemAdded()
-          }
-
-        ],
-
-        {cancelable:false}
-      )
-
-    }
-
-    function ItemAdded(){
-
-      console.log("ADD")
-
-      firebase.database().ref('/Inventory/'+Category+"/"+SubCategory+"/"+ProductName)
+    firebase
+      .database()
+      .ref('/Inventory/' + Category + '/' + SubCategory + '/' + ProductName)
       .set({
         Price: ProductPrice,
-        Qty: ProductQuantity
+        Qty: ProductQuantity,
       })
-      .then(()=>{
-          setProductName('')
-          setProductPrice('')
-          setProductQuantity('')
-          setCategory('Choose a category')
-          setSubCategory('Choose a subcategory')
-    
-          alert("Item added successfully")
-        }
-      )
-      .catch(alert("Add item failed. Please check your internet connection"))
-     
+      .then(() => {
+        setProductName('');
+        setProductPrice('');
+        setProductQuantity('');
+        setCategory('Choose a category');
+        setSubCategory('Choose a subcategory');
 
-    }
+        alert('Item added successfully');
+      })
+      .catch(alert('Add item failed. Please check your internet connection'));
+  }
 
+  // console.log(Category.getS)
 
-    // console.log(Category.getS)
-
-    // let AddWait= await Add
-
-  
+  // let AddWait= await Add
 
   const [ProductName, setProductName] = useState('');
   const [ProductPrice, setProductPrice] = useState('');
   const [ProductQuantity, setProductQuantity] = useState('');
   const [Category, setCategory] = useState('Choose a category');
-  const[SubCategory,setSubCategory]= useState('Choose a subcategory');
+  const [SubCategory, setSubCategory] = useState('Choose a subcategory');
 
-  const SubCat={
-    "Choose a category":["Choose a subcategory"],
-    "Kitchen":["Choose a subcategory","Desi", "Fast Food", "Fresh Juice"],
-    "Store":["Choose a subcategory","Stationery", "Beverages", "Grocery", "Grooming", "Electronics"]
-  }
+  const SubCat = {
+    'Choose a category': ['Choose a subcategory'],
+    Kitchen: ['Choose a subcategory', 'Desi', 'Fast Food', 'Fresh Juice'],
+    Store: [
+      'Choose a subcategory',
+      'Stationery',
+      'Beverages',
+      'Grocery',
+      'Grooming',
+      'Electronics',
+    ],
+  };
 
-  const Cat=[
-    "Choose a category",
-    "Kitchen",
-    "Store",
-  ]
-
+  const Cat = ['Choose a category', 'Kitchen', 'Store'];
 
   return (
-    <View style={styles.Screen}>
+    <TouchableWithoutFeedback onPress = {() =>{
+      Keyboard.dismiss()
+    }}>
+    <ScrollView style={styles.screen}>
       {/* <View style={styles.TopBar}>
         <TouchableOpacity style={styles.TopBarBack}>
           <Icon name="arrow-left" size={32} color="white" />
@@ -181,39 +168,34 @@ export default function AddItem({navigation}) {
 
       <View style={styles.RestScreen}>
         <View style={styles.viewstyle}>
-        <Picker
-          selectedValue={Category}
-          style={styles.container}
-          // placeholder= "Choose a category"
-          // onPress={}
-          onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}>
-
-          {/* <Picker.Item label="Choose a category" value="null" /> */}
-          {Cat.map((item,index)=>{
-            return ( <Picker.Item label={item} value={item} key={index} />)
-
-          })}
-          {/* <Picker.Item label="Choose a category" value="null" />
+          <Picker
+            selectedValue={Category}
+            style={styles.container}
+            // placeholder= "Choose a category"
+            // onPress={}
+            onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}>
+            {/* <Picker.Item label="Choose a category" value="null" /> */}
+            {Cat.map((item, index) => {
+              return <Picker.Item label={item} value={item} key={index} />;
+            })}
+            {/* <Picker.Item label="Choose a category" value="null" />
           <Picker.Item label="Food" value="food" />
           <Picker.Item label="Stationary" value="stationary" />
           <Picker.Item label="Grocery" value="grocery" /> */}
-        </Picker>
+          </Picker>
           {/* <Categoryy >{'Change'}</Categoryy> */}
         </View>
 
         <View style={styles.viewstyle}>
-
           <Picker
             selectedValue={SubCategory}
             style={styles.container}
             // placeholder= "Choose a category"
             // onPress={}
             onValueChange={(itemValue, itemIndex) => setSubCategory(itemValue)}>
-
             {/* <Picker.Item label="Choose a category" value="null" /> */}
-            {SubCat[Category].map((item,index)=>{
-              return ( <Picker.Item label={item} value={item} key={index} />)
-
+            {SubCat[Category].map((item, index) => {
+              return <Picker.Item label={item} value={item} key={index} />;
             })}
             {/* <Picker.Item label="Choose a category" value="null" />
             <Picker.Item label="Food" value="food" />
@@ -225,57 +207,53 @@ export default function AddItem({navigation}) {
         </View>
 
         {/* <TouchableOpacity style={{width: '100%'}}> */}
-          <TextInput
-            style={styles.TextInputbox}
-            // style={{fontSize: 12}}
-            placeholder="Product Name"
-            placeholderTextColor="black"
-            onChangeText={ProductName => setProductName(ProductName)}
-            defaultValue={ProductName}
-            // allowFontScalingrr
-          />
+        <TextInput
+          style={styles.TextInputbox}
+          // style={{fontSize: 12}}
+          placeholder="Product Name"
+          placeholderTextColor="black"
+          onChangeText={ProductName => setProductName(ProductName)}
+          defaultValue={ProductName}
+          // allowFontScalingrr
+        />
         {/* </TouchableOpacity> */}
 
         {/* <TouchableOpacity style={{width: '100%'}}> */}
-          <TextInput
-            style={styles.TextInputbox}
-            placeholder="Product Price"
-            placeholderTextColor="black"
-            onChangeText={ProductPrice => setProductPrice(ProductPrice)}
-            defaultValue={ProductPrice}
-            keyboardType="numeric"
-            // onBlur={()=>{this.}}
-          />
+        <TextInput
+          style={styles.TextInputbox}
+          placeholder="Product Price"
+          placeholderTextColor="black"
+          onChangeText={ProductPrice => setProductPrice(ProductPrice)}
+          defaultValue={ProductPrice}
+          keyboardType="numeric"
+          // onBlur={()=>{this.}}
+        />
         {/* </TouchableOpacity> */}
 
         {/* <TouchableOpacity style={{width: '100%'}}> */}
-          <TextInput
-            style={styles.TextInputbox}
-            placeholder="Product Quantity"
-            placeholderTextColor="black"
-            // value=""
-            keyboardType="numeric"
-            onChangeText={ProductQuantity =>
-              setProductQuantity(ProductQuantity)
-            }
-            defaultValue={ProductQuantity}
-          />
+        <TextInput
+          style={styles.TextInputbox}
+          placeholder="Product Quantity"
+          placeholderTextColor="black"
+          // value=""
+          keyboardType="numeric"
+          onChangeText={ProductQuantity => setProductQuantity(ProductQuantity)}
+          defaultValue={ProductQuantity}
+        />
         {/* </TouchableOpacity> */}
 
         <View style={styles.bigbutton}>
-          <TouchableOpacity
-            onPress={pressHandler}
-            style={styles.Confirmbutton}>
+          <TouchableOpacity onPress={pressHandler} style={styles.Confirmbutton}>
             <Text style={styles.bigbuttontext}>Confirm</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </View>
+    </ScrollView>
+    </TouchableWithoutFeedback>
   );
 }
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     // paddingTop: 40,
@@ -292,7 +270,7 @@ const styles = StyleSheet.create({
   Screen: {
     // flexDirection: "column",
     height: '100%',
-    backgroundColor: "#e8e8e8"
+    backgroundColor: '#e8e8e8',
   },
   TopBar: {
     padding: 20,
@@ -329,7 +307,7 @@ const styles = StyleSheet.create({
     // flex: 8,
     // width: 100,
     padding: '15%',
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#e8e8e8',
     height: '90%',
     justifyContent: 'center',
     alignItems: 'center',

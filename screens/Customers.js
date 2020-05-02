@@ -1,130 +1,139 @@
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import { NavigationEvents } from 'react-navigation';
-import firebase from "../assets/DatabaseConfig" ;
-import auth from "@react-native-firebase/auth" ;
-import database from "@react-native-firebase/database" ;
-
+import {NavigationEvents} from 'react-navigation';
+import firebase from '../assets/DatabaseConfig';
+import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 
 export default function Customers({navigation}) {
-  
-
-  const [cust, setcust] = useState([ ]); //[
-    // {name: 'example', email: 'example@lums.edu.pk', banstat: true},
-    // {name: 'jawadg02', email: 'abcde@ab.com2', banstat: 0},
+  const [cust, setcust] = useState([]); //[
+  // {name: 'example', email: 'example@lums.edu.pk', banstat: true},
+  // {name: 'jawadg02', email: 'abcde@ab.com2', banstat: 0},
   // ]);
 
   function banalert(item, index) {
     if (!item.banstat) {
       Alert.alert(
-        "Ban User",
-        "Are you sure you want to ban this user?",
+        'Ban User',
+        'Are you sure you want to ban this user?',
         [
           {
-            text: "Yes",
-            onPress: ()=>{
+            text: 'Yes',
+            onPress: () => {
               // console.log("YES")
               // console.log(item.name)
               // console.log(index)
-              let tempcust = cust
-              tempcust[index] = {name: item.name, email: item.email, banstat: true}
-              mydb = firebase.database().ref('/Users/'+item.email.substr(0,8))
+              let tempcust = cust;
+              tempcust[index] = {
+                name: item.name,
+                email: item.email,
+                banstat: true,
+              };
+              mydb = firebase
+                .database()
+                .ref('/Users/' + item.email.substr(0, 8));
               mydb.update({
-                BanStatus: true
-              })
+                BanStatus: true,
+              });
               // .then(
               //   console.log("\nCust:", cust),
-                // setcust(tempcust),
+              // setcust(tempcust),
               //   console.log("\nCust:", cust)
               // )
               // window.location.reload(false)
 
               // console.log(tempcust)
               // setcust(tempcust)
-              onscreenload()
-
+              onscreenload();
             },
           },
           {
-            text: "No",
-            onPress: ()=> {console.log("NO")},
+            text: 'No',
+            onPress: () => {
+              console.log('NO');
+            },
             // style: "cancel"
-
-          }
+          },
         ],
-        {cancelable: false}
-      )
-    }
-    else {
+        {cancelable: false},
+      );
+    } else {
       Alert.alert(
-        "Unban User",
-        "Are you sure you want to unban this user?",
+        'Unban User',
+        'Are you sure you want to unban this user?',
         [
           {
-            text: "Yes",
-            onPress: ()=>{
+            text: 'Yes',
+            onPress: () => {
               // console.log("YES")
               // console.log(item.name)
               // console.log(index)
-              let tempcust = cust
-              tempcust[index] = {name: item.name, email: item.email, banstat: false}
-              mydb = firebase.database().ref('/Users/'+item.email.substr(0,8))
+              let tempcust = cust;
+              tempcust[index] = {
+                name: item.name,
+                email: item.email,
+                banstat: false,
+              };
+              mydb = firebase
+                .database()
+                .ref('/Users/' + item.email.substr(0, 8));
               mydb.update({
-                BanStatus: false
-              })
+                BanStatus: false,
+              });
               // .then(
               //   console.log("\nCust:", cust),
-                // setcust(tempcust),
+              // setcust(tempcust),
               //   console.log("\nCust:", cust)
               // )
 
               // console.log(tempcust)
               // setcust(tempcust)
-              onscreenload()
-
+              onscreenload();
             },
           },
           {
-            text: "No",
-            onPress: ()=> {console.log("NO")},
+            text: 'No',
+            onPress: () => {
+              console.log('NO');
+            },
             // style: "cancel"
-
-          }
+          },
         ],
-        {cancelable: false}
-      )
+        {cancelable: false},
+      );
     }
   }
 
   function onscreenload() {
     // setcust([{name: 'example', email: 'example@lums.edu.pk', banstat: true}, ])
     // console.log("db access")
-    mydb = firebase.database().ref('/Users')
-    mydb.once("value")
-      .then(function(snapshot) {
-        // product = []
-        let custarr = []
-        snapshot.forEach(function(childsnapshot) {
-          let customer = {name: childsnapshot.child("Username").val(), email: childsnapshot.child("Useremail").val(), banstat: childsnapshot.child("BanStatus").val()}
-          // console.log(childsnapshot.child("BanStatus"))
-          custarr.push(customer)
-          // console.log(customer)
-        })
-        setcust(custarr)
-      })
+    mydb = firebase.database().ref('/Users');
+    mydb.once('value').then(function(snapshot) {
+      // product = []
+      let custarr = [];
+      snapshot.forEach(function(childsnapshot) {
+        let customer = {
+          name: childsnapshot.child('Username').val(),
+          email: childsnapshot.child('Useremail').val(),
+          banstat: childsnapshot.child('BanStatus').val(),
+        };
+        // console.log(childsnapshot.child("BanStatus"))
+        custarr.push(customer);
+        // console.log(customer)
+      });
+      setcust(custarr);
+    });
   }
 
   return (
     <View style={styles.Screen}>
-    <NavigationEvents onDidFocus={() => {onscreenload()}} />
+      <NavigationEvents
+        onDidFocus={() => {
+          onscreenload();
+        }}
+      />
       <View style={{width: '100%'}}>
         <FlatList
           data={cust}
@@ -138,8 +147,12 @@ export default function Customers({navigation}) {
 
               <TouchableOpacity
                 onPress={() => banalert(item, index)}
-                style={{justifyContent: 'center'}} >
-                <Icon name="ban" size={24} color={item.banstat ? 'black' : 'red'} />
+                style={{justifyContent: 'center'}}>
+                <Icon
+                  name="ban"
+                  size={24}
+                  color={item.banstat ? 'black' : 'red'}
+                />
               </TouchableOpacity>
             </TouchableOpacity>
           )}
@@ -162,7 +175,7 @@ const styles = StyleSheet.create({
     // flexDirection: "column",
     height: '100%',
     padding: '10%',
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#e8e8e8',
 
     // flex: '20%',
   },
@@ -205,7 +218,7 @@ const styles = StyleSheet.create({
     // flex: 8,
     // width: 100,
     padding: '15%',
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#e8e8e8',
     height: '90%',
     justifyContent: 'center',
     alignItems: 'center',

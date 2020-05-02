@@ -1,5 +1,5 @@
 import React from 'react'
-import {Text,View,TextInput,StyleSheet, Button, TouchableOpacity} from 'react-native'
+import {Text,View,TextInput,StyleSheet, Button, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView} from 'react-native'
 //import Icon from "react-native-vector-icons/FontAwesome" ;
 import Icon from "react-native-vector-icons/Feather" ;
 
@@ -43,7 +43,10 @@ class Change_Password extends React.Component{
     render(){
         //Main Container View//
         return(
-                <View style= {styles.container}>
+            <TouchableWithoutFeedback onPress = {() =>{
+                Keyboard.dismiss()
+              }}>
+                <ScrollView style= {styles.container}>
                     
                     {/*Heading Container*/}
                     <View style= {styles.heading}>
@@ -89,7 +92,8 @@ class Change_Password extends React.Component{
                             </TouchableOpacity>
                         </View>
                         </View>
-                </View>
+                </ScrollView>
+                </TouchableWithoutFeedback>
             )
     }
 }

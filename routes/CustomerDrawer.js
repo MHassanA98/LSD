@@ -12,6 +12,7 @@ import CustMenu from '../screens/CustMenu';
 import Pending_Order_Admin from '../screens/Pending_Order_Admin';
 import PendingOrdersList from '../screens/PendingOrdersList';
 import RedemptionPoints from '../screens/RedemptionPoints';
+import Signout from '../screens/Signout';
 // import Subcategory from '../screens/Subcategory';
 import Customer_Profile from '../screens/Customer_Profile';
 import change_password_customer from '../screens/change_password_customer';
@@ -44,6 +45,11 @@ const Stacks = {
 
     Profile:{
         screen:ProfileStack
+    },
+
+    Signout: {
+      screen:Signout
+
     },
 
     // Shopping_cart:{

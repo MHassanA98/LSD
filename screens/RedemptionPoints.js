@@ -6,6 +6,8 @@ import {
   View,
   TouchableOpacity,
   TextInput,
+  TouchableWithoutFeedback,
+  Keyboard,
   // Button,
   // Picker,
 } from 'react-native';
@@ -17,6 +19,9 @@ import {
 
 export default function RedemptionPoints() {
   return (
+    <TouchableWithoutFeedback onPress = {() =>{
+      Keyboard.dismiss()
+    }}>
     <View style={styles.Screen}>
       {/* <View style={styles.TopBar}>
         <TouchableOpacity style={styles.TopBarBack}>
@@ -49,6 +54,7 @@ export default function RedemptionPoints() {
         </View>
       </View>
     </View>
+    </TouchableWithoutFeedback>
   );
 }
 

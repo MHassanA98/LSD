@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     // flexDirection: "column",
     height: '100%',
     padding: '10%',
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#e8e8e8',
 
     // flex: '20%',
   },
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     // flex: 8,
     // width: 100,
     paddingTop: 50,
-    backgroundColor: '#d3d3d3',
+    backgroundColor: '#e8e8e8',
     height: '560',
     // justifyContent: 'center',
     // padding: 40,

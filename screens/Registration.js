@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, ScrollView, ImageBackground, TextInput, TouchableOpacity, } from "react-native";
+import { StyleSheet, Text, View, ScrollView, ImageBackground, TextInput, TouchableOpacity, TouchableWithoutFeedback, Keyboard} from "react-native";
 import backg from "../assets/images/backg.png" ;
 import Icon from "react-native-vector-icons/FontAwesome" ;
 import firebase from "../assets/DatabaseConfig" ;
@@ -103,33 +103,55 @@ export default function Registration({navigation}) {
       .createUserWithEmailAndPassword(email, password)
       .then(function(result) {
         console.log("User created")
+
+        firebase.auth().currentUser.sendEmailVerification()
+        .then(()=> {
+          firebase.database().ref('/Users/'+email.substr(0,8)).set({
+            Username: username,
+            Useremail: email,
+            Phonenumber: phone,
+            Customerflag: true,
+            Redemptionpoints: 0,
+            BanStatus: false,
+            // ChangeRate: 10,
+          })
+          console.log("Verify Email")
+          SignUpPress()
+        } )
+        .catch(function(error) {console.log(error)} )
+
+        console.log("Now Waiting for Verify")
+
         return result.user.updateProfile({
           displayName: username
         })
       })
-      .catch(function(error) {console.log(error)} )
+      .catch(function(error) {
+        console.log(error)
+        // alert(error) 
+      })
       // .catch(error => errorMessageInputHandler)
     let meow1w = await meow1
 
-    let meow2 = firebase
-      .auth().currentUser.sendEmailVerification()
-      .then(()=> {
-        firebase.database().ref('/Users/'+email.substr(0,8)).set({
-          Username: username,
-          Useremail: email,
-          Phonenumber: phone,
-          Customerflag: true,
-          Redemptionpoints: 0,
-          BanStatus: false,
-          // ChangeRate: 10,
-        })
-        console.log("Verify Email")
-        SignUpPress()
-      } )
-      .catch(function(error) {console.log(error)} )
-    let meow2w = await meow2
+    // let meow2 = firebase
+    //   .auth().currentUser.sendEmailVerification()
+    //   .then(()=> {
+    //     firebase.database().ref('/Users/'+email.substr(0,8)).set({
+    //       Username: username,
+    //       Useremail: email,
+    //       Phonenumber: phone,
+    //       Customerflag: true,
+    //       Redemptionpoints: 0,
+    //       BanStatus: false,
+    //       // ChangeRate: 10,
+    //     })
+    //     console.log("Verify Email")
+    //     SignUpPress()
+    //   } )
+    //   .catch(function(error) {console.log(error)} )
+    // let meow2w = await meow2
 
-    console.log("Now Waiting for Verify")
+    // console.log("Now Waiting for Verify")
 
     // let meow3 = firebase
     //   .auth()
@@ -149,6 +171,9 @@ export default function Registration({navigation}) {
   return (
     // <ScrollView style={styles.container}>
     <ImageBackground source={backg} style={styles.bgimage}>
+      <TouchableWithoutFeedback onPress = {() =>{
+      Keyboard.dismiss()
+      }}>
       <ScrollView style={styles.container}>
         <View style={styles.maincontainer}>
           
@@ -182,6 +207,7 @@ export default function Registration({navigation}) {
           </View>
         </TouchableOpacity>
       </ScrollView>
+      </TouchableWithoutFeedback>
     </ImageBackground>
     // </ScrollView>
   );

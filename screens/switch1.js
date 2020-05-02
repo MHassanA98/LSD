@@ -9,8 +9,8 @@ export default (SwitchExample = props => {
       <Switch
         onValueChange={props.toggleSwitch1}
         value={props.switch1Value}
-        trackColor={{true: 'red', false: '#d3d3d3'}}
-        thumbColor={isEnabled ? 'ffffff' : '#d3d3d3'}
+        trackColor={{true: 'red', false: '#e8e8e8'}}
+        thumbColor={isEnabled ? 'ffffff' : '#e8e8e8'}
         //   thumbTintColor="#d00f16"
       />
     </View>
