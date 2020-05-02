@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
     // flexDirection: "column",
     height: '100%',
     // padding: '10%',
-    paddingTop: '10%',
+    paddingTop: '5%',
     // marginVertical: 10,
     backgroundColor: '#e8e8e8',
 
