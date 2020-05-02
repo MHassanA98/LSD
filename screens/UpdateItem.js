@@ -29,10 +29,10 @@ export default function UpdateItem({navigation}) {
   
   const pressHandler = () =>{
     
-    if (ProductName==''){
-      alert("Name field cannot be empty")
-    }
-    else if (ProductPrice==''){
+    // if (ProductName==''){
+    //   alert("Name field cannot be empty")
+    // }
+    if (ProductPrice==''){
       alert("Price field cannot be empty")
     }
     else if (ProductQuantity=='')
