@@ -2,6 +2,9 @@ import React from 'react'
 import {Text,View,TextInput,StyleSheet, Button, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView} from 'react-native'
 //import Icon from "react-native-vector-icons/FontAwesome" ;
 import Icon from "react-native-vector-icons/Feather" ;
+import firebase from '../assets/DatabaseConfig';
+import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 
 //import CustomButton from '../screens/button' for later use 
 
@@ -10,128 +13,93 @@ import Icon from "react-native-vector-icons/Feather" ;
 //Back handler has not been added
 //Respective Functions have been made to make adding functionality easier 
 //Removed touchopacity, because couldn't make that button work. Working on a seperate button module, once done will implement that 
+//redesigned, brought to sds screens design and improved by jawad
+//functionality added by hasan
+//state declaration brought to standard declaration used on other screens
 
 
-class Change_Password extends React.Component{
-    state = {
-        current:"", 
-        new:"",
-        confirm:""
-    }
+export default function Change_Password({navigation}) {
 
-    change_password_buttonhandler = () => {
-        alert(
-            `You have pressed change password`
-            )
-    }
-    old_passwordHandler = text => {
-    this.setState({
-        current: text
-        })    
-    }
-    new_passwordHandler = text => {
-        this.setState({
-            new: text
-            })    
-        }
-    confirm_passwordHandler = text => {
-        this.setState({
-            confirm: text
-            })    
-        }
+    
+    //updatePassword
 
-    render(){
         //Main Container View//
-        return(
-            <TouchableWithoutFeedback onPress = {() =>{
-                Keyboard.dismiss()
-              }}>
-                <ScrollView style= {styles.container}>
-                    
-                    {/*Heading Container*/}
-                    <View style= {styles.heading}>
-                        <Text style = {{marginLeft: 50,fontSize:35, color: 'white'}}> Change Password </Text>
+    return(
+        <TouchableWithoutFeedback onPress = {() =>{
+            Keyboard.dismiss()
+            }}>
+            <ScrollView style= {styles.container}>
+                
+                <View style = {styles.body}>
+                    <View style = {styles.iconstyle}>
+                        <Icon name = 'key' color = '#d00f16' size = {120} style = {{transform: [{rotateX: '360deg'}], transform: [{rotate : '90deg'}]}} />    
                     </View>
-                    
-                    {/*Password Change Form*/}
-                    <View style = {styles.body}>
-                        <View style = {styles.iconstyle}>
-                            <Icon name = 'key' color = '#d00f16' size = {120} style = {{transform: [{rotateX: '360deg'}], transform: [{rotate : '90deg'}]}} />    
-                        </View>
-                        <View style = {styles.textbox}>
-                            <TextInput style = {{fontSize: 18, marginLeft:15}}
-                                placeholderTextColor = 'black'
-                                placeholder = 'Current Password'
-                                onChangeText = {this.old_passwordHandler}
-                            />
-                        </View>
-                        <View style = {styles.textbox}>
-                            <TextInput style = {{fontSize: 18, marginLeft:15}}
-                                placeholderTextColor = 'black'
-                                placeholder = 'New Password'
-                                onChangeText = {this.new_passwordHandler}
-                            />
-                        </View>
-                        <View style = {styles.textbox}>
-                            <TextInput style = {{fontSize: 18, marginLeft:15}}
-                                placeholderTextColor = 'black'
-                                placeholder = 'Confirm Password'
-                                onChangeText = {this.confirm_passwordHandler}
-                            />
-                        </View>
-                        <View
-                            style={{
-                            marginTop: 20,
-                            width: '50%',
-                            justifyContent: 'center'
-                            }}>
-                            <TouchableOpacity
-                            onPress={() => alert('Confirmed!')}
-                            style={styles.Confirmbutton}>
-                            <Text style={styles.bigbuttontext}>Confirm</Text>
-                            </TouchableOpacity>
-                        </View>
-                        </View>
-                </ScrollView>
-                </TouchableWithoutFeedback>
-            )
-    }
+                    <View style = {styles.textbox}>
+                        <TextInput style = {{fontSize: 18, marginLeft:15}}
+                            placeholder = 'New Password'
+                            // onChangeText = {this.new_passwordHandler}
+                        />
+                    </View>
+                    <View style = {styles.textbox}>
+                        <TextInput style = {{fontSize: 18, marginLeft:15}}
+                            placeholder = 'Confirm Password'
+                            // onChangeText = {this.confirm_passwordHandler}
+                        />
+                    </View>
+                    <View
+                        style={{
+                        marginTop: "15%",
+                        marginBottom: "40%",
+                        width: '50%',
+                        justifyContent: 'center'
+                        }}>
+                        <TouchableOpacity
+                        onPress={() => alert('Confirmed!')}
+                        style={styles.Confirmbutton}>
+                        <Text style={styles.bigbuttontext}>Confirm</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </ScrollView>
+        </TouchableWithoutFeedback>
+    )
+
 }
 
 const styles = StyleSheet.create({
     container: {
         flex:1, 
-        width:'100%',
-        backgroundColor:'#d00f16', 
-        alignItems:'center'
-    },
-    heading: {
-        height:'2%', 
-        width:'90%', 
-        backgroundColor:'#d00f16', 
-        marginTop:20
+        // width:'100%',
+        backgroundColor:'#e8e8e8', 
+        // justifyContent: "center",
+        // alignContent: "center",
     },
     body:{
         width:'100%', 
         height: '100%',
         backgroundColor: '#e8e8e8', 
+        // backgroundColor: 'yellow', 
         marginTop:50,
-        alignItems: 'center'
+        alignItems: 'center',
+        justifyContent: "center",
     },
     textbox:{
-        marginTop:30,
+        marginTop:25,
         width:'80%',
+        borderRadius: 6,
         justifyContent:'center',
         borderBottomWidth:0, 
         backgroundColor:'white',
         fontSize: 18
     },
     iconstyle: {
-        marginTop: 30,
+        // marginTop: '10%',
         borderRadius: 180,
-        height: 120,
-        width: 120,
-        backgroundColor: '#e8e8e8',
+        height: '27%',
+        width: '40%',
+        borderWidth: 6,
+        borderColor: '#d00f16',
+        // backgroundColor: '#e8e8e8',
         alignItems: 'center',
         justifyContent: 'center',
       },
@@ -165,5 +133,3 @@ const styles = StyleSheet.create({
         // opacity: 1,
       }
 })
-
-export default Change_Password
