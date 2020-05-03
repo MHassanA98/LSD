@@ -1,5 +1,5 @@
-import React from 'react'
-import {Text,View,TextInput,StyleSheet, Button, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView} from 'react-native'
+import React, { useState } from 'react';
+import {Text,View,TextInput,StyleSheet, Button, TouchableOpacity, TouchableWithoutFeedback, Keyboard, ScrollView} from 'react-native';
 //import Icon from "react-native-vector-icons/FontAwesome" ;
 import Icon from "react-native-vector-icons/Feather" ;
 import firebase from '../assets/DatabaseConfig';
@@ -20,8 +20,39 @@ import database from '@react-native-firebase/database';
 
 export default function Change_Password({navigation}) {
 
-    
     //updatePassword
+    const [password, setPassword] = useState("");
+    const [repassword, setRepassword] = useState("");
+
+    const repasswordInputHandler = (inputRepassword) => {
+        setRepassword(inputRepassword);
+    };
+
+    const passwordInputHandler = (inputPassword) => {
+        setPassword(inputPassword);
+    };
+
+    const handleConfirmPress = () => {
+        if (password.length>=8) {
+            if (password==repassword) {
+                firebase.auth().currentUser.updatePassword(password)
+                .then(
+                    alert("Password succesfully changed!")
+                )
+                .catch(function(error) {
+                    alert(error)
+                }) 
+                // console.log("changed")
+
+            }
+            else {
+                alert("passwords do not match!")
+            }
+        }
+        else {
+            alert("Password must be 8 characters or more.")
+        }
+    }
 
         //Main Container View//
     return(
@@ -36,14 +67,18 @@ export default function Change_Password({navigation}) {
                     </View>
                     <View style = {styles.textbox}>
                         <TextInput style = {{fontSize: 18, marginLeft:15}}
+                            secureTextEntry
                             placeholder = 'New Password'
-                            // onChangeText = {this.new_passwordHandler}
+                            onChangeText = {passwordInputHandler}
+                            value = {password}
                         />
                     </View>
                     <View style = {styles.textbox}>
                         <TextInput style = {{fontSize: 18, marginLeft:15}}
+                            secureTextEntry
                             placeholder = 'Confirm Password'
-                            // onChangeText = {this.confirm_passwordHandler}
+                            onChangeText = {repasswordInputHandler}
+                            value = {repassword}
                         />
                     </View>
                     <View
@@ -54,7 +89,7 @@ export default function Change_Password({navigation}) {
                         justifyContent: 'center'
                         }}>
                         <TouchableOpacity
-                        onPress={() => alert('Confirmed!')}
+                        onPress={handleConfirmPress}
                         style={styles.Confirmbutton}>
                         <Text style={styles.bigbuttontext}>Confirm</Text>
                         </TouchableOpacity>

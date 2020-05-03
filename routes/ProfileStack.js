@@ -13,6 +13,7 @@ import Pending_Order_Admin from '../screens/Pending_Order_Admin';
 // import Subcategory from '../screens/Subcategory';
 import CustomerProfile from '../screens/Customer_Profile';
 import ChangePassword from '../screens/change_password_customer';
+import ChangePhone from '../screens/change_phone_customer';
 // import Customer from '../screens/Customer';
 // import Forgotpw from '../screens/Forgotpw';
 // import Change_Password from '../screens/ChangePassword';
@@ -58,6 +59,10 @@ const screens = {
 
   ChangePassword:{
       screen:ChangePassword
+  },
+
+  ChangePhone:{
+      screen:ChangePhone
   }
 
 //   Login: {

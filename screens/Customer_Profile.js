@@ -44,11 +44,12 @@ export default function Customer_Profile({navigation}) {
     // setUsername(uname)
   }
 
-  function change_number_buttonhandler() {
-    alert("You have pressed change number");
-  };
   function change_password_buttonhandler() {
     navigation.navigate("ChangePassword")
+  };
+  
+  function change_phone_buttonhandler() {
+    navigation.navigate("ChangePhone")
   };
 
   return (
@@ -104,7 +105,7 @@ export default function Customer_Profile({navigation}) {
             marginLeft: 100,
           }}>
           <TouchableOpacity
-            onPress={change_number_buttonhandler}
+            onPress={change_phone_buttonhandler}
             style={styles.Confirmbutton}>
             <Text style={styles.bigbuttontext}>Change Number</Text>
           </TouchableOpacity>

@@ -22,7 +22,12 @@ export default function Login({navigation}) {
       mydb.once("value")
         .then(function(snapshot) {
           let custflag = snapshot.child("Customerflag").val()
+<<<<<<< HEAD
           let username = snapshot.child("Username").val()
+=======
+          // let Name = snapshot.child("Username").val()
+          // console.log(Name)
+>>>>>>> 2caa7e3b077a20c3d97a09424f928a955a70a729
           if (custflag) {
             navigation.navigate('CustomerDrawer', {user:username})
           }
