@@ -149,10 +149,11 @@ const Stacks = {
 
 // home stack navigator screens
 const AdminDrawer = createDrawerNavigator(Stacks,
-  {
-    drawerWidth:Dimensions.get('window').width-120,
-    contentComponent: CustomerDrawer
-  })
+  // {
+    // drawerWidth:Dimensions.get('window').width-120,
+    // contentComponent: CustomerDrawer
+  // }
+  )
 //   , {
 //   defaultNavigationOptions: {
 //     headerTintColor: '#444',

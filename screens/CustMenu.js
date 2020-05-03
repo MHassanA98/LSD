@@ -1,32 +1,22 @@
 import React, {useState} from 'react';
-// import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
   StyleSheet,
-  ScrollView,
   Text,
   View,
   TouchableOpacity,
-  TextInput,
   Image,
-  // Button,
-  // Picker,
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {NavigationEvents} from 'react-navigation';
-import lsdlogo from '../assets/images/lsdlogo.png';
 import newbiryani from '../assets/images/newbiryani.png';
-// import DropDownItem from "react-native-drop-down-item";
-// import {
-//   TouchableHighlight,
-//   BorderlessButton,
-// } from "react-native-gesture-handler"
+// import function1 from './Shopping_cart';
 import firebase from '../assets/DatabaseConfig';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
-// import Swipeout from 'react-native-swipeout';
 import {add} from 'react-native-reanimated';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
+
 
 export default function CustMenu({navigation}) {
   // console.log(" Customer: ", navigation.getParam('Sub'), navigation.getParam('Cat'))
@@ -35,38 +25,40 @@ export default function CustMenu({navigation}) {
     // {name: 'meow', price: 0, quantity: 0},
   ]);
 
+
+  function handleaddcart() {
+    // ShoppingCart.apply(frommenu(3))
+    // Shopping({navigation}).frommenu(5)
+    // function1()
+    console.log("meow")
+  }
+
   // setProduct([])
 
-  // componentWillMount() {
-  //   setProduct()
-  // }
-  // window.onload = function(){
-  //   setProduct([])
-  // }
-
-  // function onscreenload() {
-  // console.log("MEOW")
-  mydb = firebase
-    .database()
-    .ref(
-      '/Inventory/' +
-        navigation.getParam('Cat') +
-        '/' +
-        navigation.getParam('Sub'),
-    );
-  mydb.once('value').then(function(snapshot) {
-    // product = []
-    snapshot.forEach(function(childsnapshot) {
-      let newprod = {
-        name: childsnapshot.key,
-        price: childsnapshot.child('Price').val(),
-        quantity: 0,
-      };
-      // console.log(newprod)
-      product.push(newprod);
+  function onscreenload() {
+    mydb = firebase
+      .database()
+      .ref(
+        '/Inventory/' +
+          navigation.getParam('Cat') +
+          '/' +
+          navigation.getParam('Sub'),
+      );
+    mydb.once('value').then(function(snapshot) {
+      // product = []
+      let prodarr = [];
+      snapshot.forEach(function(childsnapshot) {
+        let newprod = {
+          name: childsnapshot.key,
+          price: childsnapshot.child('Price').val(),
+          quantity: 0,
+        };
+        // console.log(newprod)
+        prodarr.push(newprod);
+      });
+      setProduct(prodarr)
     });
-  });
-  // }
+  }
 
   // mydb = firebase.database().ref('/Inventory/'+navigation.getParam('Cat')+'/'+navigation.getParam('Sub'))
   // mydb.once("value")
@@ -108,7 +100,7 @@ export default function CustMenu({navigation}) {
   return (
     // <ScrollView>
     <View style={styles.Screen}>
-      {/* <NavigationEvents onDidFocus={() => {onscreenload()}} /> */}
+      <NavigationEvents onDidFocus={() => {onscreenload()}} />
       {/* <View style={{width: '100%', height: 460, marginVertical: 12}}> */}
       <FlatList
         data={product}

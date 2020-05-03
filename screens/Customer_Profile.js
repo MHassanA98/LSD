@@ -1,6 +1,10 @@
-import React from 'react';
-import {Text, View, StyleSheet, Button, TouchableOpacity} from 'react-native';
+import React, {useState}  from 'react';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import {NavigationEvents} from 'react-navigation';
+import firebase from '../assets/DatabaseConfig';
+import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 
 //Made by Shahzil
 //Added Button Handlers
@@ -8,108 +12,106 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 //Need to add firebase functionality
 //Icons to be added by the space in the fields
 //The change password button will lead to change_password_customer screen
+//redesigned, brought to sds screens design and improved by jawad
+//functionality added by hasan
+//state declaration brought to standard declaration used on other screens
 
-class Customer_Profile extends React.Component {
-  state = {
-    username: '',
-    phone: '',
-    points: '',
-    email: '',
-  };
 
-  username_fetch = () => {
-    this.setState({
-      username: 'Username',
+export default function Customer_Profile({navigation}) {
+
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [points, setPoints] = useState("");
+
+  function onscreenload() {
+    let emailcheck = firebase.auth().currentUser.email
+    mydb = firebase.database().ref( '/Users/'+emailcheck.substr(0,8) );
+    mydb.once('value')
+    .then(function(snapshot) {
+      setUsername(snapshot.child("Username").val())
+      setEmail(snapshot.child("Useremail").val())
+      setPhone(snapshot.child("Phonenumber").val())
+      if (snapshot.child("Customerflag").val()) {
+        setPoints(snapshot.child("Redemptionpoints").val())
+      }
+      else {
+        setPoints(snapshot.child("ChangeRate").val())
+      }
+
     });
+    // console.log(uname)
+    // setUsername(uname)
+  }
+
+  function change_number_buttonhandler() {
+    alert("You have pressed change number");
   };
-  email_fetch = () => {
-    this.setState({
-      username: 'Email',
-    });
-  };
-  phone_fetch = () => {
-    this.setState({
-      phone: 'Phone',
-    });
-  };
-  points_fetch = () => {
-    this.setState({
-      points: 0,
-    });
+  function change_password_buttonhandler() {
+    navigation.navigate("ChangePassword")
   };
 
-  change_number_buttonhandler = () => {
-    alert(`You have pressed change number`);
-  };
-  change_password_buttonhandler = () => {
-    alert(`You have pressed change password`);
-  };
-
-  render() {
-    //Main Container View//
-    return (
-      <View style={styles.container}>
-        {/*Heading Container*/}
-        <View style={styles.heading}>
-          <View style={styles.iconstyle}>
-            <Icon name="user" color="#d00f16" size={100} />
-          </View>
-        </View>
-
-        {/*Password Change Form*/}
-        <View style={styles.body}>
-          <View style={styles.textbox}>
-            <Icon name="user" color="#d00f16" size={24} />
-            <Text style={{fontSize: 18, marginLeft: 33}}>Customer Name</Text>
-          </View>
-
-          <View style={styles.textbox}>
-            <Icon name="envelope-o" color="#d00f16" size={24} />
-            <Text style={{fontSize: 18, marginLeft: 25}}>Email</Text>
-          </View>
-
-          <View style={styles.textbox}>
-            <Icon name="phone" color="#d00f16" size={24} />
-            <Text style={{fontSize: 18, marginLeft: 30}}>Phone Number</Text>
-          </View>
-
-          <View style={styles.textbox}>
-            <Icon name="credit-card" color="#d00f16" size={24} />
-            <Text style={{fontSize: 18, marginLeft: 20}}>
-              Redemption Points
-            </Text>
-          </View>
-
-          <View
-            style={{
-              marginTop: 20,
-              width: '50%',
-              justifyContent: 'center',
-              marginLeft: 100,
-            }}>
-            <TouchableOpacity
-              onPress={() => alert('Confirmed!')}
-              style={styles.Confirmbutton}>
-              <Text style={styles.bigbuttontext}>Change Password</Text>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              marginTop: 20,
-              width: '50%',
-              justifyContent: 'center',
-              marginLeft: 100,
-            }}>
-            <TouchableOpacity
-              onPress={() => alert('Confirmed!')}
-              style={styles.Confirmbutton}>
-              <Text style={styles.bigbuttontext}>Change Number</Text>
-            </TouchableOpacity>
-          </View>
+  return (
+    <View style={styles.container}>
+      <NavigationEvents onDidFocus={() => { onscreenload(); }} />
+      {/*Heading Container*/}
+      <View style={styles.heading}>
+        <View style={styles.iconstyle}>
+          <Icon name="user" color="#d00f16" size={100} />
         </View>
       </View>
-    );
-  }
+
+      {/*Password Change Form*/}
+      <View style={styles.body}>
+        <View style={styles.textbox}>
+          <Icon name="user" color="#d00f16" size={24} />
+          <Text style={{fontSize: 18, marginLeft: 28}} >{username}</Text>
+        </View>
+
+        <View style={styles.textbox}>
+          <Icon name="envelope-o" color="#d00f16" size={24} />
+          <Text style={{fontSize: 18, marginLeft: 20}}>{email}</Text>
+        </View>
+
+        <View style={styles.textbox}>
+          <Icon name="phone" color="#d00f16" size={24} />
+          <Text style={{fontSize: 18, marginLeft: 25}}>{phone}</Text>
+        </View>
+
+        <View style={styles.textbox}>
+          <Icon name="credit-card" color="#d00f16" size={24} />
+          <Text style={{fontSize: 18, marginLeft: 15}}>{points}</Text>
+        </View>
+
+        <View
+          style={{
+            marginTop: 20,
+            width: '50%',
+            justifyContent: 'center',
+            marginLeft: 100,
+          }}>
+          <TouchableOpacity
+            onPress={change_password_buttonhandler}
+            style={styles.Confirmbutton}>
+            <Text style={styles.bigbuttontext}>Change Password</Text>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            marginTop: 20,
+            width: '50%',
+            justifyContent: 'center',
+            marginLeft: 100,
+          }}>
+          <TouchableOpacity
+            onPress={change_number_buttonhandler}
+            style={styles.Confirmbutton}>
+            <Text style={styles.bigbuttontext}>Change Number</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -120,10 +122,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   heading: {
-    height: 100,
+    height: '14%',
     width: '100%',
     backgroundColor: '#d00f16',
-    marginTop: 70,
+    marginTop: '17%',
     marginRight: 10,
     // alignContent: 'center',
     alignItems: 'center',
@@ -134,7 +136,7 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 20,
     backgroundColor: '#e8e8e8',
-    marginTop: 40,
+    marginTop: '8%',
   },
   textbox: {
     flexDirection: 'row',
@@ -190,4 +192,5 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Customer_Profile;
+
+
