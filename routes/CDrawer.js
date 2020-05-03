@@ -11,13 +11,6 @@ export default function CustomerDrawer({navigation}) {
 
     const [screen, setScreen]=useState('Home')
 
-<<<<<<< HEAD
-=======
-    // console.log(navigation.dangerouslyGetParent().state.routes[1])
-    // console.log(route.getParams)
-
-    // console.log(navigation.state.routes[1].key)
->>>>>>> 2caa7e3b077a20c3d97a09424f928a955a70a729
     navigateToScreen = ( route ) =>(
         () => {
         navigation.dispatch(NavigationActions.navigate({routeName:route}));
