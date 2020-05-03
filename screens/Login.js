@@ -29,6 +29,8 @@ export default function Login({navigation}) {
       mydb.once("value")
         .then(function(snapshot) {
           let custflag = snapshot.child("Customerflag").val()
+          // let Name = snapshot.child("Username").val()
+          // console.log(1234)
           if (custflag) {
             navigation.navigate('CustomerDrawer')
           }

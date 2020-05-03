@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import {StyleSheet, Text, View, TouchableOpacity,Dimensions, Alert} from 'react-native'
 import MIcon from 'react-native-vector-icons/MaterialIcons'
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -9,11 +9,15 @@ import firebase from '../assets/DatabaseConfig'
 
 export default function CustomerDrawer({navigation}) {
 
-    console.log(navigation.dangerouslyGetParent().state)
-    // console.log(navigation.state.routes[0].key)
+    const [screen, setScreen]=useState('Home')
+
+    console.log(navigation.dangerouslyGetParent().state.routes[1])
+
+    // console.log(navigation.state.routes[1].key)
     navigateToScreen = ( route ) =>(
         () => {
         navigation.dispatch(NavigationActions.navigate({routeName:route}));
+        setScreen(route)
         // console.log("asdasd")
     })
 
@@ -56,35 +60,35 @@ export default function CustomerDrawer({navigation}) {
                 </Text>
             </View>
             {/* <View > */}
-            <TouchableOpacity style={[styles.TouchOpp,{}]} onPress={navigateToScreen('Home')} activeOpacity={0.3}>
-                <MCIcon style={styles.FAIcon} name='home' size={24}/>
-                <Text style={styles.TextDraw}>
+            <TouchableOpacity style={[styles.TouchOpp,(screen==='Home') ? styles.Active: null]} onPress={navigateToScreen('Home')} activeOpacity={0.3}>
+                <MCIcon style={[styles.FAIcon,(screen==='Home') ? styles.ActiveLogo: null]} name='home' size={24}/>
+                <Text style={[styles.TextDraw,(screen==='Home') ? styles.ActiveText: null]}>
                     {/* {navigation.state.routes.map((item)=>console.log(item.key))} */}
                     Home
                 </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.TouchOpp,{}]} onPress={navigateToScreen('Profile')} activeOpacity={0.3}>
-                <MCIcon style={styles.FAIcon} name='account-box' size={24}/>
-                <Text style={styles.TextDraw}>
+            <TouchableOpacity style={[styles.TouchOpp,(screen==='Profile') ? styles.Active: null]} onPress={navigateToScreen('Profile')} activeOpacity={0.3}>
+                <MCIcon style={[styles.FAIcon,(screen==='Profile') ? styles.ActiveLogo: null]} name='account-box' size={24}/>
+                <Text style={[styles.TextDraw,(screen==='Profile') ? styles.ActiveText: null]}>
                     {/* {navigation.state.routes.map((item)=>console.log(item.key))} */}
                     Profile
                     
                 </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={[styles.TouchOpp,{}]} onPress={navigateToScreen('Orders')} activeOpacity={0.3}>
-                <MCIcon style={styles.FAIcon} name='truck-delivery' size={24}/>
-                <Text style={[styles.TextDraw]}>
+            <TouchableOpacity style={[styles.TouchOpp,(screen==='Orders') ? styles.Active: null]} onPress={navigateToScreen('Orders')} activeOpacity={0.3}>
+                <MCIcon style={[styles.FAIcon,(screen==='Orders') ? styles.ActiveLogo: null]} name='truck-delivery' size={24}/>
+                <Text style={[styles.TextDraw,(screen==='Orders') ? styles.ActiveText: null]}>
                     {/* {navigation.state.routes.map((item)=>console.log(item.key))} */}
                     Orders
                     
                 </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.TouchOpp} onPress={navigateToScreen('Customers')} activeOpacity={0.3}>
-                <MIcon style={styles.FAIcon} name='people' size={24}/>
-                <Text style={styles.TextDraw}>
+            <TouchableOpacity style={[styles.TouchOpp,(screen==='Customers') ? styles.Active: null]} onPress={navigateToScreen('Customers')} activeOpacity={0.3}>
+                <MIcon style={[styles.FAIcon,(screen==='Customers') ? styles.ActiveLogo: null]} name='people' size={24}/>
+                <Text style={[styles.TextDraw,(screen==='Customers') ? styles.ActiveText: null]}>
                     {/* {navigation.state.routes.map((item)=>console.log(item.key))} */}
                     Customers
                     
@@ -114,21 +118,7 @@ export default function CustomerDrawer({navigation}) {
             {/* </View> */}
         </SafeAreaView>
 
-
-
-
-
-
-
-
-
-
-
-
     )
-    
-
-
 
 }
 
@@ -159,9 +149,9 @@ const styles=StyleSheet.create({
         paddingTop:16,
         paddingBottom:16,
         paddingLeft:32,
-        color:"black",
+        color:"rgba(00,00,00,1)",
         fontFamily:'Roboto-Medium',
-        fontSize:16,
+        fontSize:14,
         alignSelf:'center',
         // justifyContent:'center'
     },
@@ -176,7 +166,7 @@ const styles=StyleSheet.create({
         paddingLeft:16,
         paddingTop:12,
         paddingBottom:12,
-        color:"#d00f16"
+        color:"rgba(00,00,00,0.58)"
     },
 
     TouchOpp:{
@@ -190,10 +180,25 @@ const styles=StyleSheet.create({
     lineStyle:{
         borderWidth: 1,
         borderColor:'rgba(00,00,00,0.12)',
-        marginTop:Dimensions.get('window').height-570,
+        marginTop:Dimensions.get('window').height-560,
         marginBottom:8,
         alignSelf:'center',
         width:Dimensions.get('window').width/1.6
+   },
+
+   Active:{
+       backgroundColor:'rgba(208,15,22,0.15)'
+        // backgroundColor:'#d00f16',
+        // backgroundOpacity:0.1
+        // overlayColo:'asd'
+   },
+
+   ActiveText:{
+       color:'#d00f16'
+   },
+
+   ActiveLogo:{
+       color:'#d00f16'
    }
 
     

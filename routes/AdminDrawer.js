@@ -27,7 +27,7 @@ import RedemptionStack from './RedemptionStack';
 import AdminStack from './AdminStack';
 import CustomerStack from './CustomerStack';
 import ProfileStack from './ProfileStack';
-import CustomerDrawer from '../assets/Drawer';
+import ADrawer from './ADrawer';
 
 // import firebase from '@react-native-firebase/app';
 // import ReviewDetails from '../screens/reviewDetails';
@@ -61,6 +61,9 @@ const Stacks = {
       screen:Signout
 
     },
+
+    
+   
 
    
     
@@ -149,11 +152,13 @@ const Stacks = {
 
 // home stack navigator screens
 const AdminDrawer = createDrawerNavigator(Stacks,
-  // {
-    // drawerWidth:Dimensions.get('window').width-120,
-    // contentComponent: CustomerDrawer
-  // }
-  )
+  {
+    drawerWidth:Dimensions.get('window').width-120,
+    contentComponent: ADrawer,
+    gesturesEnabled: false,
+    edgeWidth:0
+  }
+)
 //   , {
 //   defaultNavigationOptions: {
 //     headerTintColor: '#444',
