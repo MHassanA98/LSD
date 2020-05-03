@@ -30,7 +30,7 @@ export default function Login({navigation}) {
         .then(function(snapshot) {
           let custflag = snapshot.child("Customerflag").val()
           // let Name = snapshot.child("Username").val()
-          // console.log(1234)
+          // console.log(Name)
           if (custflag) {
             navigation.navigate('CustomerDrawer')
           }
