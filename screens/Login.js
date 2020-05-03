@@ -202,11 +202,13 @@ export default function Login({navigation}) {
             <Text style={styles.buttontext}>Forgot Password?</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.bigbutton} onPress={handleLoginPress} >
-          <View style={styles.loginbutton}> 
+        <View style={styles.loginbutton}> 
+        <TouchableOpacity style={[styles.bigbutton]} onPress={handleLoginPress} >
+          
             <Text style={styles.bigbuttontext}>Login</Text>
-          </View>
+          
         </TouchableOpacity>
+        </View>
         <View style={styles.clearbottombutton}> 
           <TouchableOpacity onPress={handleSuPress} >
             <Text style={styles.buttontext}>New user? Sign up!</Text>
@@ -241,8 +243,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     backgroundColor: "white",
     borderRadius: 6,
-    borderWidth: 1,
-    borderColor: '#777',
+    // borderWidth: 1,
+    // borderColor: '#777',
     shadowColor: '#000',
     shadowOffset: { width: 2, height: 4 },
     shadowOpacity: 0.9,
@@ -280,7 +282,10 @@ const styles = StyleSheet.create({
   stretch: {
     width: '60%',
     height: '40%',
-    resizeMode: "stretch",
+    // aspectRatio:(1,2)
+    // alignSelf:'center',
+    resizeMode: "contain",
+    // backgroundColor:"black"
     // paddingBottom: 10,
     // paddingEnd: 10,
     // paddingTop: 0,
@@ -345,12 +350,21 @@ const styles = StyleSheet.create({
   },
   bigbutton: {
     // paddingTop: 10,
-    paddingHorizontal: '23%',
-    paddingTop: '15%',
-    // minHeight: '0%',
-    // paddingVertical: 5,
-    // paddingVertical: '5%',
-    flex: 2,
+    borderRadius: 17,
+    shadowColor: '#000',
+    shadowOffset: { width: 2, height: 4 },
+    shadowOpacity: 0.9,
+    shadowRadius: 6,
+    elevation: 1,
+    backgroundColor: "#d00f16",
+
+
+    // paddingHorizontal: '23%',
+    // paddingTop: '15%',
+    // // minHeight: '0%',
+    // // paddingVertical: 5,
+    // // paddingVertical: '5%',
+    // flex: 2,
     // shadowColor: '#000',
     // shadowOffset: { width: 2, height: 4 },
     // shadowOpacity: 0.9,
@@ -366,17 +380,18 @@ const styles = StyleSheet.create({
   },
   loginbutton: {
     // paddingHorizontal: 15,
-    backgroundColor: "#d00f16",
+    // backgroundColor:,
+    width:'50%',
     borderRadius: 17,
-    shadowColor: '#000',
-    shadowOffset: { width: 2, height: 4 },
-    shadowOpacity: 0.9,
-    shadowRadius: 6,
-    elevation: 2,
+    // shadowColor: '#000',
+    // shadowOffset: { width: 2, height: 4 },
+    // shadowOpacity: 0.9,
+    // shadowRadius: 6,
+    // elevation: 2,
     // minHeight: '6%',
     textAlign: "center",
 
-    // alignItems: "center",
+    alignSelf: "center",
     // paddingTop: 10,
     // fontSize: 25,
     

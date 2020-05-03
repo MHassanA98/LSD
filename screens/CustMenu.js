@@ -24,7 +24,7 @@ import newbiryani from '../assets/images/newbiryani.png';
 import firebase from '../assets/DatabaseConfig';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
-import Swipeout from 'react-native-swipeout';
+// import Swipeout from 'react-native-swipeout';
 import {add} from 'react-native-reanimated';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
