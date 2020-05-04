@@ -18,7 +18,7 @@ export default function CustomerDrawer({navigation}) {
     })
 
     function onSignoutPress() {
-        console.log("meow")
+        // console.log("meow")
         Alert.alert(
           "Logout",
           "Are you sure you want to logout?",
@@ -37,7 +37,7 @@ export default function CustomerDrawer({navigation}) {
             },
             {
               text: "No",
-              onPress: ()=> {console.log("NO")},
+            //   onPress: ()=> {console.log("NO")},
             }
           ]
           , {cancelable: false}

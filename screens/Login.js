@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { StyleSheet, Text, View, ImageBackground, Image, TextInput, TouchableOpacity, Keyboard, TouchableWithoutFeedback} from "react-native";
 import backg from "../assets/images/backg.png" ;
 import lsdlogo from "../assets/images/lsdlogo.png" ;
+import AsyncStorage from '@react-native-community/async-storage';
 import firebase from "../assets/DatabaseConfig" ;
+// import auth from "@react-native-firebase/auth" ;
+// import database from "@react-native-firebase/database" ;
 
 import Icon from "react-native-vector-icons/FontAwesome" ;
 import { NavigationEvents } from 'react-navigation';
@@ -14,6 +17,28 @@ function END(mail) {
 
 export default function Login({navigation}) {
 
+  async function emptyitems(name) {
+    try {
+      const item = await AsyncStorage.removeItem(name)
+    } catch(e) {
+      console.log(e)
+    }
+
+  }
+
+  async function removeData() {
+    try {
+      const value = await AsyncStorage.getAllKeys()
+      if(value !== null) {
+        value.forEach(function(name) {
+          emptyitems(name)
+        })
+      }
+    } catch(e) {
+      console.log(e)
+    }
+  }
+
 
   const LoginPress = () =>{
 
@@ -24,6 +49,7 @@ export default function Login({navigation}) {
           let custflag = snapshot.child("Customerflag").val()
           let username = snapshot.child("Username").val()
           if (custflag) {
+            removeData()
             navigation.navigate('CustomerDrawer', {user:username})
           }
           else {
@@ -64,8 +90,9 @@ export default function Login({navigation}) {
     
     emaillums = END(email)
     if (emaillums){
-      mydb = firebase.database().ref('/Users/'+email.substr(0,8))
-      mydb.once("value")
+      if (password.length>=8) {
+        mydb = firebase.database().ref('/Users/'+email.substr(0,8))
+        mydb.once("value")
         .then(function(snapshot) {
 
           let banstat = snapshot.child("BanStatus").val()
@@ -80,10 +107,14 @@ export default function Login({navigation}) {
 
         })
       }
-
       else {
-        alert("Please enter your LUMS email.")
+        alert("Please enter 8 or more characters for password.")
       }
+    }
+
+    else {
+      alert("Please enter your LUMS email.")
+    }
 
   };
 

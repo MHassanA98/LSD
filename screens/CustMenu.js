@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   StyleSheet,
   Text,
@@ -25,12 +26,41 @@ export default function CustMenu({navigation}) {
     // {name: 'meow', price: 0, quantity: 0},
   ]);
 
+  async function storeData(name,price) {
+    try {
+      await AsyncStorage.setItem(name, JSON.stringify({price: parseInt(price), quantity: 0}))
+      // await AsyncStorage.removeItem("@storage_Key")
+    } catch (e) {
+      // saving error
+    }
+  }
 
-  function handleaddcart() {
+  // async function getData() {
+  //   try {
+  //     // const value = await AsyncStorage.getItem("order")
+  //     const value = await AsyncStorage.getAllKeys()
+  //     if(value !== null) {
+  //       console.log(value)
+  //       // value previously stored
+  //     }
+  //     else {
+  //       console.log("lmao")
+  //     }
+  //   } catch(e) {
+  //     console.log(e)
+  //     // error reading value
+  //   }
+  // }
+
+
+  function handleaddcart(name,price) {
     // ShoppingCart.apply(frommenu(3))
     // Shopping({navigation}).frommenu(5)
     // function1()
-    console.log("meow")
+    
+    storeData(name,price)
+    // getData()
+
   }
 
   // setProduct([])
@@ -73,9 +103,9 @@ export default function CustMenu({navigation}) {
 
   //   const onAdd = () => setProd;
   // const onMin = () => setProduct(prev => prev - 1)
-  function onMin(props) {
-    return props.quantity - 1;
-  }
+  // function onMin(props) {
+  //   return props.quantity - 1;
+  // }
   //   const onAdd = () => setProduct(prev => prev + 1);
   const swipeSettings = {
     autoclose: true,
@@ -130,6 +160,7 @@ export default function CustMenu({navigation}) {
               <Text style={styles.boxfont}>{'Rs. ' + item.price}</Text>
             </View>
             <TouchableOpacity
+              onPress={() => {handleaddcart(item.name, item.price)}}
               style={{justifyContent: 'center', alignItems: 'flex-end'}}>
               <Icon name="add-shopping-cart" color="red" size={24} />
             </TouchableOpacity>

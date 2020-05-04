@@ -1,16 +1,14 @@
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-community/async-storage';
 import {
   StyleSheet,
-  ScrollView,
   Text,
   View,
   TouchableOpacity,
-  TextInput,
-  // Button,
-  // Picker,
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import { NavigationEvents } from 'react-navigation';
 // import DropDownItem from "react-native-drop-down-item";
 // import {
 //   TouchableHighlight,
@@ -18,21 +16,123 @@ import {FlatList} from 'react-native-gesture-handler';
 // } from "react-native-gesture-handler"
 
 export default function Shopping() {
-  const [product, setProduct] = useState([
-    {name: 'pencil', price: '40', quantity: 0},
-    {name: 'ruler', price: '50', quantity: 0},
-    {name: 'sharpener', price: '5', quantity: 0},
-  ]);
+  
+  const [product, setProduct] = useState([ ]);
+  // const [product, setProduct] = useState([
+  //   {name: 'pencil', price: '40', quantity: 0},
+  //   {name: 'ruler', price: '50', quantity: 0},
+  //   {name: 'sharpener', price: '5', quantity: 0},
+  // ]);
   const [total, setTotal] = useState(0);
   //   const onAdd = () => setProd;
   // const onMin = () => setProduct(prev => prev - 1)
-  function onMin(props) {
-    return props.quantity - 1;
+
+  async function qtyless(name,price,quantity) {
+    try {
+      await AsyncStorage.setItem(name, JSON.stringify({price: parseInt(price), quantity: parseInt(quantity)-1}))
+      // await AsyncStorage.removeItem("@storage_Key")
+    } catch (e) {
+      // saving error
+    }
   }
+
+  async function qtymore(name,price,quantity) {
+    try {
+      await AsyncStorage.setItem(name, JSON.stringify({price: parseInt(price), quantity: parseInt(quantity)+1}))
+      // await AsyncStorage.removeItem("@storage_Key")
+    } catch (e) {
+      // saving error
+    }
+  }
+  
+  function onMin(item) {
+    console.log(item)
+    if (item.quantity!=0) {
+      // item.quantity = item.quantity-1
+      qtyless(item.name, item.price, item.quantity)
+      getData()
+
+    }
+  }
+
+  function onPlus(item) {
+    console.log(item)
+    // item.quantity = item.quantity+1
+    qtymore(item.name, item.price, item.quantity)
+    getData()
+  }
+
+  // async function storeData() {
+  //   try {
+  //     await AsyncStorage.setItem('@storage_Key', 'stored value')
+  //   } catch (e) {
+  //     // saving error
+  //   }
+  // }
+
+  async function getitem(name,prodarr) {
+    try {
+      const item = await AsyncStorage.getItem(name)
+      // console.log(name)
+      // const value = await AsyncStorage.getAllKeys()
+      if(item !== null) {
+        let myitem = JSON.parse(item)
+
+        let newprod = {
+          name: name,
+          price: parseInt(myitem.price),
+          quantity: parseInt(myitem.quantity),
+        }
+
+        prodarr.push(newprod)
+      }
+      else {
+        console.log("lmao")
+      }
+
+    } catch(e) {
+      console.log(e)
+      // error reading value
+    }
+
+    // prodarr.push(newprod)
+
+  }
+  
+
+  async function getData() {
+    try {
+      const value = await AsyncStorage.getAllKeys()
+      if(value !== null) {
+        console.log(value)
+        let prodarr  = []
+        value.forEach(function(name) {
+          // let newprod = getitem(name, prodarr)
+          getitem(name, prodarr)
+          
+          // console.log(prodarr)
+
+          // prodarr.push(newprod)
+
+          // console.log(name)
+        })
+        setProduct(prodarr)
+        // value previously stored
+      }
+      else {
+        console.log("lmao")
+      }
+    } catch(e) {
+      // error reading value
+    }
+  }
+
+
   //   const onAdd = () => setProduct(prev => prev + 1);
 
   return (
     <View style={styles.Screen}>
+      <NavigationEvents onDidFocus={() => {getData()}} />
       <View style={{width: '100%', height: 300, marginVertical: 12}}>
         <FlatList
           data={product}
@@ -56,14 +156,14 @@ export default function Shopping() {
                   justifyContent: 'center',
                   paddingHorizontal: 10,
                 }}>
-                <TouchableOpacity style={styles.Confirmbutton}>
+                <TouchableOpacity style={styles.Confirmbutton} onPress={() => {onMin(item)}} >
                   {/* //   onPress={item => setProduct(item.quantity + 1)}> */}
                   {/* //   onPress={onMin(item)}> */}
                   {/* <Text style={styles.boxfont}>UPDATE</Text> */}
                   <Icon name="minus" color="#ffffff" style="light" />
                 </TouchableOpacity>
                 <Text>{item.quantity}</Text>
-                <TouchableOpacity style={styles.Confirmbutton}>
+                <TouchableOpacity style={styles.Confirmbutton} onPress={() => {onPlus(item)}}>
                   {/* // onPress={onAdd(item.quantity)}> */}
                   <Icon name="plus" color="#ffffff" />
                 </TouchableOpacity>
