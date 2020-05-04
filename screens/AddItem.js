@@ -9,7 +9,7 @@ import {
   Alert,
   Keyboard,
   TouchableWithoutFeedback,
-  ScrollView
+  ScrollView,
   // Button,
   // Picker,
 } from 'react-native';
@@ -145,11 +145,12 @@ export default function AddItem({navigation}) {
   const Cat = ['Choose a category', 'Kitchen', 'Store'];
 
   return (
-    <TouchableWithoutFeedback onPress = {() =>{
-      Keyboard.dismiss()
-    }}>
-    <ScrollView style={styles.screen}>
-      {/* <View style={styles.TopBar}>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}>
+      <View style={styles.screen}>
+        {/* <View style={styles.TopBar}>
         <TouchableOpacity style={styles.TopBarBack}>
           <Icon name="arrow-left" size={32} color="white" />
         </TouchableOpacity>
@@ -166,89 +167,95 @@ export default function AddItem({navigation}) {
         </TouchableOpacity>
       </View> */}
 
-      <View style={styles.RestScreen}>
-        <View style={styles.viewstyle}>
-          <Picker
-            selectedValue={Category}
-            style={styles.container}
-            // placeholder= "Choose a category"
-            // onPress={}
-            onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}>
-            {/* <Picker.Item label="Choose a category" value="null" /> */}
-            {Cat.map((item, index) => {
-              return <Picker.Item label={item} value={item} key={index} />;
-            })}
-            {/* <Picker.Item label="Choose a category" value="null" />
+        <View style={styles.RestScreen}>
+          <View style={styles.viewstyle}>
+            <Picker
+              selectedValue={Category}
+              style={styles.container}
+              // placeholder= "Choose a category"
+              // onPress={}
+              onValueChange={(itemValue, itemIndex) => setCategory(itemValue)}>
+              {/* <Picker.Item label="Choose a category" value="null" /> */}
+              {Cat.map((item, index) => {
+                return <Picker.Item label={item} value={item} key={index} />;
+              })}
+              {/* <Picker.Item label="Choose a category" value="null" />
           <Picker.Item label="Food" value="food" />
           <Picker.Item label="Stationary" value="stationary" />
           <Picker.Item label="Grocery" value="grocery" /> */}
-          </Picker>
-          {/* <Categoryy >{'Change'}</Categoryy> */}
-        </View>
+            </Picker>
+            {/* <Categoryy >{'Change'}</Categoryy> */}
+          </View>
 
-        <View style={styles.viewstyle}>
-          <Picker
-            selectedValue={SubCategory}
-            style={styles.container}
-            // placeholder= "Choose a category"
-            // onPress={}
-            onValueChange={(itemValue, itemIndex) => setSubCategory(itemValue)}>
-            {/* <Picker.Item label="Choose a category" value="null" /> */}
-            {SubCat[Category].map((item, index) => {
-              return <Picker.Item label={item} value={item} key={index} />;
-            })}
-            {/* <Picker.Item label="Choose a category" value="null" />
+          <View style={styles.viewstyle}>
+            <Picker
+              selectedValue={SubCategory}
+              style={styles.container}
+              // placeholder= "Choose a category"
+              // onPress={}
+              onValueChange={(itemValue, itemIndex) =>
+                setSubCategory(itemValue)
+              }>
+              {/* <Picker.Item label="Choose a category" value="null" /> */}
+              {SubCat[Category].map((item, index) => {
+                return <Picker.Item label={item} value={item} key={index} />;
+              })}
+              {/* <Picker.Item label="Choose a category" value="null" />
             <Picker.Item label="Food" value="food" />
             <Picker.Item label="Stationary" value="stationary" />
             <Picker.Item label="Grocery" value="grocery" /> */}
-          </Picker>
+            </Picker>
 
-          {/* <SubCategory /> */}
-        </View>
+            {/* <SubCategory /> */}
+          </View>
 
-        {/* <TouchableOpacity style={{width: '100%'}}> */}
-        <TextInput
-          style={styles.TextInputbox}
-          // style={{fontSize: 12}}
-          placeholder="Product Name"
-          placeholderTextColor="black"
-          onChangeText={ProductName => setProductName(ProductName)}
-          defaultValue={ProductName}
-          // allowFontScalingrr
-        />
-        {/* </TouchableOpacity> */}
+          {/* <TouchableOpacity style={{width: '100%'}}> */}
+          <TextInput
+            style={styles.TextInputbox}
+            // style={{fontSize: 12}}
+            placeholder="Product Name"
+            placeholderTextColor="black"
+            onChangeText={ProductName => setProductName(ProductName)}
+            defaultValue={ProductName}
+            // allowFontScalingrr
+          />
+          {/* </TouchableOpacity> */}
 
-        {/* <TouchableOpacity style={{width: '100%'}}> */}
-        <TextInput
-          style={styles.TextInputbox}
-          placeholder="Product Price"
-          placeholderTextColor="black"
-          onChangeText={ProductPrice => setProductPrice(ProductPrice)}
-          defaultValue={ProductPrice}
-          keyboardType="numeric"
-          // onBlur={()=>{this.}}
-        />
-        {/* </TouchableOpacity> */}
+          {/* <TouchableOpacity style={{width: '100%'}}> */}
+          <TextInput
+            style={styles.TextInputbox}
+            placeholder="Product Price"
+            placeholderTextColor="black"
+            onChangeText={ProductPrice => setProductPrice(ProductPrice)}
+            defaultValue={ProductPrice}
+            keyboardType="numeric"
+            // onBlur={()=>{this.}}
+          />
+          {/* </TouchableOpacity> */}
 
-        {/* <TouchableOpacity style={{width: '100%'}}> */}
-        <TextInput
-          style={styles.TextInputbox}
-          placeholder="Product Quantity"
-          placeholderTextColor="black"
-          // value=""
-          keyboardType="numeric"
-          onChangeText={ProductQuantity => setProductQuantity(ProductQuantity)}
-          defaultValue={ProductQuantity}
-        />
-        {/* </TouchableOpacity> */}
+          {/* <TouchableOpacity style={{width: '100%'}}> */}
+          <TextInput
+            style={styles.TextInputbox}
+            placeholder="Product Quantity"
+            placeholderTextColor="black"
+            // value=""
+            keyboardType="numeric"
+            onChangeText={ProductQuantity =>
+              setProductQuantity(ProductQuantity)
+            }
+            defaultValue={ProductQuantity}
+          />
+          {/* </TouchableOpacity> */}
 
-        <View style={styles.bigbutton}>
-          <TouchableOpacity onPress={pressHandler} style={styles.Confirmbutton}>
-            <Text style={styles.bigbuttontext}>Confirm</Text>
-          </TouchableOpacity>
+          <View style={styles.bigbutton}>
+            <TouchableOpacity
+              onPress={pressHandler}
+              style={styles.Confirmbutton}>
+              <Text style={styles.bigbuttontext}>Confirm</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
-    </ScrollView>
     </TouchableWithoutFeedback>
   );
 }
@@ -271,6 +278,11 @@ const styles = StyleSheet.create({
     // flexDirection: "column",
     height: '100%',
     backgroundColor: '#e8e8e8',
+    // padding: '10%',
+    // backgroundColor: '#e8e8e8',
+    // height: '90%',
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
   TopBar: {
     padding: 20,
@@ -306,9 +318,9 @@ const styles = StyleSheet.create({
   RestScreen: {
     // flex: 8,
     // width: 100,
-    padding: '15%',
+    padding: '10%',
     backgroundColor: '#e8e8e8',
-    height: '90%',
+    height: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -329,17 +341,16 @@ const styles = StyleSheet.create({
   },
   TextInputbox: {
     // width: '100%',
+    width: 280,
     paddingHorizontal: 16,
     flexDirection: 'row',
-    marginVertical: 10,
+    marginVertical: 16,
     borderColor: 'black',
     backgroundColor: 'white',
     borderWidth: 0,
-    borderRadius: 10,
-    height: 50,
-    width: '100%',
-    // padding: 20,
-    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderRadius: 4,
+    height: 56,
     // fontSize: 20,
     // shadowColor: 'darkgrey',
     // shadowOpacity: 20,
@@ -347,9 +358,9 @@ const styles = StyleSheet.create({
   },
 
   Confirmbutton: {
-    padding: '5%',
+    // padding: '5%',
     // marginVertical: 10,
-    paddingHorizontal: 15,
+    // paddingHorizontal: 15,
     backgroundColor: '#d00f16',
     borderRadius: 20,
     width: 200,
@@ -368,35 +379,36 @@ const styles = StyleSheet.create({
   bigbuttontext: {
     fontWeight: 'bold',
     color: 'white',
-    fontFamily: 'Roboto-Bold',
+    fontFamily: 'Roboto',
     fontSize: 20,
     textAlign: 'center',
-    paddingTop: '2%',
+    // paddingTop: '2%',
 
     // opacity: 1,
   },
   bigbutton: {
     // padding: '50%',
     // marginVertical: 10,
-    paddingHorizontal: '23%',
+    // paddingHorizontal: '23%',
     flex: 2,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
   viewstyle: {
     // padding: 30,
-    height: 50,
-    marginVertical: 10,
-    width: '100%',
+    height: 56,
+    marginVertical: 16,
+    width: 280,
     alignItems: 'center',
     borderColor: 'black',
     backgroundColor: 'white',
     borderWidth: 0,
-    borderRadius: 10,
-    // padding: 30,
-    // alignItems: 'center',
-    shadowColor: 'darkgrey',
-    shadowOpacity: 20,
+    // borderBottomWidth: 1,
+    borderRadius: 4,
+    shadowColor: '#000',
+    shadowOffset: {width: 2, height: 4},
+    shadowOpacity: 0.9,
+    shadowRadius: 6,
     elevation: 2,
   },
 });

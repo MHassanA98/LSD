@@ -6,9 +6,9 @@ import {
   View,
   TouchableOpacity,
   TextInput,
-  TouchableWithoutFeedback, 
-  ScrollView, 
-  Keyboard
+  TouchableWithoutFeedback,
+  ScrollView,
+  Keyboard,
   // Button,
   // Picker,
 } from 'react-native';
@@ -17,59 +17,62 @@ import {
 //   TouchableHighlight,
 //   BorderlessButton,
 // } from "react-native-gesture-handler"
-import firebase from "../assets/DatabaseConfig"
-import database from "@react-native-firebase/database"
+import firebase from '../assets/DatabaseConfig';
+import database from '@react-native-firebase/database';
 
 export default function UpdateItem({navigation}) {
+  console.log(navigation.getParam('ITEM').name);
 
+  const [ProductName, setProductName] = useState(
+    navigation.getParam('ITEM').name,
+  );
+  const [ProductPrice, setProductPrice] = useState(
+    navigation.getParam('ITEM').price,
+  );
+  const [ProductQuantity, setProductQuantity] = useState(
+    navigation.getParam('ITEM').quantity,
+  );
 
-  console.log(navigation.getParam('ITEM').name)
-
-  const [ProductName, setProductName] = useState(navigation.getParam('ITEM').name);
-  const [ProductPrice, setProductPrice] = useState(navigation.getParam('ITEM').price);
-  const [ProductQuantity, setProductQuantity] = useState(navigation.getParam('ITEM').quantity);
-  
-  
-  const pressHandler = () =>{
-    
+  const pressHandler = () => {
     // if (ProductName==''){
     //   alert("Name field cannot be empty")
     // }
-    if (ProductPrice==''){
-      alert("Price field cannot be empty")
-    }
-    else if (ProductQuantity=='')
-    {
-      alert('Quantity field cannot be empty')
-    }
-    else if (ProductPrice<0){
-      alert("Price must be greater than 0")
-    }
-    else if (ProductQuantity<0){
-      alert("Quantity must be greater than 0")
-    }
-    else{
-      console.log("sadasd")
+    if (ProductPrice == '') {
+      alert('Price field cannot be empty');
+    } else if (ProductQuantity == '') {
+      alert('Quantity field cannot be empty');
+    } else if (ProductPrice < 0) {
+      alert('Price must be greater than 0');
+    } else if (ProductQuantity < 0) {
+      alert('Quantity must be greater than 0');
+    } else {
+      console.log('sadasd');
 
-      firebase.database().ref('/Inventory/'+navigation.getParam('CAT')+"/"+navigation.getParam('SUB')+"/"+navigation.getParam('ITEM').name)
-      .update({
-        Price:ProductPrice,
-        Qty:ProductQuantity
-      })
-      .then(()=>{
-        alert("Item successfully updated")
-      })
-      .catch(()=>{
-        alert("Please check your internet connection")
-      })
-
-
-
+      firebase
+        .database()
+        .ref(
+          '/Inventory/' +
+            navigation.getParam('CAT') +
+            '/' +
+            navigation.getParam('SUB') +
+            '/' +
+            navigation.getParam('ITEM').name,
+        )
+        .update({
+          Price: ProductPrice,
+          Qty: ProductQuantity,
+        })
+        .then(() => {
+          alert('Item successfully updated');
+        })
+        .catch(() => {
+          alert('Please check your internet connection');
+        });
     }
-  }
+  };
 
   // const QtypressHandler = () =>{
-    
+
   //   // if (ProductName.length<1){
   //   //   alert("Invalid product name")
   //   // }
@@ -85,7 +88,7 @@ export default function UpdateItem({navigation}) {
   // }
 
   // const NamepressHandler = () =>{
-    
+
   //   if (ProductName.length<1){
   //     alert("Name field cannot be empty")
   //   }
@@ -97,16 +100,15 @@ export default function UpdateItem({navigation}) {
   //   // }
   //   else{
 
-
   //   }
   // }
 
-
   return (
-    <TouchableWithoutFeedback onPress = {() =>{
-      Keyboard.dismiss()
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
       }}>
-    <ScrollView style={styles.Screen}>
+      {/* <View style={styles.Screen}> */}
       {/* <View style={styles.TopBar}>
         <TouchableOpacity style={styles.TopBarBack}>
           <Icon name="arrow-left" size={32} color="white" />
@@ -125,17 +127,17 @@ export default function UpdateItem({navigation}) {
       </View> */}
 
       <View style={styles.RestScreen}>
-        <View style={{width: '100%'}}>
-          <TextInput
-            style={styles.TextInputbox}
-            placeholder="Product Name"
-            placeholderTextColor="black"
-            onChangeText={ProductName => setProductName(ProductName)}
-            defaultValue={ProductName}
-            editable={false}
-            // keyboardType="numeric"
-          />
-        </View>
+        {/* <View style={{width: '100%'}}> */}
+        <TextInput
+          style={styles.TextInputbox}
+          placeholder="Product Name"
+          placeholderTextColor="black"
+          onChangeText={ProductName => setProductName(ProductName)}
+          defaultValue={ProductName}
+          editable={false}
+          // keyboardType="numeric"
+        />
+        {/* </View> */}
 
         {/* <View style={styles.bigbutton}>
           <TouchableOpacity
@@ -145,16 +147,16 @@ export default function UpdateItem({navigation}) {
           </TouchableOpacity>
         </View>  */}
 
-        <View style={{width: '100%'}}>
-          <TextInput
-            style={styles.TextInputbox}
-            placeholder="Product Price"
-            placeholderTextColor="black"
-            onChangeText={ProductPrice => setProductPrice(ProductPrice)}
-            defaultValue={ProductPrice}
-            keyboardType="numeric"
-          />
-        </View>
+        {/* <View style={{width: '100%'}}> */}
+        <TextInput
+          style={styles.TextInputbox}
+          placeholder="Product Price"
+          placeholderTextColor="black"
+          onChangeText={ProductPrice => setProductPrice(ProductPrice)}
+          defaultValue={ProductPrice}
+          keyboardType="numeric"
+        />
+        {/* </View> */}
 
         {/* <View style={styles.bigbutton}>
           <TouchableOpacity
@@ -164,28 +166,24 @@ export default function UpdateItem({navigation}) {
           </TouchableOpacity>
         </View> */}
 
-        <View style={{width: '100%'}}>
-          <TextInput
-            style={styles.TextInputbox}
-            placeholder="Product Price"
-            placeholderTextColor="black"
-            onChangeText={ProductQuantity =>
-              setProductQuantity(ProductQuantity)
-            }
-            defaultValue={ProductQuantity}
-            keyboardType="numeric"
-          />
-        </View>
+        {/* <View style={{width: '100%'}}> */}
+        <TextInput
+          style={styles.TextInputbox}
+          placeholder="Product Price"
+          placeholderTextColor="black"
+          onChangeText={ProductQuantity => setProductQuantity(ProductQuantity)}
+          defaultValue={ProductQuantity}
+          keyboardType="numeric"
+        />
+        {/* </View> */}
 
         <View style={styles.bigbutton}>
-          <TouchableOpacity
-            onPress={pressHandler}
-            style={styles.Confirmbutton}>
+          <TouchableOpacity onPress={pressHandler} style={styles.Confirmbutton}>
             <Text style={styles.bigbuttontext}>Confirm</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </ScrollView>
+      {/* </View> */}
     </TouchableWithoutFeedback>
   );
 }
@@ -201,6 +199,7 @@ const styles = StyleSheet.create({
   Screen: {
     // flexDirection: "column",
     height: '100%',
+    backgroundColor: '#e8e8e8',
     // flex: '20%',
   },
   TopBar: {
@@ -239,10 +238,10 @@ const styles = StyleSheet.create({
   RestScreen: {
     // flex: 9,
     // width: 100,
-    padding: '15%',
-    backgroundColor: 'lightgrey',
-    height: '90%',
-    // justifyContent: 'center',
+    padding: '10%',
+    backgroundColor: '#e8e8e8',
+    height: '100%',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   firstbox: {
@@ -262,17 +261,16 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   TextInputbox: {
+    width: 280,
     paddingHorizontal: 16,
-    width: '100%',
     flexDirection: 'row',
-    marginVertical: 10,
+    marginVertical: 16,
     borderColor: 'black',
     backgroundColor: 'white',
     borderWidth: 0,
-    borderRadius: 10,
-    height: 50,
-    // padding: 20,
-    alignItems: 'center',
+    borderBottomWidth: 1,
+    borderRadius: 4,
+    height: 56,
     // fontSize: 20,
     // shadowColor: 'darkgrey',
     // shadowOpacity: 20,
@@ -282,17 +280,19 @@ const styles = StyleSheet.create({
   Confirmbutton: {
     // padding: 20,
     // paddingBottom: 20,
-    paddingHorizontal: 15,
+    // paddingHorizontal: 15,
     backgroundColor: '#d00f16',
     borderRadius: 20,
     width: 200,
     height: 40,
+    padding: '6%',
     shadowColor: '#000',
     shadowOffset: {width: 2, height: 4},
     shadowOpacity: 0.9,
     shadowRadius: 6,
     elevation: 2,
-    minHeight: '6%',
+    // minHeight: '6%',
+
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -300,16 +300,16 @@ const styles = StyleSheet.create({
   bigbuttontext: {
     fontWeight: 'bold',
     color: 'white',
-    fontFamily: 'Roboto-Bold',
+    fontFamily: 'Roboto',
     fontSize: 20,
     textAlign: 'center',
-    paddingTop: '2%',
+    // paddingTop: '2%',
 
     // opacity: 1,
   },
   bigbutton: {
     // padding: '50%',
-    paddingHorizontal: '23%',
+    // paddingHorizontal: '23%',
     flex: 2,
     alignItems: 'center',
     justifyContent: 'flex-end',
