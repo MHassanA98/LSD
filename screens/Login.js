@@ -1,75 +1,78 @@
-import React, { useState } from "react";
-import { StyleSheet, Text, View, ImageBackground, Image, TextInput, TouchableOpacity, Keyboard, TouchableWithoutFeedback} from "react-native";
-import backg from "../assets/images/backg.png" ;
-import lsdlogo from "../assets/images/lsdlogo.png" ;
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  ImageBackground,
+  Image,
+  TextInput,
+  TouchableOpacity,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from 'react-native';
+import backg from '../assets/images/backg.png';
+import lsdlogo from '../assets/images/lsdlogo.png';
 import AsyncStorage from '@react-native-community/async-storage';
-import firebase from "../assets/DatabaseConfig" ;
+import firebase from '../assets/DatabaseConfig';
 // import auth from "@react-native-firebase/auth" ;
 // import database from "@react-native-firebase/database" ;
 
-import Icon from "react-native-vector-icons/FontAwesome" ;
-import { NavigationEvents } from 'react-navigation';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
+import {NavigationEvents} from 'react-navigation';
 
 function END(mail) {
-  return mail.endsWith('@lums.edu.pk')
+  return mail.endsWith('@lums.edu.pk');
 }
 
 export default function Login({navigation}) {
-
   async function emptyitems(name) {
     try {
-      const item = await AsyncStorage.removeItem(name)
-    } catch(e) {
-      console.log(e)
+      const item = await AsyncStorage.removeItem(name);
+    } catch (e) {
+      console.log(e);
     }
-
   }
 
   async function removeData() {
     try {
-      const value = await AsyncStorage.getAllKeys()
-      if(value !== null) {
+      const value = await AsyncStorage.getAllKeys();
+      if (value !== null) {
         value.forEach(function(name) {
-          emptyitems(name)
-        })
+          emptyitems(name);
+        });
       }
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
   }
 
+  const LoginPress = () => {
+    let emailcheck = firebase.auth().currentUser.email;
+    mydb = firebase.database().ref('/Users/' + emailcheck.substr(0, 8));
+    mydb.once('value').then(function(snapshot) {
+      let custflag = snapshot.child('Customerflag').val();
+      let username = snapshot.child('Username').val();
+      if (custflag) {
+        removeData();
+        navigation.navigate('CustomerDrawer', {user: username});
+      } else {
+        navigation.navigate('AdminDrawer', {user: username});
+      }
+    });
+  };
 
-  const LoginPress = () =>{
-
-    let emailcheck = firebase.auth().currentUser.email
-      mydb = firebase.database().ref('/Users/'+emailcheck.substr(0,8))
-      mydb.once("value")
-        .then(function(snapshot) {
-          let custflag = snapshot.child("Customerflag").val()
-          let username = snapshot.child("Username").val()
-          if (custflag) {
-            removeData()
-            navigation.navigate('CustomerDrawer', {user:username})
-          }
-          else {
-            navigation.navigate('AdminDrawer', {user:username})
-          }
-        })
-  }
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   // const [repassword, setRepassword] = useState("");
   // const [username, setUsername] = useState("");
   // const [phone, setPhone] = useState("");
   // const [errorMessage, setErrorMessage] = useState();
 
-  const emailInputHandler = (inputEmail) => {
+  const emailInputHandler = inputEmail => {
     setEmail(inputEmail);
   };
 
-  const passwordInputHandler = (inputPassword) => {
+  const passwordInputHandler = inputPassword => {
     setPassword(inputPassword);
   };
 
@@ -78,159 +81,177 @@ export default function Login({navigation}) {
   // };
 
   const handleFpPress = () => {
-    navigation.navigate('Forgotpwemail')
-  }
-  
+    navigation.navigate('Forgotpwemail');
+  };
+
   const handleSuPress = () => {
-    navigation.navigate('Registration')
-  }
+    navigation.navigate('Registration');
+  };
 
   const handleLoginPress = () => {
-    
-    
-    emaillums = END(email)
-    if (emaillums){
-      if (password.length>=8) {
-        mydb = firebase.database().ref('/Users/'+email.substr(0,8))
-        mydb.once("value")
-        .then(function(snapshot) {
+    emaillums = END(email);
+    if (emaillums) {
+      if (password.length >= 8) {
+        mydb = firebase.database().ref('/Users/' + email.substr(0, 8));
+        mydb.once('value').then(function(snapshot) {
+          let banstat = snapshot.child('BanStatus').val();
 
-          let banstat = snapshot.child("BanStatus").val()
-        
           if (!banstat) {
-                handleLogin()
+            handleLogin();
+          } else {
+            alert('You are banned for misconduct.');
           }
-
-          else {
-            alert("You are banned for misconduct.") 
-          }
-
-        })
+        });
+      } else {
+        alert('Please enter 8 or more characters for password.');
       }
-      else {
-        alert("Please enter 8 or more characters for password.")
-      }
+    } else {
+      alert('Please enter your LUMS email.');
     }
-
-    else {
-      alert("Please enter your LUMS email.")
-    }
-
   };
 
   async function handleLogin() {
-
     firebase
-    .auth()
-    .signInWithEmailAndPassword(email, password)
-    .then(() => {
-      if (firebase.auth().currentUser.emailVerified) {
-        LoginPress()
-      }
-      else {
-        firebase.auth().currentUser.reload()
-        alert("Please verify email before logging in.")
-      }
-
-    })
-    .catch(function(error) {
-      alert(error)
-    })
-    
-
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        if (firebase.auth().currentUser.emailVerified) {
+          LoginPress();
+        } else {
+          firebase.auth().currentUser.reload();
+          alert('Please verify email before logging in.');
+        }
+      })
+      .catch(function(error) {
+        alert(error);
+      });
   }
 
   function loginexists() {
     meow = firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-        LoginPress()
+        LoginPress();
       }
-    })
+    });
   }
 
   return (
-    <TouchableWithoutFeedback onPress = {() =>{
-      Keyboard.dismiss()
-    }}>
-    <View style={styles.container}>
-      <NavigationEvents onDidFocus={() => {loginexists()}} />
-      <ImageBackground source={backg} style={styles.bgimage}>
-        <View style={styles.maincontainer}>
-          <Image
-            style={styles.stretch}
-            source={lsdlogo}
-          />
-          <View style={styles.inputbox}>
-            <Icon style={styles.inputicon} name="envelope-o" size={24} color="#d00f16" />
-            <TextInput placeholder="Email Address" style={styles.inputtext} onChangeText={emailInputHandler} value={email} ></TextInput>
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+      }}>
+      <View style={styles.container}>
+        <NavigationEvents
+          onDidFocus={() => {
+            loginexists();
+          }}
+        />
+        <ImageBackground source={backg} style={styles.bgimage}>
+          <View style={styles.maincontainer}>
+            <Image style={styles.stretch} source={lsdlogo} />
+            <View style={styles.inputbox}>
+              <Icon
+                style={styles.inputicon}
+                name="envelope-o"
+                size={24}
+                color="#d00f16"
+              />
+              <TextInput
+                placeholder="Email Address"
+                style={styles.inputtext}
+                onChangeText={emailInputHandler}
+                value={email}
+              />
+            </View>
+            <View style={styles.inputbox}>
+              <Icon
+                style={styles.inputicon2}
+                name="lock"
+                size={24}
+                color="#d00f16"
+              />
+              <TextInput
+                secureTextEntry
+                placeholder="Password"
+                style={styles.inputtext}
+                onChangeText={passwordInputHandler}
+                value={password}
+              />
+            </View>
+            <View style={styles.clearbutton}>
+              <TouchableOpacity onPress={handleFpPress}>
+                <Text style={styles.buttontext}>Forgot Password?</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-          <View  style={styles.inputbox}>
-            <Icon style={styles.inputicon2} name="lock" size={24} color="#d00f16" />
-            <TextInput secureTextEntry placeholder="Password" style={styles.inputtext} onChangeText={passwordInputHandler} value={password} ></TextInput>
+          {/* <View style={styles.clearbutton}>
+            <TouchableOpacity onPress={handleFpPress}>
+              <Text style={styles.buttontext}>Forgot Password?</Text>
+            </TouchableOpacity>
+          </View> */}
+
+          <View style={styles.loginbutton}>
+            <TouchableOpacity
+              style={[styles.bigbutton]}
+              onPress={handleLoginPress}>
+              <Text style={styles.bigbuttontext}>Login</Text>
+            </TouchableOpacity>
           </View>
-        </View>
-        <View style={styles.clearbutton}> 
-          <TouchableOpacity onPress={handleFpPress} >
-            <Text style={styles.buttontext}>Forgot Password?</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.loginbutton}> 
-        <TouchableOpacity style={[styles.bigbutton]} onPress={handleLoginPress} >
-          
-            <Text style={styles.bigbuttontext}>Login</Text>
-          
-        </TouchableOpacity>
-        </View>
-        <View style={styles.clearbottombutton}> 
-          <TouchableOpacity onPress={handleSuPress} >
-            <Text style={styles.buttontext}>New user? Sign up!</Text>
-          </TouchableOpacity>
-        </View>
-      </ImageBackground>
-    </View>
+          <View style={styles.clearbottombutton}>
+            <TouchableOpacity onPress={handleSuPress}>
+              <Text style={styles.buttontext}>New user? Sign up!</Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
+      </View>
     </TouchableWithoutFeedback>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column"
+    flexDirection: 'column',
+    // justifyContent: 'center',
+    // alignItems:'center',
   },
 
   bgimage: {
     flex: 1,
-    resizeMode: "stretch",
-    justifyContent: "center",
+    resizeMode: 'stretch',
+    justifyContent: 'center',
   },
 
   inputbox: {
-    color: "grey",
+    color: 'grey',
     marginTop: '6%',
-    flexDirection: "row",
-    backgroundColor: "white",
+    flexDirection: 'row',
+    backgroundColor: 'white',
     borderRadius: 6,
     shadowColor: '#000',
-    shadowOffset: { width: 2, height: 4 },
+    shadowOffset: {width: 2, height: 4},
     shadowOpacity: 0.9,
     shadowRadius: 6,
     elevation: 2,
-
+    width: '70%',
+    height: 56,
+    // paddingHorizontal: '3%',
+    // marginHorizontal: '5%',
+    justifyContent: 'space-around',
+    alignItems: 'center',
   },
 
   inputicon: {
-    paddingTop: '3%',
-    paddingLeft: '2%',
-    
+    // paddingTop: '3%',
+    // paddingLeft: '2%',
   },
   inputicon2: {
-    paddingTop: '3%',
+    // paddingTop: '3%',
     paddingLeft: '3%',
     paddingRight: '1%',
-    
   },
   inputtext: {
-    marginLeft: 5,
+    // marginLeft: 5,
     fontSize: 14,
     width: '70%',
     fontFamily: 'Roboto-Bold',
@@ -239,68 +260,73 @@ const styles = StyleSheet.create({
   stretch: {
     width: '60%',
     height: '40%',
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
 
   maincontainer: {
-    alignItems: "center",
-    justifyContent: "flex-end",
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: '10%',
     flex: 6,
   },
 
   buttontext: {
-    fontWeight: "bold",
-    color: "#d00f16",
+    fontWeight: 'bold',
+    color: '#d00f16',
     fontFamily: 'Roboto-Medium',
     fontSize: 14,
   },
 
   bigbuttontext: {
-    fontWeight: "bold",
-    color: "white",
+    fontWeight: 'bold',
+    color: 'white',
     fontFamily: 'Roboto-Bold',
     fontSize: 20,
-    textAlign: "center",
+    textAlign: 'center',
     paddingTop: '1%',
     paddingBottom: '1%',
   },
-  
+
   clearbutton: {
     opacity: 0.8,
-    paddingTop: 5,
-    marginLeft: '57%',
+    paddingTop: 16,
+    flexDirection: 'row',
+    // textAlign: 'left',
+    // paddingBottom: 40,
+    marginLeft: '47%',
     marginRight: '13%',
     flex: 1,
   },
 
   clearbottombutton: {
     opacity: 0.8,
-    justifyContent: "center",
+    justifyContent: 'center',
     marginLeft: '35%',
     flex: 1,
-    alignItems: "baseline",
+    alignItems: 'baseline',
   },
 
   bigbutton: {
-    borderRadius: 17,
+    backgroundColor: '#d00f16',
+    borderRadius: 20,
+    width: 200,
+    height: 40,
     shadowColor: '#000',
-    shadowOffset: { width: 2, height: 4 },
+    shadowOffset: {width: 2, height: 4},
     shadowOpacity: 0.9,
     shadowRadius: 6,
-    elevation: 1,
-    backgroundColor: "#d00f16",
+    // elevation: 2,
+    // minHeight: '6%',
+    textAlign: 'center',
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 2,
   },
 
   loginbutton: {
-    width:'50%',
+    width: '50%',
     borderRadius: 17,
-    textAlign: "center",
-    alignSelf: "center",
+    textAlign: 'center',
+    alignSelf: 'center',
   },
 });
-
-
-
-
-
-

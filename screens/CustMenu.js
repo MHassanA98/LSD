@@ -1,13 +1,7 @@
 import React, {useState} from 'react';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-community/async-storage';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-  Image,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {NavigationEvents} from 'react-navigation';
 import newbiryani from '../assets/images/newbiryani.png';
@@ -18,7 +12,6 @@ import database from '@react-native-firebase/database';
 import {add} from 'react-native-reanimated';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
-
 export default function CustMenu({navigation}) {
   // console.log(" Customer: ", navigation.getParam('Sub'), navigation.getParam('Cat'))
 
@@ -26,9 +19,12 @@ export default function CustMenu({navigation}) {
     // {name: 'meow', price: 0, quantity: 0},
   ]);
 
-  async function storeData(name,price) {
+  async function storeData(name, price) {
     try {
-      await AsyncStorage.setItem(name, JSON.stringify({price: parseInt(price), quantity: 0}))
+      await AsyncStorage.setItem(
+        name,
+        JSON.stringify({price: parseInt(price), quantity: 0}),
+      );
       // await AsyncStorage.removeItem("@storage_Key")
     } catch (e) {
       // saving error
@@ -52,15 +48,13 @@ export default function CustMenu({navigation}) {
   //   }
   // }
 
-
-  function handleaddcart(name,price) {
+  function handleaddcart(name, price) {
     // ShoppingCart.apply(frommenu(3))
     // Shopping({navigation}).frommenu(5)
     // function1()
-    
-    storeData(name,price)
-    // getData()
 
+    storeData(name, price);
+    // getData()
   }
 
   // setProduct([])
@@ -86,7 +80,7 @@ export default function CustMenu({navigation}) {
         // console.log(newprod)
         prodarr.push(newprod);
       });
-      setProduct(prodarr)
+      setProduct(prodarr);
     });
   }
 
@@ -130,7 +124,11 @@ export default function CustMenu({navigation}) {
   return (
     // <ScrollView>
     <View style={styles.Screen}>
-      <NavigationEvents onDidFocus={() => {onscreenload()}} />
+      <NavigationEvents
+        onDidFocus={() => {
+          onscreenload();
+        }}
+      />
       {/* <View style={{width: '100%', height: 460, marginVertical: 12}}> */}
       <FlatList
         data={product}
@@ -160,7 +158,10 @@ export default function CustMenu({navigation}) {
               <Text style={styles.boxfont}>{'Rs. ' + item.price}</Text>
             </View>
             <TouchableOpacity
-              onPress={() => {handleaddcart(item.name, item.price)}}
+              onPress={() => {
+                handleaddcart(item.name, item.price);
+                alert('Added to Cart');
+              }}
               style={{justifyContent: 'center', alignItems: 'flex-end'}}>
               <Icon name="add-shopping-cart" color="red" size={24} />
             </TouchableOpacity>
