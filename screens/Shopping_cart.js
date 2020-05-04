@@ -12,7 +12,7 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 //   BorderlessButton,
 // } from "react-native-gesture-handler"
 
-export default function Shopping() {
+export default function Shopping({navigation}) {
   const [product, setProduct] = useState([]);
   // const [product, setProduct] = useState([
   //   {name: 'pencil', price: '40', quantity: 0},
@@ -22,7 +22,9 @@ export default function Shopping() {
   const [total, setTotal] = useState(0);
   //   const onAdd = () => setProd;
   // const onMin = () => setProduct(prev => prev - 1)
-
+  const handlePress = () => {
+    navigation.navigate('Checkout');
+  };
   async function qtyless(name, price, quantity) {
     try {
       await AsyncStorage.setItem(
@@ -169,7 +171,7 @@ export default function Shopping() {
           //   extraData={quantity}
           keyExtractor={item => item.name}
           renderItem={({item}) => (
-            <Swipeable renderRightActions={leftActions}>
+            <Swipeable renderLeftActions={leftActions}>
               <View style={styles.TextInputbox}>
                 <View style={{width: 100, height: 100, flex: 2}}>
                   <Image
@@ -212,7 +214,7 @@ export default function Shopping() {
                     {/* // onPress={onAdd(item.quantity)}> */}
                     <Icon name="plus" color="#ffffff" />
                   </TouchableOpacity>
-                  <Text style={{paddingLeft: 23.5, opacity: 0.5}}>
+                  <Text style={{paddingLeft: 22, opacity: 0.5}}>
                     {item.quantity}
                   </Text>
                   <TouchableOpacity
@@ -264,7 +266,7 @@ export default function Shopping() {
       </View>
       <View style={styles.bigbutton}>
         <TouchableOpacity
-          onPress={() => alert('Confirmed!')}
+          onPress={handlePress}
           style={styles.Confirmationbutton}>
           <Text style={styles.bigbuttontext}>Checkout</Text>
         </TouchableOpacity>
@@ -433,8 +435,8 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 15,
     backgroundColor: '#d00f16',
     borderRadius: 2,
-    width: 24,
-    height: 24,
+    width: 20,
+    height: 20,
     shadowColor: '#000',
     borderRadius: 180,
     // shadowOffset: {width: 2, height: 4},

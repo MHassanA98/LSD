@@ -41,7 +41,7 @@ class Checkout extends React.Component {
             <Category />
           </View>
 
-          <View style={styles.textbox}>
+          <View style={styles.textbox2}>
             <View style={styles.write_on_the_edges}>
               <Text style={{fontSize: 15, marginLeft: 8}}>Redeem Points</Text>
               <SwitchExample
@@ -55,7 +55,8 @@ class Checkout extends React.Component {
             style={{
               fontFamily: 'Roboto',
               fontSize: 15,
-              marginLeft: 50,
+              marginLeft: '5%',
+              paddingLeft: 8,
               marginTop: 30,
             }}>
             Total Amount
@@ -123,21 +124,22 @@ class Checkout extends React.Component {
             style={{
               fontFamily: 'Roboto',
               fontSize: 15,
-              marginLeft: 50,
+              marginLeft: '5%',
               marginTop: 30,
+              paddingLeft: 8,
             }}>
             Payment Method
           </Text>
 
           <View style={styles.textbox1}>
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Icon
-                name="money"
-                color="#d00f16"
-                size={24}
-                style={{paddingHorizontal: 5}}
-              />
-              <Text style={{fontSize: 18, marginLeft: 20, padding: 5}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginLeft: 10,
+              }}>
+              <Icon name="money" color="#d00f16" size={24} />
+              <Text style={{fontSize: 16, marginLeft: 20, padding: 5}}>
                 Cash on Delivery
               </Text>
             </View>
@@ -163,7 +165,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#e8e8e8',
     alignItems: 'center',
     padding: '10%',
-    marginVertical: 10,
+    // marginVertical: 10,
   },
   heading: {
     height: '2%',
@@ -181,10 +183,10 @@ const styles = StyleSheet.create({
   textbox: {
     marginTop: 20,
     // width: '72%',
-    marginLeft: '10%',
+    marginLeft: '5%',
     // paddingBottom: 10,
-    width: '80%',
-    height: 50,
+    width: '90%',
+    height: 56,
     elevation: 5,
     borderRadius: 5,
     shadowColor: 'darkgrey',
@@ -194,11 +196,27 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     fontFamily: 'Roboto-Bold',
   },
+  textbox2: {
+    marginTop: 20,
+    // width: '72%',
+    marginLeft: '5%',
+    // paddingBottom: 10,
+    width: '90%',
+    height: 56,
+    // elevation: 5,
+    borderRadius: 5,
+    // shadowColor: 'darkgrey',
+    // shadowOpacity: 20,
+    justifyContent: 'center',
+    borderBottomWidth: 0,
+    backgroundColor: 'white',
+    fontFamily: 'Roboto-Bold',
+  },
   lower_body: {
     marginTop: 0,
     // padding: 10,
-    marginLeft: '10%',
-    width: '80%',
+    marginLeft: '5%',
+    width: '90%',
     height: 150,
     justifyContent: 'flex-start',
     borderBottomWidth: 0,
@@ -209,9 +227,9 @@ const styles = StyleSheet.create({
   textbox1: {
     marginTop: 0,
     borderRadius: 5,
-    height: 50,
-    marginLeft: '10%',
-    width: '80%',
+    height: 56,
+    marginLeft: '5%',
+    width: '90%',
     height: '8%',
     justifyContent: 'center',
     borderBottomWidth: 0,
