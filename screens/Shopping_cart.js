@@ -56,7 +56,7 @@ export default function Shopping() {
   }
 
   function onPlus(item) {
-    console.log(item)
+    // console.log(item)
     // item.quantity = item.quantity+1
     qtymore(item.name, item.price, item.quantity)
     getData()
@@ -108,7 +108,11 @@ export default function Shopping() {
         let prodarr  = []
         value.forEach(function(name) {
           // let newprod = getitem(name, prodarr)
+          // console.log(name)
           getitem(name, prodarr)
+          .then(() => {
+            setProduct(prodarr)
+          })
           
           // console.log(prodarr)
 
@@ -116,7 +120,8 @@ export default function Shopping() {
 
           // console.log(name)
         })
-        setProduct(prodarr)
+        // setProduct(prodarr)
+        // console.log(product)
         // value previously stored
       }
       else {

@@ -29,12 +29,12 @@ import database from '@react-native-firebase/database';
 
 export default function Change_Password({navigation}) {
   //updatePassword
-  const [oldpassword, setoldpassword] = useState('');
+  const [oldpassword, setOldpassword] = useState('');
   const [password, setPassword] = useState('');
   const [repassword, setRepassword] = useState('');
 
-  const oldpasswordInputHandler = inputoldpassword => {
-    setoldpassword(inputoldpassword);
+  const oldpasswordInputHandler = inputOldpassword => {
+    setOldpassword(inputOldpassword);
   };
 
   const repasswordInputHandler = inputRepassword => {
