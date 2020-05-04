@@ -1,4 +1,4 @@
-import React, {useState}  from 'react';
+import React, {useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {NavigationEvents} from 'react-navigation';
@@ -16,45 +16,44 @@ import database from '@react-native-firebase/database';
 //functionality added by hasan
 //state declaration brought to standard declaration used on other screens
 
-
 export default function Customer_Profile({navigation}) {
-
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [points, setPoints] = useState("");
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [points, setPoints] = useState('');
 
   function onscreenload() {
-    let emailcheck = firebase.auth().currentUser.email
-    mydb = firebase.database().ref( '/Users/'+emailcheck.substr(0,8) );
-    mydb.once('value')
-    .then(function(snapshot) {
-      setUsername(snapshot.child("Username").val())
-      setEmail(snapshot.child("Useremail").val())
-      setPhone(snapshot.child("Phonenumber").val())
-      if (snapshot.child("Customerflag").val()) {
-        setPoints(snapshot.child("Redemptionpoints").val())
+    let emailcheck = firebase.auth().currentUser.email;
+    mydb = firebase.database().ref('/Users/' + emailcheck.substr(0, 8));
+    mydb.once('value').then(function(snapshot) {
+      setUsername(snapshot.child('Username').val());
+      setEmail(snapshot.child('Useremail').val());
+      setPhone(snapshot.child('Phonenumber').val());
+      if (snapshot.child('Customerflag').val()) {
+        setPoints(snapshot.child('Redemptionpoints').val());
+      } else {
+        setPoints(snapshot.child('ChangeRate').val());
       }
-      else {
-        setPoints(snapshot.child("ChangeRate").val())
-      }
-
     });
     // console.log(uname)
     // setUsername(uname)
   }
 
   function change_password_buttonhandler() {
-    navigation.navigate("ChangePassword")
-  };
-  
+    navigation.navigate('ChangePassword');
+  }
+
   function change_phone_buttonhandler() {
-    navigation.navigate("ChangePhone")
-  };
+    navigation.navigate('ChangePhone');
+  }
 
   return (
     <View style={styles.container}>
-      <NavigationEvents onDidFocus={() => { onscreenload(); }} />
+      <NavigationEvents
+        onDidFocus={() => {
+          onscreenload();
+        }}
+      />
       {/*Heading Container*/}
       <View style={styles.heading}>
         <View style={styles.iconstyle}>
@@ -66,7 +65,7 @@ export default function Customer_Profile({navigation}) {
       <View style={styles.body}>
         <View style={styles.textbox}>
           <Icon name="user" color="#d00f16" size={24} />
-          <Text style={{fontSize: 18, marginLeft: 28}} >{username}</Text>
+          <Text style={{fontSize: 18, marginLeft: 28}}>{username}</Text>
         </View>
 
         <View style={styles.textbox}>
@@ -185,13 +184,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: 'white',
     fontFamily: 'Roboto-Bold',
-    fontSize: 20,
+    fontSize: 18,
     textAlign: 'center',
-    paddingTop: '2%',
+    // paddingTop: '2%',
 
     // opacity: 1,
   },
 });
-
-
-
