@@ -1,14 +1,11 @@
 import React, {useState} from 'react';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import AsyncStorage from '@react-native-community/async-storage';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
-import { NavigationEvents } from 'react-navigation';
+import {NavigationEvents} from 'react-navigation';
+import newbiryani from '../assets/images/newbiryani.png';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 // import DropDownItem from "react-native-drop-down-item";
 // import {
 //   TouchableHighlight,
@@ -16,8 +13,7 @@ import { NavigationEvents } from 'react-navigation';
 // } from "react-native-gesture-handler"
 
 export default function Shopping() {
-  
-  const [product, setProduct] = useState([ ]);
+  const [product, setProduct] = useState([]);
   // const [product, setProduct] = useState([
   //   {name: 'pencil', price: '40', quantity: 0},
   //   {name: 'ruler', price: '50', quantity: 0},
@@ -27,39 +23,50 @@ export default function Shopping() {
   //   const onAdd = () => setProd;
   // const onMin = () => setProduct(prev => prev - 1)
 
-  async function qtyless(name,price,quantity) {
+  async function qtyless(name, price, quantity) {
     try {
-      await AsyncStorage.setItem(name, JSON.stringify({price: parseInt(price), quantity: parseInt(quantity)-1}))
+      await AsyncStorage.setItem(
+        name,
+        JSON.stringify({
+          price: parseInt(price),
+          quantity: parseInt(quantity) - 1,
+        }),
+      );
       // await AsyncStorage.removeItem("@storage_Key")
     } catch (e) {
       // saving error
     }
   }
 
-  async function qtymore(name,price,quantity) {
+  async function qtymore(name, price, quantity) {
     try {
-      await AsyncStorage.setItem(name, JSON.stringify({price: parseInt(price), quantity: parseInt(quantity)+1}))
+      await AsyncStorage.setItem(
+        name,
+        JSON.stringify({
+          price: parseInt(price),
+          quantity: parseInt(quantity) + 1,
+        }),
+      );
       // await AsyncStorage.removeItem("@storage_Key")
     } catch (e) {
       // saving error
     }
   }
-  
+
   function onMin(item) {
-    console.log(item)
-    if (item.quantity!=0) {
+    console.log(item);
+    if (item.quantity != 0) {
       // item.quantity = item.quantity-1
-      qtyless(item.name, item.price, item.quantity)
-      getData()
-
+      qtyless(item.name, item.price, item.quantity);
+      getData();
     }
   }
 
   function onPlus(item) {
-    // console.log(item)
+    console.log(item);
     // item.quantity = item.quantity+1
-    qtymore(item.name, item.price, item.quantity)
-    getData()
+    qtymore(item.name, item.price, item.quantity);
+    getData();
   }
 
   // async function storeData() {
@@ -70,122 +77,196 @@ export default function Shopping() {
   //   }
   // }
 
-  async function getitem(name,prodarr) {
+  async function getitem(name, prodarr) {
     try {
-      const item = await AsyncStorage.getItem(name)
+      const item = await AsyncStorage.getItem(name);
       // console.log(name)
       // const value = await AsyncStorage.getAllKeys()
-      if(item !== null) {
-        let myitem = JSON.parse(item)
+      if (item !== null) {
+        let myitem = JSON.parse(item);
 
         let newprod = {
           name: name,
           price: parseInt(myitem.price),
           quantity: parseInt(myitem.quantity),
-        }
+        };
 
-        prodarr.push(newprod)
+        prodarr.push(newprod);
+      } else {
+        console.log('lmao');
       }
-      else {
-        console.log("lmao")
-      }
-
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
       // error reading value
     }
 
     // prodarr.push(newprod)
-
   }
-  
 
   async function getData() {
     try {
-      const value = await AsyncStorage.getAllKeys()
-      if(value !== null) {
-        console.log(value)
-        let prodarr  = []
+      const value = await AsyncStorage.getAllKeys();
+      if (value !== null) {
+        console.log(value);
+        let prodarr = [];
         value.forEach(function(name) {
           // let newprod = getitem(name, prodarr)
-          // console.log(name)
-          getitem(name, prodarr)
-          .then(() => {
-            setProduct(prodarr)
-          })
-          
+          getitem(name, prodarr);
+
           // console.log(prodarr)
 
           // prodarr.push(newprod)
 
           // console.log(name)
-        })
-        // setProduct(prodarr)
-        // console.log(product)
+        });
+        setProduct(prodarr);
         // value previously stored
+      } else {
+        console.log('lmao');
       }
-      else {
-        console.log("lmao")
-      }
-    } catch(e) {
+    } catch (e) {
       // error reading value
     }
   }
-
-
+  const leftActions = props => {
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          marginVertical: 2,
+          width: '25%',
+          // opacity: 0.8,
+          // borderRadius: 5,
+          // paddingVertical: ,
+        }}>
+        <TouchableOpacity
+          style={{
+            flex: 1,
+            backgroundColor: '#d00f16',
+            // opacity: 0.2,
+            // height: 100,
+            alignItems: 'center',
+            justifyContent: 'center',
+            // marginVertical: 5,
+          }}>
+          <Icon name="delete" color="white" size={24} />
+        </TouchableOpacity>
+      </View>
+    );
+  };
   //   const onAdd = () => setProduct(prev => prev + 1);
 
   return (
     <View style={styles.Screen}>
-      <NavigationEvents onDidFocus={() => {getData()}} />
-      <View style={{width: '100%', height: 300, marginVertical: 12}}>
+      <NavigationEvents
+        onDidFocus={() => {
+          getData();
+        }}
+      />
+      <View style={{width: '100%', height: 450}}>
         <FlatList
           data={product}
           //   extraData={quantity}
           keyExtractor={item => item.name}
           renderItem={({item}) => (
-            <View style={styles.TextInputbox}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  paddingHorizontal: 10,
-                }}>
-                <Text style={styles.title}>{item.name}</Text>
-                <Text style={styles.title}>{'Rs. ' + item.price}</Text>
-              </View>
+            <Swipeable renderRightActions={leftActions}>
+              <View style={styles.TextInputbox}>
+                <View style={{width: 100, height: 100, flex: 2}}>
+                  <Image
+                    source={newbiryani}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      resizeMode: 'stretch',
+                    }}
+                  />
+                </View>
+                <View
+                  style={{
+                    flex: 5,
+                    flexDirection: 'column',
+                    justifyContent: 'space-around',
+                    // alignItems: '',
+                    paddingHorizontal: '5%',
+                  }}>
+                  <Text style={styles.title}>{item.name}</Text>
+                  <Text style={styles.title1}>{'Rs. ' + item.price}</Text>
+                </View>
 
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  paddingHorizontal: 10,
-                }}>
-                <TouchableOpacity style={styles.Confirmbutton} onPress={() => {onMin(item)}} >
-                  {/* //   onPress={item => setProduct(item.quantity + 1)}> */}
-                  {/* //   onPress={onMin(item)}> */}
-                  {/* <Text style={styles.boxfont}>UPDATE</Text> */}
-                  <Icon name="minus" color="#ffffff" style="light" />
-                </TouchableOpacity>
-                <Text>{item.quantity}</Text>
-                <TouchableOpacity style={styles.Confirmbutton} onPress={() => {onPlus(item)}}>
-                  {/* // onPress={onAdd(item.quantity)}> */}
-                  <Icon name="plus" color="#ffffff" />
-                </TouchableOpacity>
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    justifyContent: 'space-around',
+                    // alignContent: 'flex-end',
+                    // paddingLeft: 100,
+                    flex: 1,
+                  }}>
+                  {/* <View >
+                  <Text>{item.quantity}</Text>
+                </View> */}
+                  <TouchableOpacity
+                    style={styles.Confirmbutton}
+                    onPress={() => {
+                      onPlus(item);
+                    }}>
+                    {/* // onPress={onAdd(item.quantity)}> */}
+                    <Icon name="plus" color="#ffffff" />
+                  </TouchableOpacity>
+                  <Text style={{paddingLeft: 23.5, opacity: 0.5}}>
+                    {item.quantity}
+                  </Text>
+                  <TouchableOpacity
+                    style={styles.Confirmbutton}
+                    onPress={() => {
+                      onMin(item);
+                    }}>
+                    {/* //   onPress={item => setProduct(item.quantity + 1)}> */}
+                    {/* //   onPress={onMin(item)}> */}
+                    {/* <Text style={styles.boxfont}>UPDATE</Text> */}
+                    <Icon name="minus" color="#ffffff" style="light" />
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
+            </Swipeable>
           )}
         />
       </View>
-      <View style={styles.totalbox}>
-        <Text style={styles.totalboxfont}>Total</Text>
-        <Text style={styles.totalboxfont}>Rs. {total}</Text>
+      <View style={{alignItems: 'center', paddingTop: '5%'}}>
+        <View style={styles.totalbox}>
+          {/* <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingVertical: 10,
+            }}>
+            <Text style={styles.totalboxfont}>SubTotal</Text>
+            <Text style={styles.totalboxfont}>Rs. {total}</Text>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingVertical: 10,
+            }}>
+            <Text style={styles.totalboxfont}>Discount</Text>
+            <Text style={styles.totalboxfont}>Rs. {total}</Text>
+          </View> */}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              paddingVertical: 10,
+            }}>
+            <Text style={styles.totalboxfont1}>Total</Text>
+            <Text style={styles.totalboxfont1}>Rs. {total}</Text>
+          </View>
+        </View>
       </View>
       <View style={styles.bigbutton}>
         <TouchableOpacity
           onPress={() => alert('Confirmed!')}
           style={styles.Confirmationbutton}>
-          <Text style={styles.bigbuttontext}>Confirm</Text>
+          <Text style={styles.bigbuttontext}>Checkout</Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -201,9 +282,10 @@ const styles = StyleSheet.create({
   //   justifyContent: 'center',
   // },
   Screen: {
-    // flexDirection: "column",
+    // flexDirection: 'row',
     height: '100%',
-    padding: '10%',
+    // paddingTop: '10%',
+    // justifyContent: 'center',
     backgroundColor: '#e8e8e8',
 
     // flex: '20%',
@@ -272,38 +354,40 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   totalbox: {
-    width: 328,
-    flexDirection: 'row',
-    marginVertical: 10,
+    width: '100%',
+    flexDirection: 'column',
+    // marginVertical: 10,
     borderColor: 'black',
     backgroundColor: 'white',
-    borderWidth: 0.5,
-    borderRadius: 5,
+    // borderWidth: 0.5,
+    // borderRadius: 5,
     height: 50,
     // paddingHorizontal: 20,
     paddingHorizontal: '5.7%',
+    // paddingBottom: '10%',
     // paddingLeft: 5,
     // paddingTop: 40,
     justifyContent: 'space-between',
-    alignItems: 'center',
+    // alignContent: 'center',
     shadowColor: 'darkgrey',
     shadowOpacity: 20,
   },
   TextInputbox: {
-    flexDirection: 'column',
+    flexDirection: 'row',
     padding: 7,
-    paddingHorizontal: '5.7%',
-    width: 328,
-    height: 68,
+    // paddingHorizontal: '5.7%',
+    width: '100%',
+    height: 100,
     borderRadius: 5,
     // elevation: 5,
     // flexDirection: 'row',
-    marginVertical: 10,
-    borderColor: 'black',
+    marginVertical: 2,
+    // borderColor: 'black',
     backgroundColor: 'white',
     borderWidth: 0,
+    // borderBottomWidth: 1,
     // alignContent: 'center',
-    justifyContent: 'space-between',
+    // justifyContent: 'space-around',
     // textAlign: 'left',
     fontFamily: 'Roboto',
     shadowColor: 'darkgrey',
@@ -313,15 +397,29 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    color: '#d00f16',
+    color: 'black',
     // paddingHorizontal:
     // fontWeight: 'bold',
   },
+  title1: {
+    fontSize: 14,
+    color: 'black',
+    opacity: 0.5,
+  },
   totalboxfont: {
-    fontSize: 20,
+    fontSize: 16,
     fontFamily: 'Roboto',
     color: 'black',
-    paddingHorizontal: 10,
+    opacity: 0.5,
+    // paddingHorizontal: 10,
+  },
+  totalboxfont1: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'Roboto-bold',
+    color: 'black',
+    // opacity: 0.5,
+    // paddingHorizontal: 10,
   },
   boxfont: {
     fontSize: 14,
@@ -335,9 +433,10 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 15,
     backgroundColor: '#d00f16',
     borderRadius: 2,
-    width: 18,
-    height: 18,
+    width: 24,
+    height: 24,
     shadowColor: '#000',
+    borderRadius: 180,
     // shadowOffset: {width: 2, height: 4},
     shadowOpacity: 20,
     // shadowRadius: 6,
@@ -349,7 +448,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   Confirmationbutton: {
-    padding: '5%',
+    // padding: '5%',
     // marginVertical: 10,
     paddingHorizontal: 15,
     backgroundColor: '#d00f16',
@@ -360,7 +459,7 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 2, height: 4},
     shadowOpacity: 0.9,
     shadowRadius: 6,
-    elevation: 2,
+    // elevation: 2,
     // minHeight: '6%',
     textAlign: 'center',
     justifyContent: 'center',
@@ -373,16 +472,16 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     fontSize: 20,
     textAlign: 'center',
-    paddingTop: '2%',
+    // paddingTop: '2%',
 
     // opacity: 1,
   },
   bigbutton: {
-    // padding: '50%',
+    paddingTop: '10%',
     paddingHorizontal: '23%',
-    flex: 2,
+    // flex: 2,
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
   },
   plusbutton: {
     // paddingHorizontal: 15,
