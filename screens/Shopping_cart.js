@@ -183,8 +183,7 @@ export default function Shopping({navigation}) {
     console.log("hsadhasdashdhasdahsd")
   }
 
-
-  const leftActions = props => {
+  const leftActions = (item) => {
     return (
       <View
         style={{
@@ -204,7 +203,15 @@ export default function Shopping({navigation}) {
             alignItems: 'center',
             justifyContent: 'center',
             // marginVertical: 5,
-          }}>
+          }}
+          onPress={()=>setProduct(()=>{
+            // product.findIndex((I)=>I=item.name)
+            
+            AsyncStorage.removeItem(item.name).then(setTotal(total=>total-(item.quantity*item.price)))
+            return product.filter((I)=>I.name!=item.name)
+          })
+        }
+          >
           <Icon name="delete" color="white" size={24} />
         </TouchableOpacity>
       </View>
@@ -225,7 +232,7 @@ export default function Shopping({navigation}) {
           //   extraData={quantity}
           keyExtractor={item => item.name}
           renderItem={({item}) => (
-            <Swipeable renderLeftActions={leftActions}>
+            <Swipeable renderLeftActions={()=>leftActions(item)}>
               <View style={styles.TextInputbox}>
                 <View style={{width: 100, height: 100, flex: 2}}>
                   <Image
@@ -268,7 +275,7 @@ export default function Shopping({navigation}) {
                     {/* // onPress={onAdd(item.quantity)}> */}
                     <Icon name="plus" color="#ffffff" />
                   </TouchableOpacity>
-                  <Text style={{paddingLeft: 22, opacity: 0.5}}>
+                  <Text style={{paddingLeft: 6, opacity: 0.5, alignSelf:'center'}}>
                     {item.quantity}
                   </Text>
                   <TouchableOpacity
@@ -314,15 +321,17 @@ export default function Shopping({navigation}) {
               justifyContent: 'space-between',
               paddingVertical: 10,
             }}>
-            <Text style={styles.totalboxfont1}>Total</Text>
+            <Text style={styles.totalboxfont1}>Subtotal</Text>
             <Text style={styles.totalboxfont1}>Rs. {total}</Text>
           </View>
         </View>
       </View>
       <View style={styles.bigbutton}>
         <TouchableOpacity
-          onPress={() => navigation.navigate('Home')}
-          style={styles.Confirmationbutton}>
+          onPress={() => handlePress()}
+          style={styles.Confirmationbutton}
+          // activeOpacity={0.4}
+          >
           <Text style={styles.bigbuttontext}>Checkout</Text>
         </TouchableOpacity>
       </View>

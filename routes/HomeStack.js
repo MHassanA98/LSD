@@ -17,7 +17,7 @@ import change_password_customer from '../screens/change_password_customer';
 // import Forgotpw from '../screens/Forgotpw';
 // import Change_Password from '../screens/ChangePassword';
 import React from 'react';
-import { Button,TouchableOpacity } from 'react-native';
+import { Button,TouchableOpacity,Text } from 'react-native';
 import Checkout from '../screens/Checkout'
 import AsyncStorage from '@react-native-community/async-storage';
 // import firebase from '@react-native-firebase/app';
@@ -135,6 +135,11 @@ const screens = {
         title: 'Home',
         headerTintColor:'white',
         headerRight:()=>null,
+        // headerRight:()=>(
+        //   <Text>
+        //     asd
+        //   </Text>
+        // )
         // headerLeft:() => (
         //   <TouchableOpacity
         //     onPress={() => {
