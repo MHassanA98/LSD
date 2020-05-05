@@ -11,13 +11,17 @@ import {
   // Picker,
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
+import {NavigationEvents} from 'react-navigation';
 // import DropDownItem from "react-native-drop-down-item";
 // import {
 //   TouchableHighlight,
 //   BorderlessButton,
 // } from "react-native-gesture-handler"
 
-export default function Orders() {
+export default function Orders({navigation}) {
+  const handlePress = () => {
+    navigation.navigate('Pending_Order_Admin');
+  };
   const [order, setorder] = useState([
     {name: 'jawadg01', orderid: '1'},
     {name: 'jawadg02', orderid: '2'},
@@ -51,22 +55,22 @@ export default function Orders() {
         </TouchableOpacity>
       </View> */}
       {/* <View style={styles.RestScreen}> */}
-      <View style={{width: '100%'}}>
-        {/* <TouchableOpacity raised style={{elevation: 2}}> */}
-        <FlatList
-          data={order}
-          keyExtractor={item => item.orderid}
-          renderItem={({item}) => (
-            <TouchableOpacity style={{justifyContent: 'center'}}>
-              <Text raised style={styles.TextInputbox}>
-                {'OrderID ' + item.orderid}
-              </Text>
-            </TouchableOpacity>
-          )}
-        />
-        {/* </TouchableOpacity> */}
-      </View>
+      {/* <View style={{width: '100%'}}> */}
+      {/* <TouchableOpacity raised style={{elevation: 2}}> */}
+      <FlatList
+        data={order}
+        keyExtractor={item => item.orderid}
+        renderItem={({item}) => (
+          <TouchableOpacity style={styles.TextInputbox} onPress={handlePress}>
+            <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold'}}>
+              {'OrderID ' + item.orderid}
+            </Text>
+          </TouchableOpacity>
+        )}
+      />
+      {/* </TouchableOpacity> */}
     </View>
+    // </View>
   );
 }
 
@@ -81,8 +85,11 @@ const styles = StyleSheet.create({
   Screen: {
     // flexDirection: "column",
     height: '100%',
-    padding: '10%',
+    paddingLeft: '10%',
+    paddingTop: '10%',
     backgroundColor: '#e8e8e8',
+    justifyContent: 'center',
+    // alignItems: 'center',
 
     // flex: '20%',
   },
@@ -149,24 +156,25 @@ const styles = StyleSheet.create({
     // justifyContent: "center",
   },
   TextInputbox: {
-    paddingTop: 13,
-    paddingHorizontal: 16,
-    width: 328,
-    height: 48,
+    // paddingTop: 13,
+    // paddingHorizontal: 16,
+    width: '90%',
+    height: 58,
     flexDirection: 'row',
     marginVertical: 10,
     borderColor: 'black',
     backgroundColor: 'white',
     borderWidth: 0,
+
     // elevation: 2,
     shadowColor: 'darkgrey',
-    shadowOpacity: 20,
-    elevation: 5,
+    shadowOpacity: 1,
+    elevation: 2,
     borderRadius: 5,
-    fontSize: 16,
+    fontSize: 6,
     fontFamily: 'Roboto-Bold',
     // height: 50,
-    // justifyContent: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
   },
 

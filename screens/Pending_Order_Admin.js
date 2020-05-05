@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View, StyleSheet, Button, TouchableOpacity} from 'react-native';
-
+import {NavigationEvents} from 'react-navigation';
 //Made by Shahzil
 //The list of items feels very dubios need to rewamp the whole list of items otherwise showing like this is hard because:
 //1- The alignment isn't good when used for varying name length
@@ -77,14 +77,18 @@ class Pending_Order_Admin extends React.Component {
           </View>
 
           <View style={styles.lower_body}>
-            <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+            <View
+              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
               <Text
                 style={{
                   fontSize: 12,
+                  marginLeft: 20,
                   marginTop: 10,
                   marginBottom: 5,
-                  marginHorizontal: 30,
                 }}>
+                Items:
+              </Text>
+              <Text style={{fontSize: 12, marginTop: 10, marginBottom: 5}}>
                 Qty
               </Text>
               <Text
@@ -103,7 +107,8 @@ class Pending_Order_Admin extends React.Component {
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
-                // marginHorizontal: 20,
+                borderBottomWidth: 0.5,
+                paddingBottom: 5,
               }}>
               <Text
                 style={{
@@ -114,37 +119,25 @@ class Pending_Order_Admin extends React.Component {
                 }}>
                 Eggs
               </Text>
-
-              <View
+              <Text
                 style={{
-                  flexDirection: 'row',
-                  justifyContent: 'flex-end',
-                  paddingRight: 20,
-                  //   marginHorizontal: 30,
+                  fontSize: 18,
+                  marginRight: 30,
+                  marginTop: 10,
+                  marginBottom: 5,
                 }}>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    marginHorizontal: 60,
-                    // marginRight: 10,
-                    marginTop: 10,
-                    // paddingRight: 10,
-                    marginBottom: 5,
-                  }}>
-                  6
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    marginRight: 10,
-                    marginTop: 10,
-                    marginBottom: 5,
-
-                    color: '#d00c16',
-                  }}>
-                  70
-                </Text>
-              </View>
+                6
+              </Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  marginRight: 30,
+                  marginTop: 10,
+                  marginBottom: 5,
+                  color: '#d00c16',
+                }}>
+                70
+              </Text>
             </View>
 
             <View style={styles.write_on_the_edges}>
@@ -188,7 +181,7 @@ class Pending_Order_Admin extends React.Component {
                 style={{
                   fontSize: 15,
                   marginLeft: 20,
-                  marginTop: 30,
+                  marginTop: 10,
                   marginBottom: 5,
                 }}>
                 Total
@@ -197,7 +190,7 @@ class Pending_Order_Admin extends React.Component {
                 style={{
                   fontSize: 15,
                   marginRight: 20,
-                  marginTop: 30,
+                  marginTop: 10,
                   marginBottom: 5,
                 }}>
                 Rs. {this.state.Total}
