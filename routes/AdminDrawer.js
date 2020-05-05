@@ -13,7 +13,7 @@ import {Dimensions} from 'react-native'
 // import Pending_Order_Admin from '../screens/Pending_Order_Admin';
 // import PendingOrdersList from '../screens/PendingOrdersList';
 // import RedemptionPoints from '../screens/RedemptionPoints';
-import Signout from '../screens/Signout';
+// import Signout from '../screens/Signout';
 // import Subcategory from '../screens/Subcategory';
 // import Customer_Profile from '../screens/Customer_Profile';
 // import change_password_customer from '../screens/change_password_customer';
@@ -57,10 +57,10 @@ const Stacks = {
       screen:ProfileStack
     },
 
-    Signout: {
-      screen:Signout
+    // Signout: {
+    //   screen:Signout
 
-    },
+    // },
 
     
    

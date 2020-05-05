@@ -15,9 +15,9 @@ import { NavigationEvents } from 'react-navigation';
 //   BorderlessButton,
 // } from "react-native-gesture-handler"
 
-export default function Shopping() {
+export default function Shopping({navigation}) {
   
-  const [product, setProduct] = useState([ ]);
+  const [product, setProduct] = useState([]);
   // const [product, setProduct] = useState([
   //   {name: 'pencil', price: '40', quantity: 0},
   //   {name: 'ruler', price: '50', quantity: 0},
@@ -28,9 +28,13 @@ export default function Shopping() {
   // const onMin = () => setProduct(prev => prev - 1)
 
   async function qtyless(name,price,quantity) {
+
     try {
+      // await AsyncStorage.setItem(name, JSON.stringify({price: parseInt(price), quantity: parseInt(quantity)-1}))
       await AsyncStorage.setItem(name, JSON.stringify({price: parseInt(price), quantity: parseInt(quantity)-1}))
+
       // await AsyncStorage.removeItem("@storage_Key")
+      // setProduct({quantity: quantity+1})
     } catch (e) {
       // saving error
     }
@@ -40,6 +44,7 @@ export default function Shopping() {
     try {
       await AsyncStorage.setItem(name, JSON.stringify({price: parseInt(price), quantity: parseInt(quantity)+1}))
       // await AsyncStorage.removeItem("@storage_Key")
+      // console.log(product)
     } catch (e) {
       // saving error
     }
@@ -49,17 +54,46 @@ export default function Shopping() {
     console.log(item)
     if (item.quantity!=0) {
       // item.quantity = item.quantity-1
-      qtyless(item.name, item.price, item.quantity)
-      getData()
+      qtyless(item.name, item.price, item.quantity).then(()=>{
+        let i=product.findIndex(element=>element.name==item.name)
+        let New=[...product]
+        New[i]={...New[i],"quantity":parseInt(item.quantity)-1}
+        setProduct(New)
+        setTotal(total=>total-item.price)
+      })
+      // getData()
+      // console.log(product)
 
     }
   }
 
   function onPlus(item) {
     console.log(item)
+    console.log(product)
     // item.quantity = item.quantity+1
-    qtymore(item.name, item.price, item.quantity)
-    getData()
+    // qtymore(item.name, item.price, item.quantity).then(()=>{
+
+      // console.log(product.findIndex(element=>element.name==item.name))
+      console.log(product)
+      // product[product.findIndex(element=>element.name==item.name)].quantity=item.quantity+1
+      // setProduct((PROD)=>{
+      //   PROD.map((item)=>{
+      //     console.log(item)
+      //   })
+      // })
+      qtymore(item.name, item.price, item.quantity).then(()=>{
+        let i=product.findIndex(element=>element.name==item.name)
+        let New=[...product]
+        New[i]={...New[i],"quantity":parseInt(item.quantity)+1}
+        setProduct(New)
+        setTotal(total=>total+item.price)
+      })
+
+
+      console.log(product)
+      
+    // })
+    // getData()
   }
 
   // async function storeData() {
@@ -70,19 +104,28 @@ export default function Shopping() {
   //   }
   // }
 
-  async function getitem(name,prodarr) {
+  async function getitem(name,prodarr,Total) {
     try {
       const item = await AsyncStorage.getItem(name)
-      // console.log(name)
+      // console.log("NAME",name)
       // const value = await AsyncStorage.getAllKeys()
       if(item !== null) {
         let myitem = JSON.parse(item)
+        // console.log(myitem)
 
         let newprod = {
           name: name,
           price: parseInt(myitem.price),
           quantity: parseInt(myitem.quantity),
         }
+
+        // console.log(myitem.price+10)
+        // console.log(myitem.price*myitem.quantity)
+        Total=Total+(myitem.price*myitem.quantity)
+        setTotal(total=>total+Total)
+        console.log("TOTAL    ",Total)
+
+        console.log(newprod)
 
         prodarr.push(newprod)
       }
@@ -101,14 +144,24 @@ export default function Shopping() {
   
 
   async function getData() {
+    console.log("!@#$%^&         ",product)
     try {
       const value = await AsyncStorage.getAllKeys()
+      // console.log("VALVALVLAVLAVLLVALAV", value)
       if(value !== null) {
-        console.log(value)
+        console.log("VALLL",value)
         let prodarr  = []
+        let Total=0
         value.forEach(function(name) {
           // let newprod = getitem(name, prodarr)
-          getitem(name, prodarr)
+          getitem(name, prodarr, Total).then(()=>{
+            console.log("1PROD",prodarr)
+            console.log("PRODDDDD",product)
+            setProduct(prodarr)   
+
+          })
+          
+         
           
           // console.log(prodarr)
 
@@ -116,8 +169,8 @@ export default function Shopping() {
 
           // console.log(name)
         })
-        setProduct(prodarr)
-        // value previously stored
+        // setTotal(total)
+
       }
       else {
         console.log("lmao")
@@ -127,12 +180,16 @@ export default function Shopping() {
     }
   }
 
+  function blurry() {
+    console.log("hsadhasdashdhasdahsd")
+  }
+
 
   //   const onAdd = () => setProduct(prev => prev + 1);
 
   return (
     <View style={styles.Screen}>
-      <NavigationEvents onDidFocus={() => {getData()}} />
+      <NavigationEvents onWillFocus={() => {getData()}} onDidBlur={()=>{blurry()}} on />
       <View style={{width: '100%', height: 300, marginVertical: 12}}>
         <FlatList
           data={product}
@@ -156,7 +213,7 @@ export default function Shopping() {
                   justifyContent: 'center',
                   paddingHorizontal: 10,
                 }}>
-                <TouchableOpacity style={styles.Confirmbutton} onPress={() => {onMin(item)}} >
+                <TouchableOpacity style={[styles.Confirmbutton, {backgroundColor: item.quantity==1? "rgba(00,00,00,0.2)" : "#d00f16"}]} onPress={() => {onMin(item)}} disabled={item.quantity==1? true: false} >
                   {/* //   onPress={item => setProduct(item.quantity + 1)}> */}
                   {/* //   onPress={onMin(item)}> */}
                   {/* <Text style={styles.boxfont}>UPDATE</Text> */}
@@ -178,7 +235,7 @@ export default function Shopping() {
       </View>
       <View style={styles.bigbutton}>
         <TouchableOpacity
-          onPress={() => alert('Confirmed!')}
+          onPress={() => navigation.navigate('Home')}
           style={styles.Confirmationbutton}>
           <Text style={styles.bigbuttontext}>Confirm</Text>
         </TouchableOpacity>

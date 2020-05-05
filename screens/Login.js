@@ -17,24 +17,27 @@ function END(mail) {
 
 export default function Login({navigation}) {
 
-  async function emptyitems(name) {
-    try {
-      const item = await AsyncStorage.removeItem(name)
-    } catch(e) {
-      console.log(e)
-    }
+  // async function emptyitems(name) {
+  //   try {
+  //     const item = await AsyncStorage.removeItem(name)
+  //   } catch(e) {
+  //     console.log(e)
+  //   }
 
-  }
+  // }
 
   async function removeData() {
     try {
-      const value = await AsyncStorage.getAllKeys()
-      if(value !== null) {
-        value.forEach(function(name) {
-          emptyitems(name)
-        })
-      }
-    } catch(e) {
+      // const value = await AsyncStorage.getAllKeys()
+      // if(value !== null) {
+      //   value.forEach(function(name) {
+      //     emptyitems(name)
+      //   })
+      // }
+      const keys=await AsyncStorage.getAllKeys()
+      await AsyncStorage.multiRemove(keys)
+    }
+     catch(e) {
       console.log(e)
     }
   }
@@ -87,34 +90,74 @@ export default function Login({navigation}) {
 
   const handleLoginPress = () => {
     
-    
-    emaillums = END(email)
-    if (emaillums){
-      if (password.length>=8) {
-        mydb = firebase.database().ref('/Users/'+email.substr(0,8))
-        mydb.once("value")
-        .then(function(snapshot) {
-
-          let banstat = snapshot.child("BanStatus").val()
-        
-          if (!banstat) {
-                handleLogin()
-          }
-
-          else {
-            alert("You are banned for misconduct.") 
-          }
-
-        })
-      }
-      else {
-        alert("Please enter 8 or more characters for password.")
-      }
+    if (email==""){
+      alert("Please enter your email address")
+    }
+    else if(password==""){
+      alert("Please enter your password")
     }
 
     else {
-      alert("Please enter your LUMS email.")
+
+      emaillums = END(email)
+      if (emaillums){
+        // if (password.length>=8) {
+          mydb = firebase.database().ref('/Users/'+email.substr(0,8))
+          mydb.once("value")
+          .then(function(snapshot) {
+
+            let banstat = snapshot.child("BanStatus").val()
+          
+            if (!banstat) {
+                  handleLogin()
+            }
+
+            else {
+              alert("You are banned for misconduct.") 
+            }
+
+          })
+          // .catch(e=>console.log(e))
+        // }
+        // else {
+        //   alert("Please enter 8 or more characters for password.")
+        // }
+      }
+
+      else {
+        alert("Please enter your LUMS email.")
+      }
+
     }
+    
+    // emaillums = END(email)
+    // if (emaillums){
+    //   if (password.length>=8) {
+    //     mydb = firebase.database().ref('/Users/'+email.substr(0,8))
+    //     mydb.once("value")
+    //     .then(function(snapshot) {
+
+    //       let banstat = snapshot.child("BanStatus").val()
+        
+    //       if (!banstat) {
+    //             handleLogin()
+    //       }
+
+    //       else {
+    //         alert("You are banned for misconduct.") 
+    //       }
+
+    //     })
+    //     .catch(e=>console.log(e))
+    //   }
+    //   else {
+    //     alert("Please enter 8 or more characters for password.")
+    //   }
+    // }
+
+    // else {
+    //   alert("Please enter your LUMS email.")
+    // }
 
   };
 

@@ -19,8 +19,36 @@ import change_password_customer from '../screens/change_password_customer';
 import React from 'react';
 import { Button,TouchableOpacity } from 'react-native';
 import Checkout from '../screens/Checkout'
+import AsyncStorage from '@react-native-community/async-storage';
 // import firebase from '@react-native-firebase/app';
 // import ReviewDetails from '../screens/reviewDetails';
+
+// async function emptyitems(name) {
+//     try {
+//       const item = await AsyncStorage.removeItem(name)
+//     } catch(e) {
+//       console.log(e)
+//     }
+
+//   }
+
+// async function removeData() {
+  
+//   try {
+//     const value = await AsyncStorage.getAllKeys()
+//     if(value !== null) {
+//       value.forEach(function(name) {
+//         emptyitems(name)
+//       })
+//     }
+//     console.log("Here")
+//     // const keys=await AsyncStorage.getAllKeys()
+//     // await AsyncStorage.multiRemove(keys)
+//   }
+//    catch(e) {
+//     console.log(e)
+//   }
+// }
 
 const screens = {
 
@@ -70,7 +98,7 @@ const screens = {
             // color="#e8e8e8"
             style={{paddingLeft:16}}
           >
-            <Icon name='menu' size={28} color={'white'}/>
+            <Icon name='menu' size={24} color={'white'}/>
 
 
           </TouchableOpacity>
@@ -98,8 +126,33 @@ const screens = {
 
   ShoppingCart:{
     screen:ShoppingCart,
-    navigationOptions:{
-      headerRight:()=>null
+    // navigationOptions:{
+    //   headerRight:()=>null
+    // }
+    navigationOptions:({navigation})=>{
+
+      return{
+        title: 'Home',
+        headerTintColor:'white',
+        headerRight:()=>null,
+        // headerLeft:() => (
+        //   <TouchableOpacity
+        //     onPress={() => {
+        //       // removeData().then(navigation.goBack())
+        //       navigation.goBack()
+              
+        //     }
+        //   }
+        //     // title="Info"
+        //     // color="#e8e8e8"
+        //     style={{paddingLeft:16}}
+        //   >
+        //     <Icon name='arrow-back' size={24} color={'white'}/>
+
+
+        //   </TouchableOpacity>
+        // ),
+      }
     }
   },
 
@@ -149,6 +202,7 @@ const HomeStack = createStackNavigator(screens, {
           onPress={() => navigation.navigate('ShoppingCart')}
           // title="Info"
           // color="#e8e8e8"
+          activeOpacity={0.4}
           style={{paddingRight:16}}
         >
           <Icon name='shopping-cart' size={28} color={'white'}/>
