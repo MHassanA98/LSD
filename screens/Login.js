@@ -3,6 +3,7 @@ import {
   StyleSheet,
   Text,
   View,
+  ScrollView,
   ImageBackground,
   Image,
   TextInput,
@@ -18,7 +19,7 @@ import firebase from '../assets/DatabaseConfig';
 // import database from "@react-native-firebase/database" ;
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {NavigationEvents} from 'react-navigation';
+// import {NavigationEvents} from 'react-navigation';
 
 function END(mail) {
   return mail.endsWith('@lums.edu.pk');
@@ -167,25 +168,25 @@ export default function Login({navigation}) {
       });
   }
 
-  function loginexists() {
-    meow = firebase.auth().onAuthStateChanged(function(user) {
-      if (user) {
-        LoginPress();
-      }
-    });
-  }
+  // function loginexists() {
+  //   meow = firebase.auth().onAuthStateChanged(function(user) {
+  //     if (user) {
+  //       LoginPress();
+  //     }
+  //   });
+  // }
 
   return (
     <TouchableWithoutFeedback
-      onPress={() => {
-        Keyboard.dismiss();
-      }}>
+      onPress={() => { Keyboard.dismiss(); }}
+      // style={styles.container}
+      >
       <View style={styles.container}>
-        <NavigationEvents
+        {/* <NavigationEvents
           onDidFocus={() => {
             loginexists();
           }}
-        />
+        /> */}
         <ImageBackground source={backg} style={styles.bgimage}>
           <View style={styles.maincontainer}>
             <Image style={styles.stretch} source={lsdlogo} />
@@ -252,6 +253,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    // minHeight: "100%",
     // justifyContent: 'center',
     // alignItems:'center',
   },
