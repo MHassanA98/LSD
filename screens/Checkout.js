@@ -178,7 +178,7 @@ export default function Checkout({navigation}) {
     let emailcheck = firebase.auth().currentUser.email;
     let RedPoints=0
     mydb =firebase.database().ref('/Users/' + emailcheck.substr(0, 8))
-    .once('value').then(async function(snapshot) {
+    .once('value').then(function(snapshot) {
       // let custflag = snapshot.child('Customerflag').val();
       // let username = snapshot.child('Username').val();
       // if (custflag) {
@@ -306,10 +306,10 @@ export default function Checkout({navigation}) {
               </Text>
             </View>
             <View style={styles.write_on_the_edges}>
-              <Text style={{fontSize: 16, marginLeft: 16, marginBottom: 5, color:Switch? 'rgba(00,00,00,0.5)': 'black' }}>
+              <Text style={{fontSize: 16, marginLeft: 16, marginBottom: 5, color:!Switch? 'rgba(00,00,00,0.2)': 'black' }}>
                 Points Discount
               </Text>
-              <Text style={{fontSize: 16, marginRight: 16, marginBottom: 5}}>
+              <Text style={{fontSize: 16, marginRight: 16, marginBottom: 5, color:!Switch? 'rgba(00,00,00,0.2)': 'black'}}>
                 Rs. {RedPts}
               </Text>
             </View>

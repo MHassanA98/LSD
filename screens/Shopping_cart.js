@@ -226,11 +226,11 @@ export default function Shopping({navigation}) {
   return (
     <View style={styles.Screen}>
       <NavigationEvents
-        onDidFocus={() => {
+        onWillFocus={() => {
           getData();
         }}
       />
-      <View style={{width: '100%', height: 450}}>
+      <View style={{width: '100%', height: 480, marginVertical:12}}>
         <FlatList
           data={product}
           //   extraData={quantity}
@@ -283,7 +283,8 @@ export default function Shopping({navigation}) {
                     {item.quantity}
                   </Text>
                   <TouchableOpacity
-                    style={styles.Confirmbutton}
+                    style={[styles.Confirmbutton,{backgroundColor: item.quantity==1? "grey": "#d00f16" }]}
+                    disabled={item.quantity==1}
                     onPress={() => {
                       onMin(item);
                     }}>

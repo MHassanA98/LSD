@@ -23,7 +23,7 @@ export default function CustMenu({navigation}) {
     try {
       await AsyncStorage.setItem(
         name,
-        JSON.stringify({price: parseInt(price), quantity: 0}),
+        JSON.stringify({price: parseInt(price), quantity: 1}),
       );
       // await AsyncStorage.removeItem("@storage_Key")
     } catch (e) {
@@ -125,7 +125,7 @@ export default function CustMenu({navigation}) {
     // <ScrollView>
     <View style={styles.Screen}>
       <NavigationEvents
-        onDidFocus={() => {
+        onWillFocus={() => {
           onscreenload();
         }}
       />
