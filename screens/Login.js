@@ -17,7 +17,7 @@ import firebase from '../assets/DatabaseConfig';
 // import auth from "@react-native-firebase/auth" ;
 // import database from "@react-native-firebase/database" ;
 
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {NavigationEvents} from 'react-navigation';
 
 function END(mail) {
@@ -25,7 +25,6 @@ function END(mail) {
 }
 
 export default function Login({navigation}) {
-
   // async function emptyitems(name) {
   //   try {
   //     const item = await AsyncStorage.removeItem(name)
@@ -43,11 +42,10 @@ export default function Login({navigation}) {
       //     emptyitems(name)
       //   })
       // }
-      const keys=await AsyncStorage.getAllKeys()
-      await AsyncStorage.multiRemove(keys)
-    }
-     catch(e) {
-      console.log(e)
+      const keys = await AsyncStorage.getAllKeys();
+      await AsyncStorage.multiRemove(keys);
+    } catch (e) {
+      console.log(e);
     }
   }
 
@@ -94,47 +92,34 @@ export default function Login({navigation}) {
   };
 
   const handleLoginPress = () => {
-    
-    if (email==""){
-      alert("Please enter your email address")
-    }
-    else if(password==""){
-      alert("Please enter your password")
-    }
-
-    else {
-
-      emaillums = END(email)
-      if (emaillums){
+    if (email == '') {
+      alert('Please enter your email address');
+    } else if (password == '') {
+      alert('Please enter your password');
+    } else {
+      emaillums = END(email);
+      if (emaillums) {
         // if (password.length>=8) {
-          mydb = firebase.database().ref('/Users/'+email.substr(0,8))
-          mydb.once("value")
-          .then(function(snapshot) {
+        mydb = firebase.database().ref('/Users/' + email.substr(0, 8));
+        mydb.once('value').then(function(snapshot) {
+          let banstat = snapshot.child('BanStatus').val();
 
-            let banstat = snapshot.child("BanStatus").val()
-          
-            if (!banstat) {
-                  handleLogin()
-            }
-
-            else {
-              alert("You are banned for misconduct.") 
-            }
-
-          })
-          // .catch(e=>console.log(e))
+          if (!banstat) {
+            handleLogin();
+          } else {
+            alert('You are banned for misconduct.');
+          }
+        });
+        // .catch(e=>console.log(e))
         // }
         // else {
         //   alert("Please enter 8 or more characters for password.")
         // }
+      } else {
+        alert('Please enter your LUMS email.');
       }
-
-      else {
-        alert("Please enter your LUMS email.")
-      }
-
     }
-    
+
     // emaillums = END(email)
     // if (emaillums){
     //   if (password.length>=8) {
@@ -143,13 +128,13 @@ export default function Login({navigation}) {
     //     .then(function(snapshot) {
 
     //       let banstat = snapshot.child("BanStatus").val()
-        
+
     //       if (!banstat) {
     //             handleLogin()
     //       }
 
     //       else {
-    //         alert("You are banned for misconduct.") 
+    //         alert("You are banned for misconduct.")
     //       }
 
     //     })
@@ -163,7 +148,6 @@ export default function Login({navigation}) {
     // else {
     //   alert("Please enter your LUMS email.")
     // }
-
   };
 
   async function handleLogin() {
@@ -208,7 +192,7 @@ export default function Login({navigation}) {
             <View style={styles.inputbox}>
               <Icon
                 style={styles.inputicon}
-                name="envelope-o"
+                name="email-outline"
                 size={24}
                 color="#d00f16"
               />
@@ -222,14 +206,14 @@ export default function Login({navigation}) {
             <View style={styles.inputbox}>
               <Icon
                 style={styles.inputicon2}
-                name="lock"
+                name="lock-outline"
                 size={24}
                 color="#d00f16"
               />
               <TextInput
                 secureTextEntry
                 placeholder="Password"
-                style={styles.inputtext}
+                style={styles.inputtext2}
                 onChangeText={passwordInputHandler}
                 value={password}
               />
@@ -280,37 +264,47 @@ const styles = StyleSheet.create({
 
   inputbox: {
     color: 'grey',
-    marginTop: '6%',
+    // paddingTop: '6%',
     flexDirection: 'row',
     backgroundColor: 'white',
     borderRadius: 6,
-    shadowColor: '#000',
-    shadowOffset: {width: 2, height: 4},
-    shadowOpacity: 0.9,
-    shadowRadius: 6,
-    elevation: 2,
-    width: '70%',
-    height: 56,
-    // paddingHorizontal: '3%',
-    // marginHorizontal: '5%',
-    justifyContent: 'space-around',
+    // justifyContent: 'flex-start',
     alignItems: 'center',
+    paddingHorizontal: '2%',
+    width: 280,
+    height: 56,
+    borderColor: 'black',
+    borderBottomWidth: 0.5,
+    marginTop: '6%',
   },
 
   inputicon: {
+    flex: 2,
+
     // paddingTop: '3%',
     // paddingLeft: '2%',
   },
   inputicon2: {
+    flex: 2,
     // paddingTop: '3%',
-    paddingLeft: '3%',
-    paddingRight: '1%',
+    // paddingRight: '1%',
+    paddingLeft: 1,
   },
   inputtext: {
     // marginLeft: 5,
+    flex: 20,
     fontSize: 14,
-    width: '70%',
-    fontFamily: 'Roboto-Bold',
+    // width: '70%',
+    marginLeft: 3,
+    fontFamily: 'Roboto-Medium',
+  },
+  inputtext2: {
+    // marginLeft: 5,
+    flex: 20,
+    fontSize: 14,
+    // width: '70%',
+    marginLeft: 2,
+    fontFamily: 'Roboto-Medium',
   },
 
   stretch: {

@@ -21,7 +21,10 @@ export default function CustMenu({navigation}) {
 
   async function storeData(name, price) {
     try {
-      await AsyncStorage.setItem(name, JSON.stringify({price: parseInt(price), quantity: 1}))
+      await AsyncStorage.setItem(
+        name,
+        JSON.stringify({price: parseInt(price), quantity: 0}),
+      );
       // await AsyncStorage.removeItem("@storage_Key")
     } catch (e) {
       // saving error
@@ -98,30 +101,34 @@ export default function CustMenu({navigation}) {
   //   return props.quantity - 1;
   // }
   //   const onAdd = () => setProduct(prev => prev + 1);
-  // const swipeSettings = {
-  //   autoclose: true,
-  //   onClose: (secId, rowId, direction) => {},
-  //   onOpen: (secId, rowId, direction) => {},
-  //   right: [
-  //     {
-  //       onPress: () => {},
-  //       text: 'Add',
-  //       type: 'Add',
-  //       backgroundColor: 'red',
-  //       height: '90%',
-  //       width: '100%',
-  //       // padding: 10/,
-  //       // marginVertical: 10,
-  //     },
+  const swipeSettings = {
+    autoclose: true,
+    onClose: (secId, rowId, direction) => {},
+    onOpen: (secId, rowId, direction) => {},
+    right: [
+      {
+        onPress: () => {},
+        text: 'Add',
+        type: 'Add',
+        backgroundColor: 'red',
+        height: '90%',
+        width: '100%',
+        // padding: 10/,
+        // marginVertical: 10,
+      },
 
-  //     // rowId: 1,
-  //     // secId: 1
-  //   ],
-  // };
+      // rowId: 1,
+      // secId: 1
+    ],
+  };
   return (
     // <ScrollView>
     <View style={styles.Screen}>
-      <NavigationEvents onWillFocus={() => {onscreenload()}} />
+      <NavigationEvents
+        onDidFocus={() => {
+          onscreenload();
+        }}
+      />
       {/* <View style={{width: '100%', height: 460, marginVertical: 12}}> */}
       <FlatList
         data={product}
@@ -150,14 +157,15 @@ export default function CustMenu({navigation}) {
               <Text style={styles.title}>{item.name}</Text>
               <Text style={styles.boxfont}>{'Rs. ' + item.price}</Text>
             </View>
-            <TouchableOpacity
-              onPress={() => {
-                handleaddcart(item.name, item.price);
-                alert('Added to Cart');
-              }}
-              style={{justifyContent: 'center', alignItems: 'flex-end'}}>
-              <Icon name="add-shopping-cart" color="red" size={24} />
-            </TouchableOpacity>
+            <View style={{justifyContent: 'center', alignItems: 'flex-end'}}>
+              <TouchableOpacity
+                onPress={() => {
+                  handleaddcart(item.name, item.price);
+                  alert('Added to Cart');
+                }}>
+                <Icon name="add-shopping-cart" color="red" size={24} />
+              </TouchableOpacity>
+            </View>
           </View>
         )}
       />
