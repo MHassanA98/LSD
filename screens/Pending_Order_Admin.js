@@ -1,6 +1,7 @@
-import React, {useState, } from 'react';
+import React, {useState} from 'react';
 import {Text, View, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import {NavigationEvents} from 'react-navigation';
+import {FlatList} from 'react-native-gesture-handler';
 //Made by Shahzil
 //The list of items feels very dubios need to rewamp the whole list of items otherwise showing like this is hard because:
 //1- The alignment isn't good when used for varying name length
@@ -8,41 +9,46 @@ import {NavigationEvents} from 'react-navigation';
 //How to make this scrollable
 //How to make this scrollable
 
-
 export default function Pending_Order_Admin({navigation}) {
-  
-  const [order, setorder] = useState([{
-    Order_ID: '52',
-    Customer_Name: 'Username',
-    Location: 'Location',
-    Phone_Number: 'Phone Number',
-    Time: 'Bad time',
-    Subtotal: '10',
-    Points_discount: '20',
-    Delivery_Charges: '10',
-    Total: '100',
-  }]);
+  const [product, setProduct] = useState([
+    {name: 'pencil', price: '10'},
+    {name: 'ruler', price: '50'},
+    {name: 'sharpener', price: '5'},
+    {name: 'eraser', price: '4'},
+    {name: 'pen', price: '54'},
+    {name: 'marker', price: '22'},
+    {name: 'tape', price: '44'},
+    {name: 'ribbon', price: '22'},
+    {name: 'pillow', price: '21'},
+    {name: 'toy', price: '10'},
+    {name: 'car', price: '11'},
+    {name: 'box', price: '12'},
+  ]);
 
-  function Order_ID_fetch() {
-    
-  };
-  function Order_status_fetch() {
-    
-  };
-  function Location_status_fetch() {
-    
-  };
-  function Time_status_fetch() {
-    
-  };
-  function points_fetch() {
-    
-  };
+  const [order, setorder] = useState([
+    {
+      Order_ID: '52',
+      Customer_Name: 'Username',
+      Location: 'Location',
+      Phone_Number: 'Phone Number',
+      Time: 'Bad time',
+      Subtotal: '10',
+      Points_discount: '20',
+      Delivery_Charges: '10',
+      Total: '100',
+    },
+  ]);
+
+  function Order_ID_fetch() {}
+  function Order_status_fetch() {}
+  function Location_status_fetch() {}
+  function Time_status_fetch() {}
+  function points_fetch() {}
   function dispatch_buttonhandler() {
     alert(`Order Confirmed`);
-  };
+  }
 
-    //Main Container View//
+  //Main Container View//
   return (
     <View style={styles.container}>
       <View style={styles.body}>
@@ -63,15 +69,12 @@ export default function Pending_Order_Admin({navigation}) {
         <View style={styles.textbox}>
           <View style={styles.write_on_the_edges}>
             <Text style={{fontSize: 18, marginLeft: 20}}>Time</Text>
-            <Text style={{fontSize: 18, marginRight: 20}}>
-              {order.Time}
-            </Text>
+            <Text style={{fontSize: 18, marginRight: 20}}>{order.Time}</Text>
           </View>
         </View>
 
         <View style={styles.lower_body}>
-          <View
-            style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
             <Text
               style={{
                 fontSize: 12,
@@ -96,44 +99,64 @@ export default function Pending_Order_Admin({navigation}) {
           </View>
 
           {/*Items will come down below here*/}
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              borderBottomWidth: 0.5,
-              paddingBottom: 5,
-            }}>
-            <Text
-              style={{
-                fontSize: 18,
-                marginLeft: 20,
-                marginTop: 10,
-                marginBottom: 5,
-              }}>
-              Eggs
-            </Text>
-            <Text
-              style={{
-                fontSize: 18,
-                marginRight: 30,
-                marginTop: 10,
-                marginBottom: 5,
-              }}>
-              6
-            </Text>
-            <Text
-              style={{
-                fontSize: 18,
-                marginRight: 30,
-                marginTop: 10,
-                marginBottom: 5,
-                color: '#d00c16',
-              }}>
-              70
-            </Text>
-          </View>
+          <FlatList
+            data={product}
+            keyExtractor={item => item.name}
+            renderItem={({item}) => (
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  // borderBottomWidth: 0.2,
+                  marginVertical: 5,
+                  height: 30,
 
-          <View style={styles.write_on_the_edges}>
+                  paddingBottom: 5,
+                }}>
+                <View style={{flex: 1}}>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      marginLeft: 20,
+                      marginTop: 10,
+                      marginBottom: 5,
+                    }}>
+                    {item.name}
+                  </Text>
+                </View>
+                <View style={{flex: 1, alignItems: 'center'}}>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      marginRight: 30,
+                      marginTop: 10,
+                      marginBottom: 5,
+                    }}>
+                    {item.price}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: 'flex-end',
+                    // paddingRight: '10%',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      marginRight: 30,
+                      marginTop: 10,
+                      marginBottom: 5,
+                      color: '#d00c16',
+                    }}>
+                    {item.price}
+                  </Text>
+                </View>
+              </View>
+            )}
+          />
+
+          <View style={styles.write_on_the_edges1}>
             <Text
               style={{
                 fontSize: 15,
@@ -203,7 +226,6 @@ export default function Pending_Order_Admin({navigation}) {
   );
 }
 
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -262,6 +284,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  write_on_the_edges1: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderTopWidth: 1,
+  },
   Confirmbutton: {
     padding: '5%',
     // marginVertical: 10,
@@ -300,5 +327,3 @@ const styles = StyleSheet.create({
     paddingBottom: 30,
   },
 });
-
-
