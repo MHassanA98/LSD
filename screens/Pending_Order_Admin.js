@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, } from 'react';
 import {Text, View, StyleSheet, Button, TouchableOpacity} from 'react-native';
 import {NavigationEvents} from 'react-navigation';
 //Made by Shahzil
@@ -8,8 +8,10 @@ import {NavigationEvents} from 'react-navigation';
 //How to make this scrollable
 //How to make this scrollable
 
-class Pending_Order_Admin extends React.Component {
-  state = {
+
+export default function Pending_Order_Admin({navigation}) {
+  
+  const [order, setorder] = useState([{
     Order_ID: '52',
     Customer_Name: 'Username',
     Location: 'Location',
@@ -19,197 +21,188 @@ class Pending_Order_Admin extends React.Component {
     Points_discount: '20',
     Delivery_Charges: '10',
     Total: '100',
+  }]);
+
+  function Order_ID_fetch() {
+    
   };
-  Order_ID_fetch = () => {
-    this.setState({
-      Order_ID: 'ID',
-    });
+  function Order_status_fetch() {
+    
   };
-  Order_status_fetch = () => {
-    this.setState({
-      Order_Status: 'Username',
-    });
+  function Location_status_fetch() {
+    
   };
-  Location_status_fetch = () => {
-    this.setState({
-      Location: 'Email',
-    });
+  function Time_status_fetch() {
+    
   };
-  Time_status_fetch = () => {
-    this.setState({
-      Time: 'Phone',
-    });
+  function points_fetch() {
+    
   };
-  points_fetch = () => {
-    this.setState({
-      points: 0,
-    });
-  };
-  dispatch_buttonhandler = () => {
+  function dispatch_buttonhandler() {
     alert(`Order Confirmed`);
   };
-  render() {
+
     //Main Container View//
-    return (
-      <View style={styles.container}>
-        <View style={styles.body}>
-          <View style={styles.textbox}>
-            <View style={styles.write_on_the_edges}>
-              <Text style={{fontSize: 18, marginLeft: 20}}>
-                {this.state.Customer_Name}
-              </Text>
-              <Text style={{fontSize: 18, marginRight: 20}}>
-                {this.state.Location}
-              </Text>
-            </View>
-            <Text style={{fontSize: 14, marginLeft: 20, opacity: 0.5}}>
-              {this.state.Phone_Number}
+  return (
+    <View style={styles.container}>
+      <View style={styles.body}>
+        <View style={styles.textbox}>
+          <View style={styles.write_on_the_edges}>
+            <Text style={{fontSize: 18, marginLeft: 20}}>
+              {order.Customer_Name}
+            </Text>
+            <Text style={{fontSize: 18, marginRight: 20}}>
+              {order.Location}
+            </Text>
+          </View>
+          <Text style={{fontSize: 14, marginLeft: 20, opacity: 0.5}}>
+            {order.Phone_Number}
+          </Text>
+        </View>
+
+        <View style={styles.textbox}>
+          <View style={styles.write_on_the_edges}>
+            <Text style={{fontSize: 18, marginLeft: 20}}>Time</Text>
+            <Text style={{fontSize: 18, marginRight: 20}}>
+              {order.Time}
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.lower_body}>
+          <View
+            style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text
+              style={{
+                fontSize: 12,
+                marginLeft: 20,
+                marginTop: 10,
+                marginBottom: 5,
+              }}>
+              Items:
+            </Text>
+            <Text style={{fontSize: 12, marginTop: 10, marginBottom: 5}}>
+              Qty
+            </Text>
+            <Text
+              style={{
+                fontSize: 12,
+                marginRight: 20,
+                marginTop: 10,
+                marginBottom: 5,
+              }}>
+              Total Price
             </Text>
           </View>
 
-          <View style={styles.textbox}>
-            <View style={styles.write_on_the_edges}>
-              <Text style={{fontSize: 18, marginLeft: 20}}>Time</Text>
-              <Text style={{fontSize: 18, marginRight: 20}}>
-                {this.state.Time}
-              </Text>
-            </View>
-          </View>
-
-          <View style={styles.lower_body}>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text
-                style={{
-                  fontSize: 12,
-                  marginLeft: 20,
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}>
-                Items:
-              </Text>
-              <Text style={{fontSize: 12, marginTop: 10, marginBottom: 5}}>
-                Qty
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  marginRight: 20,
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}>
-                Total Price
-              </Text>
-            </View>
-
-            {/*Items will come down below here*/}
-            <View
+          {/*Items will come down below here*/}
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+              borderBottomWidth: 0.5,
+              paddingBottom: 5,
+            }}>
+            <Text
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                borderBottomWidth: 0.5,
-                paddingBottom: 5,
+                fontSize: 18,
+                marginLeft: 20,
+                marginTop: 10,
+                marginBottom: 5,
               }}>
-              <Text
-                style={{
-                  fontSize: 18,
-                  marginLeft: 20,
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}>
-                Eggs
-              </Text>
-              <Text
-                style={{
-                  fontSize: 18,
-                  marginRight: 30,
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}>
-                6
-              </Text>
-              <Text
-                style={{
-                  fontSize: 18,
-                  marginRight: 30,
-                  marginTop: 10,
-                  marginBottom: 5,
-                  color: '#d00c16',
-                }}>
-                70
-              </Text>
-            </View>
-
-            <View style={styles.write_on_the_edges}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  marginLeft: 20,
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}>
-                Subtotal
-              </Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  marginRight: 20,
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}>
-                Rs. {this.state.Subtotal}
-              </Text>
-            </View>
-            <View style={styles.write_on_the_edges}>
-              <Text style={{fontSize: 15, marginLeft: 20, marginBottom: 5}}>
-                Points Discount
-              </Text>
-              <Text style={{fontSize: 15, marginRight: 20, marginBottom: 5}}>
-                -Rs. {this.state.Points_discount}
-              </Text>
-            </View>
-            <View style={styles.write_on_the_edges}>
-              <Text style={{fontSize: 15, marginLeft: 20, marginBottom: 5}}>
-                Delivery Charges
-              </Text>
-              <Text style={{fontSize: 15, marginRight: 20, marginBottom: 5}}>
-                Rs. {this.state.Delivery_Charges}
-              </Text>
-            </View>
-            <View style={styles.write_on_the_edges}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  marginLeft: 20,
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}>
-                Total
-              </Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  marginRight: 20,
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}>
-                Rs. {this.state.Total}
-              </Text>
-            </View>
+              Eggs
+            </Text>
+            <Text
+              style={{
+                fontSize: 18,
+                marginRight: 30,
+                marginTop: 10,
+                marginBottom: 5,
+              }}>
+              6
+            </Text>
+            <Text
+              style={{
+                fontSize: 18,
+                marginRight: 30,
+                marginTop: 10,
+                marginBottom: 5,
+                color: '#d00c16',
+              }}>
+              70
+            </Text>
           </View>
 
-          <View style={styles.bigbutton}>
-            <TouchableOpacity
-              onPress={() => alert('Confirmed!')}
-              style={styles.Confirmbutton}>
-              <Text style={styles.bigbuttontext}>Dispatch</Text>
-            </TouchableOpacity>
+          <View style={styles.write_on_the_edges}>
+            <Text
+              style={{
+                fontSize: 15,
+                marginLeft: 20,
+                marginTop: 10,
+                marginBottom: 5,
+              }}>
+              Subtotal
+            </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                marginRight: 20,
+                marginTop: 10,
+                marginBottom: 5,
+              }}>
+              Rs. {order.Subtotal}
+            </Text>
+          </View>
+          <View style={styles.write_on_the_edges}>
+            <Text style={{fontSize: 15, marginLeft: 20, marginBottom: 5}}>
+              Points Discount
+            </Text>
+            <Text style={{fontSize: 15, marginRight: 20, marginBottom: 5}}>
+              -Rs. {order.Points_discount}
+            </Text>
+          </View>
+          <View style={styles.write_on_the_edges}>
+            <Text style={{fontSize: 15, marginLeft: 20, marginBottom: 5}}>
+              Delivery Charges
+            </Text>
+            <Text style={{fontSize: 15, marginRight: 20, marginBottom: 5}}>
+              Rs. {order.Delivery_Charges}
+            </Text>
+          </View>
+          <View style={styles.write_on_the_edges}>
+            <Text
+              style={{
+                fontSize: 15,
+                marginLeft: 20,
+                marginTop: 10,
+                marginBottom: 5,
+              }}>
+              Total
+            </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                marginRight: 20,
+                marginTop: 10,
+                marginBottom: 5,
+              }}>
+              Rs. {order.Total}
+            </Text>
           </View>
         </View>
+
+        <View style={styles.bigbutton}>
+          <TouchableOpacity
+            onPress={() => alert('Confirmed!')}
+            style={styles.Confirmbutton}>
+            <Text style={styles.bigbuttontext}>Dispatch</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    );
-  }
+    </View>
+  );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -308,4 +301,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Pending_Order_Admin;
+
