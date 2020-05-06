@@ -17,8 +17,8 @@ import firebase from '../assets/DatabaseConfig';
 
 export default function Orders({navigation}) {
   
-  const handlePress = () => {
-    navigation.navigate('Pending_Order_Admin');
+  const handlePress = (orderid) => {
+    navigation.navigate('Pending_Order_Admin', orderid);
   };
   
   const [order, setorder] = useState([ ]);
@@ -71,7 +71,7 @@ export default function Orders({navigation}) {
         data={order}
         keyExtractor={item => item.orderid}
         renderItem={({item}) => (
-          <TouchableOpacity style={styles.TextInputbox} onPress={handlePress}>
+          <TouchableOpacity style={styles.TextInputbox} onPress={() => handlePress(item.orderid)}>
             <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold'}}>
               {'OrderID ' + item.orderid}
             </Text>
