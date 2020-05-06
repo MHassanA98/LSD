@@ -125,9 +125,9 @@ export default function CustMenu({navigation}) {
     // <ScrollView>
     <View style={styles.Screen}>
       <NavigationEvents
-        onWillFocus={() => {
-          onscreenload();
-        }}
+        onWillFocus={
+          onscreenload
+        }
       />
       {/* <View style={{width: '100%', height: 460, marginVertical: 12}}> */}
       <FlatList

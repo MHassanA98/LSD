@@ -1,5 +1,5 @@
 import React,{useState} from 'react';
-import {Text, View, StyleSheet, Button, TouchableOpacity,Dimensions} from 'react-native';
+import {Text, View, StyleSheet, Button, TouchableOpacity,Dimensions, Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import SwitchExample from './switch1.js';
 import Category from './PickerList.js';
@@ -26,6 +26,7 @@ export default function Checkout({navigation}) {
   const [RedPtsStore,setRedPtsStore]=useState(0)
   const [Switch,setSwitch]=useState(false)
   const [Delivery,setDelivery]=useState(20)
+  const [Products, setProducts]=useState([])
 
 
 
@@ -40,6 +41,90 @@ export default function Checkout({navigation}) {
   //     Total: 100,
   //   };
   // }
+  const handlePress=()=>{
+
+    if (Location=="null"){
+      alert("Please choose a location")
+      return
+    }
+
+    let Email=firebase.auth().currentUser.email.substr(0, 8)
+
+    firebase
+        .database()
+        .ref('/Orders/' + Email)
+        .once('value')
+        .then(snapshot => {
+          console.log('HERERE');
+          // console.log(value)
+          console.log(snapshot.exists());
+          if (snapshot.exists()) {
+            // console.log('EXISTS');
+            ExistsAlert();
+          } else {
+            PlaceOrder(Email);
+            // console.log('NOT EXISTS');
+          }
+        }).catch((e)=>Alert.alert("Checkout Failed","Please check your Internet connection"))
+    
+  }
+  
+  function ExistsAlert(){
+    Alert.alert("Checkout failed", "You already have a pending order")
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  const PlaceOrder=(Email)=>{
+    console.log(Products)
+
+    
+
+    // let Email=firebase.auth().currentUser.email.substr(0, 8)
+
+    let Hour=new Date().getHours()
+    let Min=new Date().getMinutes()
+    let time=Hour+":"+Min
+    console.log(time)
+    firebase.database().ref('/Orders/'+Email).set({
+      Subtotal: Subtotal,
+      RedPts:RedPts,
+      Total:Total,
+      Delivery:Delivery,
+      Location:Location,
+      Time:time,
+      OrderStatus: "Confirmed",
+      Products: Products
+
+    }).then(()=>{
+
+      if (Switch){
+
+        firebase.database().ref('/Users/'+Email).update({
+          Redemptionpoints:0
+        })
+
+      }
+
+      
+    }).then(Alert.alert("Checkout Successful!","Your order has been placed."))
+    .catch((e)=>Alert.alert("Checkout Failed","Please check your Internet connection"))
+
+  }
+
+
+
+
+
+
+
+
   function toggleSwitch1(value) {
     // let emailcheck = firebase.auth().currentUser.email;
     // mydb = firebase.database().ref('/Users/' + emailcheck.substr(0, 8));
@@ -231,8 +316,10 @@ export default function Checkout({navigation}) {
           {
             setSubtotal(navigation.getParam('Subtotal'))
             setTotal(navigation.getParam('Subtotal')+Delivery)
+            setProducts(navigation.getParam('Products'))
             // setState({...state,subtotal:navigation.getParam('Subtotal'), Total:navigation.getParam('Subtotal')+state.Delivery_Charges})
-            LoadData()
+            LoadData()            
+
             // setState({...state,RedemptionPoints:Red})
 
           }
@@ -270,6 +357,7 @@ export default function Checkout({navigation}) {
               <SwitchExample
                 toggleSwitch1={toggleSwitch1}
                 switch1Value={Switch}
+                REDPTS={RedPtsStore}
               />
             </View>
           </View>
@@ -377,7 +465,7 @@ export default function Checkout({navigation}) {
 
           <View style={styles.bigbutton}>
             <TouchableOpacity
-              onPress={() => alert('Order Confirmed!')}
+              onPress={handlePress}
               style={styles.Confirmbutton}>
               <Text style={styles.bigbuttontext}>Confirm Order</Text>
             </TouchableOpacity>

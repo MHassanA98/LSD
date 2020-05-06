@@ -119,7 +119,7 @@ export default function Registration({navigation}) {
                 Redemptionpoints: 0,
                 BanStatus: false,
                 // ChangeRate: 10,
-              });
+              }).catch((e)=>alert(e))
             console.log('Verify Email');
             SignUpPress();
           })

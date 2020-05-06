@@ -23,7 +23,7 @@ export default function Shopping({navigation}) {
   //   const onAdd = () => setProd;
   // const onMin = () => setProduct(prev => prev - 1)
   const handlePress = () => {
-    navigation.navigate('Checkout',{Subtotal: total});
+    navigation.navigate('Checkout',{Subtotal: total, Products: product});
   };
   
   async function qtyless(name, price, quantity) {

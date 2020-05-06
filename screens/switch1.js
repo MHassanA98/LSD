@@ -11,6 +11,7 @@ export default (SwitchExample = props => {
         value={props.switch1Value}
         trackColor={{true: 'red', false: '#e8e8e8'}}
         thumbColor={isEnabled ? 'ffffff' : '#e8e8e8'}
+        disabled={props.REDPTS==0}
         //   thumbTintColor="#d00f16"
       />
     </View>

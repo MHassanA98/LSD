@@ -114,7 +114,7 @@ export default function AdminMenu({navigation}) {
   return (
     <View style={styles.Screen}>
       <NavigationEvents
-        onDidFocus={() => {
+        onWillFocus={() => {
           onscreenload();
         }}
       />
