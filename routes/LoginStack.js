@@ -8,6 +8,7 @@ import Kitchen from '../screens/Kitchen';
 import Store from '../screens/Store';
 import AdminMenu from '../screens/AdminMenu';
 import CustMenu from '../screens/CustMenu';
+import splashscreen from '../screens/splashscreen';
 import Pending_Order_Admin from '../screens/Pending_Order_Admin';
 // import Subcategory from '../screens/Subcategory';
 import Customer_Profile from '../screens/Customer_Profile';
@@ -29,6 +30,13 @@ const screens = {
   //     // gestureEnabled:true
   //   }
   // },
+
+  splashscreen: {
+    screen: splashscreen,
+    navigationOptions:{
+      headerShown:false
+    }
+  },
 
   Login: {
     screen: Login,
