@@ -13,7 +13,6 @@ import Swipeable from 'react-native-gesture-handler/Swipeable';
 // } from "react-native-gesture-handler"
 
 export default function Shopping({navigation}) {
-  
   const [product, setProduct] = useState([]);
   // const [product, setProduct] = useState([
   //   {name: 'pencil', price: '40', quantity: 0},
@@ -36,7 +35,6 @@ export default function Shopping({navigation}) {
         }),
       );
       // await AsyncStorage.removeItem("@storage_Key")
-      // setProduct({quantity: quantity+1})
     } catch (e) {
       // saving error
     }
@@ -52,12 +50,26 @@ export default function Shopping({navigation}) {
         }),
       );
       // await AsyncStorage.removeItem("@storage_Key")
-      // console.log(product)
     } catch (e) {
       // saving error
     }
   }
 
+  // function onMin(item) {
+  //   console.log(item);
+  //   if (item.quantity != 0) {
+  //     // item.quantity = item.quantity-1
+  //     qtyless(item.name, item.price, item.quantity);
+  //     getData();
+  //   }
+  // }
+
+  // function onPlus(item) {
+  //   console.log(item);
+  //   // item.quantity = item.quantity+1
+  //   qtymore(item.name, item.price, item.quantity);
+  //   getData();
+  // }
   function onMin(item) {
     console.log(item);
     if (item.quantity != 0) {
@@ -115,12 +127,11 @@ export default function Shopping({navigation}) {
   async function getitem(name,prodarr,Total) {
     console.log("TOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO   ",Total)
     try {
-      const item = await AsyncStorage.getItem(name)
-      // console.log("NAME",name)
+      const item = await AsyncStorage.getItem(name);
+      // console.log(name)
       // const value = await AsyncStorage.getAllKeys()
-      if(item !== null) {
-        let myitem = JSON.parse(item)
-        // console.log(myitem)
+      if (item !== null) {
+        let myitem = JSON.parse(item);
 
         let newprod = {
           name: name,
@@ -162,20 +173,19 @@ export default function Shopping({navigation}) {
             // console.log("1PROD",prodarr)
             // console.log("PRODDDDD",product)
             setProduct(prodarr)   
-
           })
-          
-         
-          
           // console.log(prodarr)
 
           // prodarr.push(newprod)
 
           // console.log(name)
-        })
-        // setTotal(total)
-
-      }
+        });
+        // setProduct(prodarr);
+        // value previously stored
+      } 
+      // else {
+      //   console.log('lmao');
+      // }
     } catch (e) {
       // error reading value
     }
@@ -191,9 +201,9 @@ export default function Shopping({navigation}) {
         style={{
           flexDirection: 'row',
           marginVertical: 2,
-          width: '25%',
+          width: '17.5%',
           // opacity: 0.8,
-          // borderRadius: 5,
+          borderRadius: 2,
           // paddingVertical: ,
         }}>
         <TouchableOpacity
@@ -205,15 +215,7 @@ export default function Shopping({navigation}) {
             alignItems: 'center',
             justifyContent: 'center',
             // marginVertical: 5,
-          }}
-          onPress={()=>setProduct(()=>{
-            // product.findIndex((I)=>I=item.name)
-            
-            AsyncStorage.removeItem(item.name).then(setTotal(total=>total-(item.quantity*item.price)))
-            return product.filter((I)=>I.name!=item.name)
-          })
-        }
-          >
+          }}>
           <Icon name="delete" color="white" size={24} />
         </TouchableOpacity>
       </View>
@@ -224,17 +226,17 @@ export default function Shopping({navigation}) {
   return (
     <View style={styles.Screen}>
       <NavigationEvents
-        onWillFocus={() => {
+        onDidFocus={() => {
           getData();
         }}
       />
-      <View style={{width: '100%', height: 500, marginVertical:12,}}>
+      <View style={{width: '100%', height: 450}}>
         <FlatList
           data={product}
           //   extraData={quantity}
           keyExtractor={item => item.name}
           renderItem={({item}) => (
-            <Swipeable renderLeftActions={()=>leftActions(item)}>
+            <Swipeable renderLeftActions={leftActions}>
               <View style={styles.TextInputbox}>
                 <View style={{width: 100, height: 100, flex: 2}}>
                   <Image
@@ -277,12 +279,11 @@ export default function Shopping({navigation}) {
                     {/* // onPress={onAdd(item.quantity)}> */}
                     <Icon name="plus" color="#ffffff" />
                   </TouchableOpacity>
-                  <Text style={{paddingLeft: 6, opacity: 0.5, alignSelf:'center'}}>
+                  <Text style={{paddingLeft: 22, opacity: 0.5}}>
                     {item.quantity}
                   </Text>
                   <TouchableOpacity
-                    style={[styles.Confirmbutton,{backgroundColor: item.quantity==1? "grey": "#d00f16" }]}
-                    disabled={item.quantity==1}
+                    style={styles.Confirmbutton}
                     onPress={() => {
                       onMin(item);
                     }}>
@@ -323,17 +324,15 @@ export default function Shopping({navigation}) {
               justifyContent: 'space-between',
               paddingVertical: 10,
             }}>
-            <Text style={styles.totalboxfont1}>Subtotal</Text>
+            <Text style={styles.totalboxfont1}>Total</Text>
             <Text style={styles.totalboxfont1}>Rs. {total}</Text>
           </View>
         </View>
       </View>
       <View style={styles.bigbutton}>
         <TouchableOpacity
-          onPress={() => handlePress()}
-          style={styles.Confirmationbutton}
-          // activeOpacity={0.4}
-          >
+          onPress={handlePress}
+          style={styles.Confirmationbutton}>
           <Text style={styles.bigbuttontext}>Checkout</Text>
         </TouchableOpacity>
       </View>

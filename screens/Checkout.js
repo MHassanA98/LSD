@@ -306,7 +306,7 @@ export default function Checkout({navigation}) {
               </Text>
             </View>
             <View style={styles.write_on_the_edges}>
-              <Text style={{fontSize: 16, marginLeft: 16, marginBottom: 5, }}>
+              <Text style={{fontSize: 16, marginLeft: 16, marginBottom: 5, color:Switch? 'rgba(00,00,00,0.5)': 'black' }}>
                 Points Discount
               </Text>
               <Text style={{fontSize: 16, marginRight: 16, marginBottom: 5}}>
