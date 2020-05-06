@@ -52,15 +52,14 @@ export default function splashscreen({navigation}) {
         <NavigationEvents onWillFocus={() => {loginexists()}} />
         <ImageBackground source={backg} style={styles.bgimage}>
           <View style={styles.maincontainer}>
-            <Image
-              style={styles.stretch}
-              source={lsdlogo}
-            />
-            <ActivityIndicator size="large" color="#d00f16" />
+            <View style={styles.logocontainer} >
+              <Image
+                style={styles.stretch}
+                source={lsdlogo}
+              />
+            </View>
+            <ActivityIndicator size="large" color="#d00f16" style={styles.activity} />
           </View>
-          {/* <View>
-            <ActivityIndicator size="large" color="#d00f16" />
-          </View> */}
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
@@ -79,15 +78,26 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
+  logocontainer: {
+    flex: 6,
+    flexDirection: "column",
+    paddingLeft: "13%",
+    justifyContent: "flex-end",
+  },
+
+  activity: {
+    paddingTop: "5%",
+    flex: 4,
+    justifyContent: "flex-start",
+  },
+
   stretch: {
-    width: '60%',
-    height: '40%',
+    width: '70%',
+    height: '50%',
     resizeMode: "contain",
   },
 
   maincontainer: {
-    alignItems: "center",
-    justifyContent: "center",
     flex: 6,
   },
 
