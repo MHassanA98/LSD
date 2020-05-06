@@ -13,7 +13,7 @@ export default function Category() {
       <Picker.Item label="Choose a Location" value="null" />
       <Picker.Item label="M5" value="M5" />
       <Picker.Item label="SDSB" value="SDSB" />
-      <Picker.Item label="Female Barrier" value="FB" />
+      <Picker.Item label="Female Barrier" value="Female Barrier" />
     </Picker>
     // </TouchableOpacity>
   );

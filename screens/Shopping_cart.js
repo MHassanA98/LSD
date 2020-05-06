@@ -24,7 +24,7 @@ export default function Shopping({navigation}) {
   //   const onAdd = () => setProd;
   // const onMin = () => setProduct(prev => prev - 1)
   const handlePress = () => {
-    navigation.navigate('Checkout');
+    navigation.navigate('Checkout',{Subtotal: total});
   };
   async function qtyless(name, price, quantity) {
     try {
@@ -113,6 +113,7 @@ export default function Shopping({navigation}) {
   // }
 
   async function getitem(name,prodarr,Total) {
+    console.log("TOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO   ",Total)
     try {
       const item = await AsyncStorage.getItem(name)
       // console.log("NAME",name)
@@ -131,14 +132,14 @@ export default function Shopping({navigation}) {
         // console.log(myitem.price*myitem.quantity)
         Total=Total+(myitem.price*myitem.quantity)
         setTotal(total=>total+Total)
-        console.log("TOTAL    ",Total)
+        // console.log("TOTAL    ",Total)
 
-        console.log(newprod)
+        // console.log(newprod)
 
         prodarr.push(newprod)
       }
     } catch (e) {
-      console.log(e);
+      // console.log(e);
       // error reading value
     }
 
@@ -146,19 +147,20 @@ export default function Shopping({navigation}) {
   }
 
   async function getData() {
-    console.log("!@#$%^&         ",product)
+    // console.log("!@#$%^&         ",product)
+    setTotal(0)
     try {
       const value = await AsyncStorage.getAllKeys()
       // console.log("VALVALVLAVLAVLLVALAV", value)
       if(value !== null) {
-        console.log("VALLL",value)
+        // console.log("VALLL",value)
         let prodarr  = []
         let Total=0
         value.forEach(function(name) {
           // let newprod = getitem(name, prodarr)
           getitem(name, prodarr, Total).then(()=>{
-            console.log("1PROD",prodarr)
-            console.log("PRODDDDD",product)
+            // console.log("1PROD",prodarr)
+            // console.log("PRODDDDD",product)
             setProduct(prodarr)   
 
           })
@@ -179,9 +181,9 @@ export default function Shopping({navigation}) {
     }
   }
 
-  function blurry() {
-    console.log("hsadhasdashdhasdahsd")
-  }
+  // function blurry() {
+  //   console.log("hsadhasdashdhasdahsd")
+  // }
 
   const leftActions = (item) => {
     return (

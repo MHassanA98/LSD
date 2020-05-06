@@ -207,7 +207,7 @@ const HomeStack = createStackNavigator(screens, {
           onPress={() => navigation.navigate('ShoppingCart')}
           // title="Info"
           // color="#e8e8e8"
-          activeOpacity={0.4}
+          activeOpacity={0.3}
           style={{paddingRight:16}}
         >
           <Icon name='shopping-cart' size={28} color={'white'}/>

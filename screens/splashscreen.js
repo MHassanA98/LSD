@@ -24,7 +24,7 @@ export default function Login({navigation}) {
       Keyboard.dismiss()
     }}>
       <View style={styles.container}>
-        <NavigationEvents onDidFocus={() => {loginexists()}} />
+        <NavigationEvents onWillFocus={() => {loginexists()}} />
         <ImageBackground source={backg} style={styles.bgimage}>
           <View style={styles.maincontainer}>
             <Image
