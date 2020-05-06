@@ -4,6 +4,7 @@ import {
   Text,
   View,
   ScrollView,
+  KeyboardAvoidingView,
   ImageBackground,
   Image,
   TextInput,
@@ -177,17 +178,17 @@ export default function Login({navigation}) {
   // }
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => { Keyboard.dismiss(); }}
-      // style={styles.container}
-      >
-      <View style={styles.container}>
+    <ImageBackground source={backg} style={styles.bgimage}>
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}>
+        <View style={styles.container} scrollEnabled={false}>
         {/* <NavigationEvents
           onDidFocus={() => {
             loginexists();
           }}
         /> */}
-        <ImageBackground source={backg} style={styles.bgimage}>
           <View style={styles.maincontainer}>
             <Image style={styles.stretch} source={lsdlogo} />
             <View style={styles.inputbox}>
@@ -225,11 +226,6 @@ export default function Login({navigation}) {
               </TouchableOpacity>
             </View>
           </View>
-          {/* <View style={styles.clearbutton}>
-            <TouchableOpacity onPress={handleFpPress}>
-              <Text style={styles.buttontext}>Forgot Password?</Text>
-            </TouchableOpacity>
-          </View> */}
 
           <View style={styles.loginbutton}>
             <TouchableOpacity
@@ -243,17 +239,17 @@ export default function Login({navigation}) {
               <Text style={styles.buttontext}>New user? Sign up!</Text>
             </TouchableOpacity>
           </View>
-        </ImageBackground>
-      </View>
-    </TouchableWithoutFeedback>
+        </View>
+      </TouchableWithoutFeedback>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    // backgroundColor: "white",
     flex: 1,
     flexDirection: 'column',
-    // minHeight: "100%",
     // justifyContent: 'center',
     // alignItems:'center',
   },
@@ -282,7 +278,6 @@ const styles = StyleSheet.create({
 
   inputicon: {
     flex: 2,
-
     // paddingTop: '3%',
     // paddingLeft: '2%',
   },
@@ -316,10 +311,11 @@ const styles = StyleSheet.create({
   },
 
   maincontainer: {
+    // backgroundColor: "white",
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     paddingTop: '10%',
-    flex: 6,
+    flex: 10,
   },
 
   buttontext: {
@@ -356,6 +352,7 @@ const styles = StyleSheet.create({
     marginLeft: '35%',
     flex: 1,
     alignItems: 'baseline',
+    // backgroundColor: "yellow",
   },
 
   bigbutton: {
@@ -376,6 +373,7 @@ const styles = StyleSheet.create({
   },
 
   loginbutton: {
+    flex: 1,
     width: '50%',
     borderRadius: 17,
     textAlign: 'center',
