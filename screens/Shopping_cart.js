@@ -25,6 +25,7 @@ export default function Shopping({navigation}) {
   const handlePress = () => {
     navigation.navigate('Checkout',{Subtotal: total});
   };
+  
   async function qtyless(name, price, quantity) {
     try {
       await AsyncStorage.setItem(
@@ -195,6 +196,16 @@ export default function Shopping({navigation}) {
   //   console.log("hsadhasdashdhasdahsd")
   // }
 
+  // function DeleteCart(item){
+  //   console.log(item)
+  //   setProduct((item)=>{
+  //     // product.findIndex((I)=>I=item.name)
+      
+  //     AsyncStorage.removeItem(item.name).then(setTotal(total=>total-(item.quantity*item.price)))
+  //     return product.filter((I)=>I.name!=item.name)
+  //   })
+  // }
+
   const leftActions = (item) => {
     return (
       <View
@@ -215,7 +226,15 @@ export default function Shopping({navigation}) {
             alignItems: 'center',
             justifyContent: 'center',
             // marginVertical: 5,
-          }}>
+          }}
+          onPress={()=>setProduct(()=>{
+            // product.findIndex((I)=>I=item.name)
+            AsyncStorage.removeItem(item.name).then(setTotal(total=>total-(item.quantity*item.price)))
+            return product.filter((I)=>I.name!=item.name)
+            })
+          }
+            
+          >
           <Icon name="delete" color="white" size={24} />
         </TouchableOpacity>
       </View>
@@ -236,7 +255,7 @@ export default function Shopping({navigation}) {
           //   extraData={quantity}
           keyExtractor={item => item.name}
           renderItem={({item}) => (
-            <Swipeable renderLeftActions={leftActions}>
+            <Swipeable renderLeftActions={()=>leftActions(item)}>
               <View style={styles.TextInputbox}>
                 <View style={{width: 100, height: 100, flex: 2}}>
                   <Image
