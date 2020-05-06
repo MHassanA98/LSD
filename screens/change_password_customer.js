@@ -29,12 +29,12 @@ import database from '@react-native-firebase/database';
 
 export default function Change_Password({navigation}) {
   //updatePassword
-  const [oldpassword, setoldpassword] = useState('');
+  const [oldpassword, setOldpassword] = useState('');
   const [password, setPassword] = useState('');
   const [repassword, setRepassword] = useState('');
 
-  const oldpasswordInputHandler = inputoldpassword => {
-    setoldpassword(inputoldpassword);
+  const oldpasswordInputHandler = inputOldpassword => {
+    setOldpassword(inputOldpassword);
   };
 
   const repasswordInputHandler = inputRepassword => {
@@ -46,22 +46,31 @@ export default function Change_Password({navigation}) {
   };
 
   const handleConfirmPress = () => {
-    if (password.length >= 8) {
-      if (password == repassword) {
-        firebase
-          .auth()
-          .currentUser.updatePassword(password)
-          .then(alert('Password succesfully changed!'))
-          .catch(function(error) {
-            alert(error);
-          });
-        // console.log("changed")
+
+    let credential = firebase.auth.EmailAuthProvider.credential(firebase.auth().currentUser.email, oldpassword);
+
+    firebase.auth().currentUser.reauthenticateWithCredential(credential)
+    .then( function () {
+      if (password.length >= 8) {
+        if (password == repassword) {
+          firebase
+            .auth()
+            .currentUser.updatePassword(password)
+            .then(alert('Password succesfully changed!'))
+            .catch(function(error) {
+              alert(error);
+            });
+          // console.log("changed")
+        } else {
+          alert('passwords do not match!');
+        }
       } else {
-        alert('passwords do not match!');
+        alert('Password must be 8 characters or more.');
       }
-    } else {
-      alert('Password must be 8 characters or more.');
-    }
+
+    })
+    .catch( function(error) {alert(error) })
+
   };
 
   //Main Container View//
