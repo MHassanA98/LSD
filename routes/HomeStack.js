@@ -117,7 +117,16 @@ const screens = {
   },
 
   CustMenu:{
-    screen:CustMenu
+    screen:CustMenu,
+    navigationOptions:({navigation})=>{
+
+      return{
+        title: navigation.getParam('Sub'),
+        headerTintColor:'white',
+        // headerRight:()=>null,
+       
+      }
+    }
   },
 
   // AdminMenu:{
@@ -135,28 +144,7 @@ const screens = {
         title: 'Shopping Cart',
         headerTintColor:'white',
         headerRight:()=>null,
-        // headerRight:()=>(
-        //   <Text>
-        //     asd
-        //   </Text>
-        // )
-        // headerLeft:() => (
-        //   <TouchableOpacity
-        //     onPress={() => {
-        //       // removeData().then(navigation.goBack())
-        //       navigation.goBack()
-              
-        //     }
-        //   }
-        //     // title="Info"
-        //     // color="#e8e8e8"
-        //     style={{paddingLeft:16}}
-        //   >
-        //     <Icon name='arrow-back' size={24} color={'white'}/>
-
-
-        //   </TouchableOpacity>
-        // ),
+       
       }
     }
   },

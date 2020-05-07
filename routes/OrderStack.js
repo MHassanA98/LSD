@@ -17,7 +17,7 @@ import change_password_customer from '../screens/change_password_customer';
 // import Forgotpw from '../screens/Forgotpw';
 // import Change_Password from '../screens/ChangePassword';
 import React from 'react';
-import { Button, TouchableOpacity } from 'react-native';
+import {TouchableOpacity } from 'react-native';
 // import firebase from '@react-native-firebase/app';
 // import ReviewDetails from '../screens/reviewDetails';
 
@@ -49,6 +49,14 @@ const screens = {
 
     Pending_Order_Admin:{
         screen:Pending_Order_Admin,
+        navigationOptions:({navigation})=>{
+
+          return{
+            title: 'Order Detail',
+            headerTintColor:'white',
+            
+          }
+        }
         
     },
 

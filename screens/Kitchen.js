@@ -18,7 +18,7 @@ import database from '@react-native-firebase/database';
 
 export default function Kitchen({navigation}) {
   const [SubCat, setSubCat] = useState([
-    {Sub: 'Desi Food', Cat: 'Kitchen'},
+    {Sub: 'Desi', Cat: 'Kitchen'},
     {Sub: 'Fast Food', Cat: 'Kitchen'},
     {Sub: 'Fresh Juice', Cat: 'Kitchen'},
   ]);

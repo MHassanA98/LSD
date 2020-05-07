@@ -23,6 +23,10 @@ export default function Shopping({navigation}) {
   //   const onAdd = () => setProd;
   // const onMin = () => setProduct(prev => prev - 1)
   const handlePress = () => {
+    if (product.length==0){
+      alert('Shopping cart is empty')
+      return
+    }
     navigation.navigate('Checkout',{Subtotal: total, Products: product});
   };
   
@@ -355,7 +359,7 @@ export default function Shopping({navigation}) {
       <View style={styles.bigbutton}>
         <TouchableOpacity
           onPress={handlePress}
-          style={styles.Confirmationbutton}>
+          style={[styles.Confirmationbutton]}>
           <Text style={styles.bigbuttontext}>Checkout</Text>
         </TouchableOpacity>
       </View>
