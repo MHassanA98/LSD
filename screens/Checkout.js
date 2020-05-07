@@ -59,7 +59,7 @@ export default function Checkout({navigation}) {
         Qty:item.available-item.quantity
 
       })
-      .catch(()=>Alert.alert("Checkout Failed","Please check your Internet connection"))
+      .catch((e)=>Alert.alert("Checkout Failed","Please check your Internet connection"))
   
   
   })
@@ -175,7 +175,7 @@ const Press2=()=>{
 
       
     }).then(Alert.alert("Checkout Successful!","Your order has been placed."))
-    .catch((e)=>Alert.alert(e))
+    .catch((e)=>Alert.alert("Checkout Failed","Please check your Internet connection"))
 
   }
 
@@ -225,7 +225,7 @@ const Press2=()=>{
 
        
     firebase.database().ref('/Users/'+Email).update({
-          Redemptionpoints:AddRedPts
+          Redemptionpoints:parseInt(AddRedPts)
           
     })
     
