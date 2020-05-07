@@ -4,35 +4,17 @@ import {
   View,
   TextInput,
   StyleSheet,
-  Button,
   TouchableOpacity,
   TouchableWithoutFeedback,
   Keyboard,
-  ScrollView,
 } from 'react-native';
-//import Icon from "react-native-vector-icons/FontAwesome" ;
 import Icon from 'react-native-vector-icons/Feather';
 import firebase from '../assets/DatabaseConfig';
-import auth from '@react-native-firebase/auth';
-import database from '@react-native-firebase/database';
-
-//import CustomButton from '../screens/button' for later use
-
-//brought to you by Shahzil
-//Icons from the Top is missing
-//Back handler has not been added
-//Respective Functions have been made to make adding functionality easier
-//Removed touchopacity, because couldn't make that button work. Working on a seperate button module, once done will implement that
-//redesigned, brought to sds screens design and improved by jawad
-//functionality added by hasan
-//state declaration brought to standard declaration used on other screens
 
 export default function Change_Password({navigation}) {
-  //updatePassword
   const [oldpassword, setOldpassword] = useState('');
   const [password, setPassword] = useState('');
   const [repassword, setRepassword] = useState('');
-
   const oldpasswordInputHandler = inputOldpassword => {
     setOldpassword(inputOldpassword);
   };
@@ -60,7 +42,6 @@ export default function Change_Password({navigation}) {
             .catch(function(error) {
               alert(error);
             });
-          // console.log("changed")
         } else {
           alert('passwords do not match!');
         }
@@ -70,16 +51,13 @@ export default function Change_Password({navigation}) {
 
     })
     .catch( function(error) {alert(error) })
-
   };
 
-  //Main Container View//
   return (
     <TouchableWithoutFeedback
       onPress={() => {
         Keyboard.dismiss();
       }}>
-      {/* <View style={styles.container}> */}
       <View style={styles.body}>
         <View style={{flex: 2}}>
           <View style={styles.iconstyle}>
@@ -97,26 +75,20 @@ export default function Change_Password({navigation}) {
         </View>
         <View style={{flex: 3}}>
           <TextInput
-            // style={{fontSize: 18, marginLeft: 15}}
             secureTextEntry
             placeholder="Old Password"
             onChangeText={oldpasswordInputHandler}
             value={oldpassword}
             style={styles.textbox}
           />
-          {/* <View style={styles.textbox}> */}
           <TextInput
-            // style={{fontSize: 18, marginLeft: 15}}
             secureTextEntry
             placeholder="New Password"
             onChangeText={passwordInputHandler}
             value={password}
             style={styles.textbox}
           />
-          {/* </View>/ */}
-          {/* <View style={styles.textbox}> */}
           <TextInput
-            // style={{fontSize: 18, marginLeft: 15}}
             secureTextEntry
             placeholder="Confirm Password"
             onChangeText={repasswordInputHandler}
@@ -130,9 +102,6 @@ export default function Change_Password({navigation}) {
             flexDirection: 'column',
             alignItems: 'flex-end',
             flex: 1,
-            // flexDirection: 'column',
-            // alignItems: 'center',
-            // justifyContent: 'flex-end',
             paddingTop: 50,
           }}>
           <TouchableOpacity
@@ -142,8 +111,7 @@ export default function Change_Password({navigation}) {
           </TouchableOpacity>
         </View>
       </View>
-      {/* </View> */}
-    </TouchableWithoutFeedback>
+      </TouchableWithoutFeedback>
   );
 }
 
@@ -152,15 +120,11 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#e8e8e8',
-    // backgroundColor: 'yellow',
-    // marginTop: 50,
-    // paddingTop: '20%',
-    // marginVertical: 16,
     paddingTop: '10%',
     alignItems: 'center',
-    // justifyContent: 'center',
-  },
-  textbox: {
+    },
+  
+    textbox: {
     width: 280,
     paddingHorizontal: 16,
     flexDirection: 'row',
@@ -172,18 +136,17 @@ const styles = StyleSheet.create({
     borderRadius: 4,
     height: 56,
   },
+  
   iconstyle: {
-    // marginTop: '10%',
     borderRadius: 180,
     height: 180,
     width: 180,
-    // paddingBottom: '15%',
     backgroundColor: '#ffffff',
     alignItems: 'center',
     justifyContent: 'center',
   },
+  
   Confirmbutton: {
-    // marginVertical: 10,
     paddingHorizontal: 15,
     backgroundColor: '#d00f16',
     borderRadius: 20,
@@ -194,20 +157,17 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.9,
     shadowRadius: 6,
     elevation: 2,
-    // minHeight: '6%',
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 2,
   },
+
   bigbuttontext: {
     fontWeight: 'bold',
     color: 'white',
     fontFamily: 'Roboto-Bold',
     fontSize: 20,
     textAlign: 'center',
-    // paddingTop: '2%',
-
-    // opacity: 1,
   },
 });

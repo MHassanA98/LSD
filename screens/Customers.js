@@ -4,14 +4,9 @@ import {StyleSheet, Text, View, TouchableOpacity, Alert} from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {NavigationEvents} from 'react-navigation';
 import firebase from '../assets/DatabaseConfig';
-import auth from '@react-native-firebase/auth';
-import database from '@react-native-firebase/database';
 
 export default function Customers({navigation}) {
   const [cust, setcust] = useState([]); //[
-  // {name: 'example', email: 'example@lums.edu.pk', banstat: true},
-  // {name: 'jawadg02', email: 'abcde@ab.com2', banstat: 0},
-  // ]);
 
   function banalert(item, index) {
     if (!item.banstat) {
@@ -22,9 +17,6 @@ export default function Customers({navigation}) {
           {
             text: 'Yes',
             onPress: () => {
-              // console.log("YES")
-              // console.log(item.name)
-              // console.log(index)
               let tempcust = cust;
               tempcust[index] = {
                 name: item.name,
@@ -37,15 +29,6 @@ export default function Customers({navigation}) {
               mydb.update({
                 BanStatus: true,
               });
-              // .then(
-              //   console.log("\nCust:", cust),
-              // setcust(tempcust),
-              //   console.log("\nCust:", cust)
-              // )
-              // window.location.reload(false)
-
-              // console.log(tempcust)
-              // setcust(tempcust)
               onscreenload();
             },
           },
@@ -54,7 +37,6 @@ export default function Customers({navigation}) {
             onPress: () => {
               console.log('NO');
             },
-            // style: "cancel"
           },
         ],
         {cancelable: false},
@@ -67,9 +49,6 @@ export default function Customers({navigation}) {
           {
             text: 'Yes',
             onPress: () => {
-              // console.log("YES")
-              // console.log(item.name)
-              // console.log(index)
               let tempcust = cust;
               tempcust[index] = {
                 name: item.name,
@@ -82,14 +61,6 @@ export default function Customers({navigation}) {
               mydb.update({
                 BanStatus: false,
               });
-              // .then(
-              //   console.log("\nCust:", cust),
-              // setcust(tempcust),
-              //   console.log("\nCust:", cust)
-              // )
-
-              // console.log(tempcust)
-              // setcust(tempcust)
               onscreenload();
             },
           },
@@ -98,7 +69,6 @@ export default function Customers({navigation}) {
             onPress: () => {
               console.log('NO');
             },
-            // style: "cancel"
           },
         ],
         {cancelable: false},
@@ -107,11 +77,8 @@ export default function Customers({navigation}) {
   }
 
   function onscreenload() {
-    // setcust([{name: 'example', email: 'example@lums.edu.pk', banstat: true}, ])
-    // console.log("db access")
     mydb = firebase.database().ref('/Users');
     mydb.once('value').then(function(snapshot) {
-      // product = []
       let custarr = [];
       snapshot.forEach(function(childsnapshot) {
         let customer = {
@@ -119,9 +86,7 @@ export default function Customers({navigation}) {
           email: childsnapshot.child('Useremail').val(),
           banstat: childsnapshot.child('BanStatus').val(),
         };
-        // console.log(childsnapshot.child("BanStatus"))
         custarr.push(customer);
-        // console.log(customer)
       });
       setcust(custarr);
     });
@@ -163,35 +128,24 @@ export default function Customers({navigation}) {
 }
 
 const styles = StyleSheet.create({
-  // confirmbutton: {
-  //   flexDirection: 'row',
-  //   // width: "30%",
-  //   padding: 50,
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-
   Screen: {
-    // flexDirection: "column",
     height: '100%',
     padding: '10%',
     backgroundColor: '#e8e8e8',
-
-    // flex: '20%',
   },
+  
   TopBar: {
     padding: 20,
     flexDirection: 'row',
     flex: 2,
-
     width: '100%',
     height: '100%',
     backgroundColor: '#d00f16',
     alignItems: 'center',
     justifyContent: 'space-between',
   },
+  
   TopBarText: {
-    // padding: 40,
     flexDirection: 'row',
     fontSize: 30,
     fontFamily: 'Roboto-Bold',
@@ -200,31 +154,28 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     flex: 6,
   },
+  
   TopBarSearch: {
-    // flexDirection: "row",
     alignItems: 'flex-end',
     color: 'white',
     fontSize: 20,
     flex: 1,
   },
+  
   TopBarBack: {
     color: 'white',
     flex: 1,
     fontSize: 20,
   },
+  
   RestScreen: {
-    // flex: 9,
-    // width: 100,
-    // flex: 8,
-    // width: 100,
     padding: '15%',
     backgroundColor: '#e8e8e8',
     height: '90%',
     justifyContent: 'center',
     alignItems: 'center',
-    // justifyContent: 'center',
-    // alignItems: 'center',
   },
+  
   firstbox: {
     width: '100%',
     flexDirection: 'row',
@@ -235,12 +186,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     height: 50,
     paddingTop: 40,
-    // justifyContent: 'center',
     alignItems: 'center',
     shadowColor: 'darkgrey',
     shadowOpacity: 20,
-    // justifyContent: "center",
   },
+  
   TextInputbox: {
     flexDirection: 'row',
     padding: 7,
@@ -249,7 +199,6 @@ const styles = StyleSheet.create({
     height: 64,
     borderRadius: 5,
     elevation: 5,
-    // flexDirection: 'row',
     marginVertical: 10,
     borderColor: 'black',
     backgroundColor: 'white',
@@ -260,21 +209,19 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     shadowColor: 'darkgrey',
     shadowOpacity: 20,
-    // borderRadius: 10,
-    // height: 50,
   },
+  
   title: {
     fontSize: 16,
     fontWeight: 'bold',
   },
+  
   boxfont: {
     fontSize: 12,
     paddingTop: 4,
   },
 
   Confirmbutton: {
-    // padding: 20,
-    // paddingBottom: 20,
     paddingHorizontal: 15,
     backgroundColor: '#d00f16',
     borderRadius: 20,
@@ -290,6 +237,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  
   bigbuttontext: {
     fontWeight: 'bold',
     color: 'white',
@@ -297,11 +245,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     paddingTop: '2%',
-
-    // opacity: 1,
   },
+  
   bigbutton: {
-    // padding: '50%',
     paddingHorizontal: '23%',
     flex: 2,
     alignItems: 'center',

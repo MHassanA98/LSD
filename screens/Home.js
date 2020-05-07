@@ -1,16 +1,11 @@
 import React, {useState} from 'react';
-// import { AppLoading } from 'expo';
-// import Navigator from './route/NavigDraw'
 import {
   StyleSheet,
   Text,
   View,
-  Image,
   ImageBackground,
   Dimensions,
   TouchableOpacity,
-  Button,
-  BackHandler,
 } from 'react-native';
 
 export default function Home({navigation}) {
@@ -21,9 +16,6 @@ export default function Home({navigation}) {
   const KitchenPress = () => {
     navigation.navigate('Kitchen');
   };
-
-  // BackHandler.addEventListener('hardwareBackPress', function () {BackHandler.exitApp()});
-  // BackHandler.removeEventListener('hardwareBackPress', true);
 
   return (
     <View style={styles.home}>
@@ -53,7 +45,6 @@ export default function Home({navigation}) {
         </ImageBackground>
       </TouchableOpacity>
 
-      {/* <Button title= 'Goto /> */}
     </View>
   );
 }
@@ -84,8 +75,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 12,
   },
-
-  // button:{
-
-  // }
 });

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Picker, StyleSheet } from 'react-native'
+import { View, Picker, StyleSheet } from 'react-native'
 
 class PickerExample extends Component {
    state = {user: ''}

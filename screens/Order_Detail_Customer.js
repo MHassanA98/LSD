@@ -4,13 +4,6 @@ import {FlatList} from 'react-native-gesture-handler';
 import {NavigationEvents} from 'react-navigation';
 import firebase from '../assets/DatabaseConfig';
 
-//Made by Shahzil
-//The list of items feels very dubios need to rewamp the whole list of items otherwise showing like this is hard because:
-//1- The alignment isn't good when used for varying name length
-//2- What will we do if someone orders 20 items and the scroll down is well faulty just a thought okok
-//Remade by jawad
-//backend fully added by patel
-
 export default function Pending_Order_Admin({navigation}) {
   const [order, setorder] = useState([
     {
@@ -27,8 +20,6 @@ export default function Pending_Order_Admin({navigation}) {
   const [product, setProduct] = useState([ ]);
 
   async function getOrder() {
-    // console.log("MEOW")
-    // console.log(navigation.getParam('orderid'))
     let emailcheck = firebase.auth().currentUser.email;
     let prodarr = []
     mydb = firebase.database().ref('/Orders/'+emailcheck.substr(0, 8));
@@ -44,7 +35,6 @@ export default function Pending_Order_Admin({navigation}) {
       })
 
       snapshot.child("Products").forEach(function (childsnapshot) {
-        // console.log(childsnapshot.child("name"))
         let prod = {
           name: childsnapshot.child('name').val(),
           price: childsnapshot.child('price').val(),
@@ -56,19 +46,9 @@ export default function Pending_Order_Admin({navigation}) {
     });
   }
 
-
-
-
-  //Main Container View//
   return (
     <View style={styles.container}>
     <NavigationEvents onWillFocus={() => { getOrder() }} />
-      {/* Heading Container
-                  <View style= {styles.heading}>
-                      <Text style = {{marginLeft: 50,fontSize:35, color: 'white'}}> OrderID {this.state.Order_ID} </Text>
-                  </View> */}
-
-      {/*Main Body*/}
       <View style={styles.body}>
         <View style={styles.textbox}>
           <View style={styles.write_on_the_edges}>
@@ -123,10 +103,7 @@ export default function Pending_Order_Admin({navigation}) {
               Total Price
             </Text>
           </View>
-
-          {/*Items will come down below here*/}
           <FlatList
-            // style={{flex: 1}}
             data={product}
             keyExtractor={item => item.name}
             renderItem={({item}) => (
@@ -134,7 +111,6 @@ export default function Pending_Order_Admin({navigation}) {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
-                  // borderBottomWidth: 0.5,
                   height: 40,
                   paddingBottom: 5,
                 }}>
@@ -166,7 +142,6 @@ export default function Pending_Order_Admin({navigation}) {
                   style={{
                     flex: 1,
                     alignItems: 'flex-end',
-                    // paddingRight: '10%',
                   }}>
                   <Text
                     style={{
@@ -280,7 +255,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
   },
   lower_body: {
-    // flex: 5,
     marginTop: 20,
     marginLeft: '10%',
     width: '80%',

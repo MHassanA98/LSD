@@ -1,23 +1,16 @@
 import React, {useState} from 'react';
-// import { AppLoading } from 'expo';
-// import Navigator from './route/NavigDraw'
 import {
   StyleSheet,
   Text,
   View,
-  Image,
   ImageBackground,
   Dimensions,
   TouchableOpacity,
-  Button,
   ScrollView,
 } from 'react-native';
 import firebase from '../assets/DatabaseConfig';
-import auth from '@react-native-firebase/auth';
-import database from '@react-native-firebase/database';
 
 export default function Store({navigation}) {
-  // const [product, setProduct] = useState([ {name: 'ribbon'} ]);
   const [SubCat, setSubCat] = useState([
     {Sub: 'Stationery', Cat: 'Store'},
     {Sub: 'Beverages', Cat: 'Store'},
@@ -27,7 +20,6 @@ export default function Store({navigation}) {
   ]);
 
   const handleStationary = () => {
-    // setSubCat("Stationery")
     email = firebase.auth().currentUser.email;
     mydb = firebase.database().ref('/Users/' + email.substr(0, 8));
     mydb.once('value').then(function(snapshot) {
@@ -41,7 +33,6 @@ export default function Store({navigation}) {
   };
 
   const handleBeverages = () => {
-    // setSubCat("Stationery")
     email = firebase.auth().currentUser.email;
     mydb = firebase.database().ref('/Users/' + email.substr(0, 8));
     mydb.once('value').then(function(snapshot) {
@@ -55,7 +46,6 @@ export default function Store({navigation}) {
   };
 
   const handleGrooming = () => {
-    // setSubCat("Stationery")
     email = firebase.auth().currentUser.email;
     mydb = firebase.database().ref('/Users/' + email.substr(0, 8));
     mydb.once('value').then(function(snapshot) {
@@ -69,7 +59,6 @@ export default function Store({navigation}) {
   };
 
   const handleGrocery = () => {
-    // setSubCat("Stationery")
     email = firebase.auth().currentUser.email;
     mydb = firebase.database().ref('/Users/' + email.substr(0, 8));
     mydb.once('value').then(function(snapshot) {
@@ -83,7 +72,6 @@ export default function Store({navigation}) {
   };
 
   const handleElectronics = () => {
-    // setSubCat("Stationery")
     email = firebase.auth().currentUser.email;
     mydb = firebase.database().ref('/Users/' + email.substr(0, 8));
     mydb.once('value').then(function(snapshot) {
@@ -150,16 +138,6 @@ export default function Store({navigation}) {
         </ImageBackground>
       </TouchableOpacity>
 
-      {/* <TouchableOpacity style={styles.button} activeOpacity={0.8}> 
-            <ImageBackground source= {require('../assets/images/Electronics.png')} style={styles.image}>
-                <View style={styles.textcontainer}>
-                    <Text style={styles.text}>
-                        Electronics
-                    </Text>
-                </View>
-            </ImageBackground>
-        </TouchableOpacity> */}
-
       <TouchableOpacity
         style={[styles.button, {marginBottom: 10}]}
         activeOpacity={0.8}
@@ -173,7 +151,6 @@ export default function Store({navigation}) {
         </ImageBackground>
       </TouchableOpacity>
 
-      {/* <Button title= 'Goto /> */}
     </ScrollView>
   );
 }
@@ -205,7 +182,4 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
 
-  // button:{
-
-  // }
 });

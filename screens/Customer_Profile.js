@@ -3,18 +3,6 @@ import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {NavigationEvents} from 'react-navigation';
 import firebase from '../assets/DatabaseConfig';
-import auth from '@react-native-firebase/auth';
-import database from '@react-native-firebase/database';
-
-//Made by Shahzil
-//Added Button Handlers
-//Added states and fetch functions
-//Need to add firebase functionality
-//Icons to be added by the space in the fields
-//The change password button will lead to change_password_customer screen
-//redesigned, brought to sds screens design and improved by jawad
-//functionality added by hasan
-//state declaration brought to standard declaration used on other screens
 
 export default function Customer_Profile({navigation}) {
   const [username, setUsername] = useState('');
@@ -35,8 +23,6 @@ export default function Customer_Profile({navigation}) {
         setPoints(snapshot.child('ChangeRate').val());
       }
     });
-    // console.log(uname)
-    // setUsername(uname)
   }
 
   function change_password_buttonhandler() {
@@ -54,14 +40,12 @@ export default function Customer_Profile({navigation}) {
           onscreenload();
         }}
       />
-      {/*Heading Container*/}
       <View style={styles.heading}>
         <View style={styles.iconstyle}>
           <Icon name="user" color="#d00f16" size={100} />
         </View>
       </View>
 
-      {/*Password Change Form*/}
       <View style={styles.body}>
         <View style={styles.textbox}>
           <Icon name="user" color="#d00f16" size={24} />
@@ -127,7 +111,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#d00f16',
     marginTop: '17%',
     marginRight: 10,
-    // alignContent: 'center',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -148,7 +131,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     paddingHorizontal: 10,
-    // justifyContent: 'center',
     borderWidth: 0,
     backgroundColor: 'white',
     fontFamily: 'Roboto-Bold',
@@ -163,7 +145,6 @@ const styles = StyleSheet.create({
   },
   Confirmbutton: {
     padding: '5%',
-    // marginVertical: 10,
     paddingHorizontal: 15,
     backgroundColor: '#d00f16',
     borderRadius: 20,
@@ -174,7 +155,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.9,
     shadowRadius: 6,
     elevation: 2,
-    // minHeight: '6%',
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -186,8 +166,5 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     fontSize: 18,
     textAlign: 'center',
-    // paddingTop: '2%',
-
-    // opacity: 1,
   },
 });
