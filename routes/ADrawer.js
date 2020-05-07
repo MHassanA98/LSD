@@ -17,6 +17,34 @@ export default function CustomerDrawer({navigation}) {
         navigation.dispatch(NavigationActions.navigate({routeName:route}));
         setScreen(route)
     })
+    
+       function onShutdown(){
+
+        Alert.alert(
+            "Shutdown Deliver",
+            "Are you sure you want to suspend the delivery service?",
+            [
+              {
+                text: "Yes",
+                // onPress: ()=>{
+                //   firebase.auth().signOut()
+                //   .then(() => {
+                //     navigation.navigate("LoginStack")
+                //   })
+                //   .catch(function(error) {
+                //     alert(error)
+                //   })
+                // }
+              },
+              {
+                text: "No",
+
+              }
+            ]
+            , {cancelable: false}
+          )
+
+    }
 
     function onSignoutPress() {
         // console.log("meow")
@@ -87,7 +115,7 @@ export default function CustomerDrawer({navigation}) {
 
             <View style={styles.lineStyle}/>
 
-            <TouchableOpacity style={[styles.TouchOpp,{}]} onPress={()=>{}} activeOpacity={0.3}>
+            <TouchableOpacity style={[styles.TouchOpp,{}]} onPress={onShutdown} activeOpacity={0.3}>
                 <MIcon style={styles.FAIcon} name='power-settings-new' size={24}/>
                 <Text style={styles.TextDraw}>
                     Shutdown
