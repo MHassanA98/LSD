@@ -1,7 +1,11 @@
 import React, {useState} from 'react';
-import {Text, View, StyleSheet, Button, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {NavigationEvents} from 'react-navigation';
 import {FlatList} from 'react-native-gesture-handler';
+import firebase from '../assets/DatabaseConfig';
+import { createIconSetFromFontello } from 'react-native-vector-icons';
+
+
 //Made by Shahzil
 //The list of items feels very dubios need to rewamp the whole list of items otherwise showing like this is hard because:
 //1- The alignment isn't good when used for varying name length
@@ -10,66 +14,97 @@ import {FlatList} from 'react-native-gesture-handler';
 //How to make this scrollable
 
 export default function Pending_Order_Admin({navigation}) {
-  const [product, setProduct] = useState([
-    {name: 'pencil', price: '10'},
-    {name: 'ruler', price: '50'},
-    {name: 'sharpener', price: '5'},
-    {name: 'eraser', price: '4'},
-    {name: 'pen', price: '54'},
-    {name: 'marker', price: '22'},
-    {name: 'tape', price: '44'},
-    {name: 'ribbon', price: '22'},
-    {name: 'pillow', price: '21'},
-    {name: 'toy', price: '10'},
-    {name: 'car', price: '11'},
-    {name: 'box', price: '12'},
-  ]);
+  const [product, setProduct] = useState([ ]);
+    // {name: 'pencil', price: '10'},
+    // {name: 'ruler', price: '50'},
+    // {name: 'sharpener', price: '5'},
+    // {name: 'eraser', price: '4'},
+    // {name: 'pen', price: '54'},
+    // {name: 'marker', price: '22'},
+    // {name: 'tape', price: '44'},
+    // {name: 'ribbon', price: '22'},
+    // {name: 'pillow', price: '21'},
+    // {name: 'toy', price: '10'},
+    // {name: 'car', price: '11'},
+    // {name: 'box', price: '12'},
+  // ]);
 
-  const [order, setorder] = useState([
-    {
-      Order_ID: '52',
-      Customer_Name: 'Username',
-      Location: 'Location',
-      Phone_Number: 'Phone Number',
-      Time: 'Bad time',
-      Subtotal: '10',
-      Points_discount: '20',
-      Delivery_Charges: '10',
-      Total: '100',
-    },
-  ]);
+  const [deets, setDeets] = useState([ ]);
+  //   {
+  //     name: "why",
+  //     phone: "meow",
 
-  function Order_ID_fetch() {}
-  function Order_status_fetch() {}
-  function Location_status_fetch() {}
-  function Time_status_fetch() {}
-  function points_fetch() {}
+  //   },
+  // ])
+
+  const [order, setorder] = useState([ ]);
+  
+  async function getOrder() {
+    // console.log("MEOW")
+    // console.log(navigation.getParam('orderid'))
+    let prodarr = []
+    mydb = firebase.database().ref('/Orders/'+navigation.getParam('orderid'));
+    mydb.once('value').then(function(snapshot) {
+      setorder({
+        Delivery_Charges: snapshot.child('Delivery').val(),
+        Location: snapshot.child('Location').val(),
+        OrderSatus: snapshot.child('OrderStatus').val(),
+        Points_discount: snapshot.child('RedPts').val(),
+        Subtotal: snapshot.child('Subtotal').val(),
+        Time: snapshot.child('Time').val(),
+        Total: snapshot.child('Total').val(),
+      })
+
+      snapshot.child("Products").forEach(function (childsnapshot) {
+        // console.log(childsnapshot.child("name"))
+        let prod = {
+          name: childsnapshot.child('name').val(),
+          price: childsnapshot.child('price').val(),
+          quantity: childsnapshot.child('quantity').val(),
+        };
+        prodarr.push(prod)
+      });
+      setProduct(prodarr)
+    });
+    
+    mydb = firebase.database().ref('/Users/'+navigation.getParam('orderid'));
+    mydb.once('value').then(function(snapshot) {
+      setDeets({
+        name: snapshot.child('Username').val(),
+        phone: snapshot.child('Phonenumber').val(),
+      })
+    });
+
+
+  }
+
   function dispatch_buttonhandler() {
-    alert(`Order Confirmed`);
+    alert("Order Confirmed");
   }
 
   //Main Container View//
   return (
     <View style={styles.container}>
+      <NavigationEvents onWillFocus={() => { getOrder() }} />
       <View style={styles.body}>
         <View style={styles.textbox}>
           <View style={styles.write_on_the_edges}>
-            <Text style={{fontSize: 18, marginLeft: 20}}>
-              {order.Customer_Name}
+            <Text style={{fontSize: 18, marginLeft: 20, fontFamily: 'Roboto',}}>
+              {deets.name}
             </Text>
-            <Text style={{fontSize: 18, marginRight: 20}}>
+            <Text style={{fontSize: 18, marginRight: 20, fontFamily: 'Roboto',}}>
               {order.Location}
             </Text>
           </View>
-          <Text style={{fontSize: 14, marginLeft: 20, opacity: 0.5}}>
-            {order.Phone_Number}
+          <Text style={{fontSize: 14, marginLeft: 20, opacity: 0.5, fontFamily: 'Roboto',}}>
+            {deets.phone}
           </Text>
         </View>
 
         <View style={styles.textbox}>
           <View style={styles.write_on_the_edges}>
-            <Text style={{fontSize: 18, marginLeft: 20}}>Time</Text>
-            <Text style={{fontSize: 18, marginRight: 20}}>{order.Time}</Text>
+            <Text style={{fontSize: 18, marginLeft: 20, fontFamily: 'Roboto',}}>Time</Text>
+            <Text style={{fontSize: 18, marginRight: 20, fontFamily: 'Roboto',}}>{order.Time}</Text>
           </View>
         </View>
 
@@ -81,10 +116,11 @@ export default function Pending_Order_Admin({navigation}) {
                 marginLeft: 20,
                 marginTop: 10,
                 marginBottom: 5,
+                fontFamily: 'Roboto',
               }}>
               Items:
             </Text>
-            <Text style={{fontSize: 12, marginTop: 10, marginBottom: 5}}>
+            <Text style={{fontSize: 12, marginTop: 10, marginBottom: 5, fontFamily: 'Roboto',}}>
               Qty
             </Text>
             <Text
@@ -93,12 +129,14 @@ export default function Pending_Order_Admin({navigation}) {
                 marginRight: 20,
                 marginTop: 10,
                 marginBottom: 5,
+                fontFamily: 'Roboto',
               }}>
-              Total Price
+              Price
             </Text>
           </View>
 
           {/*Items will come down below here*/}
+          {/* <SafeAreaView> */}
           <FlatList
             data={product}
             keyExtractor={item => item.name}
@@ -112,7 +150,8 @@ export default function Pending_Order_Admin({navigation}) {
                   height: 30,
 
                   paddingBottom: 5,
-                }}>
+                }}
+                >
                 <View style={{flex: 1}}>
                   <Text
                     style={{
@@ -120,6 +159,7 @@ export default function Pending_Order_Admin({navigation}) {
                       marginLeft: 20,
                       marginTop: 10,
                       marginBottom: 5,
+                      fontFamily: 'Roboto',
                     }}>
                     {item.name}
                   </Text>
@@ -128,11 +168,11 @@ export default function Pending_Order_Admin({navigation}) {
                   <Text
                     style={{
                       fontSize: 14,
-                      marginRight: 30,
                       marginTop: 10,
                       marginBottom: 5,
+                      fontFamily: 'Roboto',
                     }}>
-                    {item.price}
+                    {item.quantity}
                   </Text>
                 </View>
                 <View
@@ -144,10 +184,10 @@ export default function Pending_Order_Admin({navigation}) {
                   <Text
                     style={{
                       fontSize: 14,
-                      marginRight: 30,
+                      marginRight: 20,
                       marginTop: 10,
                       marginBottom: 5,
-                      color: '#d00c16',
+                      fontFamily: 'Roboto',
                     }}>
                     {item.price}
                   </Text>
@@ -155,6 +195,7 @@ export default function Pending_Order_Admin({navigation}) {
               </View>
             )}
           />
+          {/* </SafeAreaView> */}
 
           <View style={styles.write_on_the_edges1}>
             <Text
@@ -163,6 +204,7 @@ export default function Pending_Order_Admin({navigation}) {
                 marginLeft: 20,
                 marginTop: 10,
                 marginBottom: 5,
+                fontFamily: 'Roboto',
               }}>
               Subtotal
             </Text>
@@ -172,23 +214,24 @@ export default function Pending_Order_Admin({navigation}) {
                 marginRight: 20,
                 marginTop: 10,
                 marginBottom: 5,
+                fontFamily: 'Roboto',
               }}>
               Rs. {order.Subtotal}
             </Text>
           </View>
           <View style={styles.write_on_the_edges}>
-            <Text style={{fontSize: 15, marginLeft: 20, marginBottom: 5}}>
+            <Text style={{fontSize: 15, marginLeft: 20, marginBottom: 5, fontFamily: 'Roboto',}}>
               Points Discount
             </Text>
-            <Text style={{fontSize: 15, marginRight: 20, marginBottom: 5}}>
+            <Text style={{fontSize: 15, marginRight: 20, marginBottom: 5, fontFamily: 'Roboto',}}>
               -Rs. {order.Points_discount}
             </Text>
           </View>
           <View style={styles.write_on_the_edges}>
-            <Text style={{fontSize: 15, marginLeft: 20, marginBottom: 5}}>
+            <Text style={{fontSize: 15, marginLeft: 20, marginBottom: 5, fontFamily: 'Roboto',}}>
               Delivery Charges
             </Text>
-            <Text style={{fontSize: 15, marginRight: 20, marginBottom: 5}}>
+            <Text style={{fontSize: 15, marginRight: 20, marginBottom: 5, fontFamily: 'Roboto',}}>
               Rs. {order.Delivery_Charges}
             </Text>
           </View>
@@ -199,6 +242,7 @@ export default function Pending_Order_Admin({navigation}) {
                 marginLeft: 20,
                 marginTop: 10,
                 marginBottom: 5,
+                fontFamily: 'Roboto',
               }}>
               Total
             </Text>
@@ -208,6 +252,7 @@ export default function Pending_Order_Admin({navigation}) {
                 marginRight: 20,
                 marginTop: 10,
                 marginBottom: 5,
+                fontFamily: 'Roboto',
               }}>
               Rs. {order.Total}
             </Text>
@@ -216,7 +261,8 @@ export default function Pending_Order_Admin({navigation}) {
 
         <View style={styles.bigbutton}>
           <TouchableOpacity
-            onPress={() => alert('Confirmed!')}
+            // disabled="false"
+            onPress={dispatch_buttonhandler}
             style={styles.Confirmbutton}>
             <Text style={styles.bigbuttontext}>Dispatch</Text>
           </TouchableOpacity>
@@ -256,7 +302,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderBottomWidth: 0,
     backgroundColor: 'white',
-    fontFamily: 'Roboto-Bold',
+    fontFamily: 'Roboto',
   },
   first_box: {
     marginTop: 20,
@@ -266,9 +312,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderBottomWidth: 0,
     backgroundColor: 'white',
-    fontFamily: 'Roboto-Bold',
+    fontFamily: 'Roboto',
   },
   lower_body: {
+    flex: 5,
     marginTop: 20,
     marginVertical: 20,
     borderRadius: 5,
@@ -278,7 +325,7 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-start',
     borderBottomWidth: 0,
     backgroundColor: 'white',
-    fontFamily: 'Roboto-Bold',
+    fontFamily: 'Roboto',
   },
   write_on_the_edges: {
     flexDirection: 'row',
@@ -287,6 +334,7 @@ const styles = StyleSheet.create({
   write_on_the_edges1: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    borderTopColor: '#e8e8e8',
     borderTopWidth: 1,
   },
   Confirmbutton: {
