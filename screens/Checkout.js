@@ -225,7 +225,7 @@ const Press2=()=>{
 
        
     firebase.database().ref('/Users/'+Email).update({
-          Redemptionpoints:AddRedPts
+          Redemptionpoints:parseInt(AddRedPts)
           
     })
     
@@ -530,7 +530,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: '23%',
     
     alignItems: 'center',
-    marginTop:"30%"
+    marginTop:10
     
   },
   write_on_the_edges: {
