@@ -9,16 +9,53 @@ import Store from '../screens/Store';
 import AdminMenu from '../screens/AdminMenu';
 import CustMenu from '../screens/CustMenu';
 import Pending_Order_Admin from '../screens/Pending_Order_Admin';
+// import Subcategory from '../screens/Subcategory';
 import Customer_Profile from '../screens/Customer_Profile';
 import change_password_customer from '../screens/change_password_customer';
+// import Forgotpw from '../screens/Forgotpw';
+// import Change_Password from '../screens/ChangePassword';
 import React from 'react';
 import { Button } from 'react-native';
 import AddItem from '../screens/AddItem'
 import UpdateItem from '../screens/UpdateItem'
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+// import firebase from '@react-native-firebase/app';
+// import ReviewDetails from '../screens/reviewDetails';
 
 const screens = {
+
+//   Home: {
+//     screen: Home,
+//     navigationOptions:{
+//       title: 'LSD',
+//       headerLeft:() => null,
+//       // gestureEnabled:true
+//     }
+//   },
+
+//   Login: {
+//     screen: Login,
+//     navigationOptions:{
+//       headerShown:false
+//     }
+//   },
+
+//   Registration: {
+//     screen: Registration,
+//     navigationOptions:{
+//       title:null,
+//       headerTransparent: true
+//     }
+//   },
+
+//   Forgotpwemail: {
+//     screen: Forgotpwemail,
+//     navigationOptions:{
+//       title:null,
+//       headerTransparent: true
+//     }
+//   },
 
   Home: {
     screen: Home,
@@ -41,8 +78,20 @@ const screens = {
         ),
       }
     }
-  },
-  
+      
+      // gestureEnabled:true
+      // headerLeft: () => (
+      //   <Button
+      //     onPress={() => navigation.openDrawer}
+      //     title="Info"
+      //     color="#e8e8e8"
+      //   />)
+      
+      },
+      
+    // },
+    
+
   Kitchen:{
     screen:Kitchen
     
@@ -51,6 +100,10 @@ const screens = {
   Store:{
     screen:Store
   },
+
+//   CustMenu:{
+//     screen:CustMenu
+//   },
 
   AdminMenu:{
     screen:AdminMenu,
@@ -80,11 +133,25 @@ const screens = {
       navigationOptions:{
               title:"Update Item"
             }
-
+      // title:"Item Name"
   }
+
+
+
+  // Customer_Profile: {
+  //     screen: Customer_Profile,
+  //     navigationOptions:{
+  //       headerShown:false
+  //     }
+  //   },
+  
+  // change_password_customer: {
+  //   screen: change_password_customer,
+  // },
 
 };
 
+// home stack navigator screens
 const AdminStack = createStackNavigator(screens, {
   defaultNavigationOptions: {
     headerTintColor: '#ffffff',
@@ -106,4 +173,5 @@ const AdminStack = createStackNavigator(screens, {
   }
 });
 
+// export default createAppContainer(HomeStack);
 export default AdminStack

@@ -27,6 +27,9 @@ import CustomerStack from './CustomerStack';
 import ProfileStack from './ProfileStack';
 import CustomerDrawer from './CustomerDrawer';
 
+// import firebase from '@react-native-firebase/app';
+// import ReviewDetails from '../screens/reviewDetails';
+
 const Switches = {
 
     LoginStack:{
@@ -40,9 +43,122 @@ const Switches = {
     CustomerDrawer:{
         screen:CustomerDrawer
     },
+
+    // CustomerStack:{
+    //   screen:CustomerStack
+    // },
+
+    // ProfileStack:{
+    //   screen:ProfileStack
+    // }
+
+   
     
+
+
+//   Home: {
+//     screen: Home,
+//     navigationOptions:{
+//       title: 'LSD',
+//       headerLeft:() => null,
+//       // gestureEnabled:true
+//     }
+//   },
+
+//   Login: {
+//     screen: Login,
+//     navigationOptions:{
+//       headerShown:false
+//     }
+//   },
+
+//   Registration: {
+//     screen: Registration,
+//     navigationOptions:{
+//       title:null,
+//       headerTransparent: true
+//     }
+//   },
+
+//   Forgotpwemail: {
+//     screen: Forgotpwemail,
+//     navigationOptions:{
+//       title:null,
+//       headerTransparent: true
+//     }
+//   },
+
+//   Home: {
+//     screen: Home,
+//     navigationOptions:{
+//       title: 'LSD',
+//       headerLeft:() => null,
+//       // gestureEnabled:true
+//     }
+//   },
+
+//   Kitchen:{
+//     screen:Kitchen
+    
+//   },
+
+//   Store:{
+//     screen:Store
+//   },
+
+//   CustMenu:{
+//     screen:CustMenu
+//   },
+
+//   AdminMenu:{
+//     screen:AdminMenu
+//   },
+
+//   AddItem:{
+//       screen: AddItem
+//   },
+
+//   UpdateItem:{
+//       screen:UpdateItem
+//   }
+
+  
+
+  // Customer_Profile: {
+  //     screen: Customer_Profile,
+  //     navigationOptions:{
+  //       headerShown:false
+  //     }
+  //   },
+  
+  // change_password_customer: {
+  //   screen: change_password_customer,
+  // },
+
 };
 
+// home stack navigator screens
 const Navigate = createSwitchNavigator(Switches)
+//   , {
+//   defaultNavigationOptions: {
+//     headerTintColor: '#444',
+//     headerStyle: { 
+//     backgroundColor: '#d00f16', 
+//     height: 60,
+//     shadowColor: "black",
+//     shadowOffset: {
+//       width: 0,
+//       height: 2,
+//     },
+//     shadowOpacity: 0.9,
+//     shadowRadius: 1.50,
+//     elevation: 3,
+//   },
 
+  
+    
+//   }
+// });
+
+// export default createAppContainer(HomeStack);
 export default createAppContainer(Navigate)

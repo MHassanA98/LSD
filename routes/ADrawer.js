@@ -9,42 +9,17 @@ export default function CustomerDrawer({navigation}) {
 
     const [screen, setScreen]=useState('Home')
 
+    // console.log(navigation.dangerouslyGetParent().state.routes[1])
+
+    // console.log(navigation.state.routes[1].key)
     navigateToScreen = ( route ) =>(
         () => {
         navigation.dispatch(NavigationActions.navigate({routeName:route}));
         setScreen(route)
     })
 
-    function onShutdown(){
-
-        Alert.alert(
-            "Shutdown Deliver",
-            "Are you sure you want to suspend the delivery service?",
-            [
-              {
-                text: "Yes",
-                // onPress: ()=>{
-                //   firebase.auth().signOut()
-                //   .then(() => {
-                //     navigation.navigate("LoginStack")
-                //   })
-                //   .catch(function(error) {
-                //     alert(error)
-                //   })
-                // }
-              },
-              {
-                text: "No",
-  
-              }
-            ]
-            , {cancelable: false}
-          )
-
-    }
-
     function onSignoutPress() {
-
+        // console.log("meow")
         Alert.alert(
           "Logout",
           "Are you sure you want to logout?",
@@ -63,7 +38,7 @@ export default function CustomerDrawer({navigation}) {
             },
             {
               text: "No",
-
+            //   onPress: ()=> {console.log("NO")},
             }
           ]
           , {cancelable: false}
@@ -84,6 +59,7 @@ export default function CustomerDrawer({navigation}) {
             <TouchableOpacity style={[styles.TouchOpp,(screen==='Home') ? styles.Active: null]} onPress={navigateToScreen('Home')} activeOpacity={0.3}>
                 <MCIcon style={[styles.FAIcon,(screen==='Home') ? styles.ActiveLogo: null]} name='home' size={24}/>
                 <Text style={[styles.TextDraw,(screen==='Home') ? styles.ActiveText: null]}>
+                    {/* {navigation.state.routes.map((item)=>console.log(item.key))} */}
                     Home
                 </Text>
             </TouchableOpacity>
@@ -111,7 +87,7 @@ export default function CustomerDrawer({navigation}) {
 
             <View style={styles.lineStyle}/>
 
-            <TouchableOpacity style={[styles.TouchOpp,{}]} onPress={()=>{onShutdown}} activeOpacity={0.3}>
+            <TouchableOpacity style={[styles.TouchOpp,{}]} onPress={()=>{}} activeOpacity={0.3}>
                 <MIcon style={styles.FAIcon} name='power-settings-new' size={24}/>
                 <Text style={styles.TextDraw}>
                     Shutdown
@@ -201,5 +177,9 @@ const styles=StyleSheet.create({
    ActiveLogo:{
        color:'#d00f16'
    }
+
+    
+
+
 
 })
