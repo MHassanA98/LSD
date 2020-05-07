@@ -225,7 +225,7 @@ const Press2=()=>{
 
        
     firebase.database().ref('/Users/'+Email).update({
-          Redemptionpoints:AddRedPts
+          Redemptionpoints: parseInt(AddRedPts)
           
     })
     
