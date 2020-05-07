@@ -11,7 +11,8 @@ import { createIconSetFromFontello } from 'react-native-vector-icons';
 //1- The alignment isn't good when used for varying name length
 //2- What will we do if someone orders 20 items and the scroll down is well faulty just a thought okok
 //How to make this scrollable
-//How to make this scrollable
+//Remade by jawad
+//backend fully added by patel
 
 export default function Pending_Order_Admin({navigation}) {
   const [product, setProduct] = useState([ ]);
@@ -48,7 +49,7 @@ export default function Pending_Order_Admin({navigation}) {
       setorder({
         Delivery_Charges: snapshot.child('Delivery').val(),
         Location: snapshot.child('Location').val(),
-        OrderSatus: snapshot.child('OrderStatus').val(),
+        OrderStatus: snapshot.child('OrderStatus').val(),
         Points_discount: snapshot.child('RedPts').val(),
         Subtotal: snapshot.child('Subtotal').val(),
         Time: snapshot.child('Time').val(),
@@ -79,7 +80,17 @@ export default function Pending_Order_Admin({navigation}) {
   }
 
   function dispatch_buttonhandler() {
-    alert("Order Confirmed");
+    firebase.database().ref( '/Orders/' + navigation.getParam('orderid'))
+        .update({
+          OrderStatus: "Dispatched"
+        })
+        .then(() => {
+          alert('Order Confirmed');
+        })
+        .catch(() => {
+          alert('Please check your internet connection');
+        });
+
   }
 
   //Main Container View//
