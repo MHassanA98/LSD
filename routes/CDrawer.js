@@ -2,8 +2,10 @@ import React,{useState} from 'react'
 import {StyleSheet, Text, View, TouchableOpacity,Dimensions, Alert} from 'react-native'
 import MIcon from 'react-native-vector-icons/MaterialIcons'
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import FIcon from 'react-native-vector-icons/FontAwesome'
 import {SafeAreaView, NavigationActions} from 'react-navigation'
 import firebase from '../assets/DatabaseConfig'
+// import { Directions } from 'react-native-gesture-handler'
 
 export default function CustomerDrawer({navigation}) {
 
@@ -16,6 +18,7 @@ export default function CustomerDrawer({navigation}) {
     })
 
     function onSignoutPress() {
+        // console.log("meow")
         Alert.alert(
           "Logout",
           "Are you sure you want to logout?",
@@ -34,6 +37,7 @@ export default function CustomerDrawer({navigation}) {
             },
             {
               text: "No",
+            //   onPress: ()=> {console.log("NO")},
             }
           ]
           , {cancelable: false}
@@ -41,6 +45,7 @@ export default function CustomerDrawer({navigation}) {
       }
 
     return(
+
         <SafeAreaView style={styles.Safe}>
 
             <View style={styles.HeaderImage}>
@@ -49,6 +54,7 @@ export default function CustomerDrawer({navigation}) {
                     Hello {navigation.getParam('user')}
                 </Text>
             </View>
+            {/* <View > */}
             <TouchableOpacity style={[styles.TouchOpp,(screen==='Home') ? styles.Active: null]} onPress={navigateToScreen('Home')} activeOpacity={0.3}>
                 <MCIcon style={[styles.FAIcon,(screen==='Home') ? styles.ActiveLogo: null]} name='home' size={24}/>
                 <Text style={[styles.TextDraw,(screen==='Home') ? styles.ActiveText: null]}>

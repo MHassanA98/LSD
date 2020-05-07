@@ -8,6 +8,10 @@ import firebase from '../assets/DatabaseConfig'
 export default function CustomerDrawer({navigation}) {
 
     const [screen, setScreen]=useState('Home')
+
+    // console.log(navigation.dangerouslyGetParent().state.routes[1])
+
+    // console.log(navigation.state.routes[1].key)
     navigateToScreen = ( route ) =>(
         () => {
         navigation.dispatch(NavigationActions.navigate({routeName:route}));
@@ -15,6 +19,7 @@ export default function CustomerDrawer({navigation}) {
     })
 
     function onSignoutPress() {
+        // console.log("meow")
         Alert.alert(
           "Logout",
           "Are you sure you want to logout?",
@@ -33,6 +38,7 @@ export default function CustomerDrawer({navigation}) {
             },
             {
               text: "No",
+            //   onPress: ()=> {console.log("NO")},
             }
           ]
           , {cancelable: false}
@@ -42,6 +48,7 @@ export default function CustomerDrawer({navigation}) {
     return(
 
         <SafeAreaView style={styles.Safe}>
+
             <View style={styles.HeaderImage}>
                 <MIcon style={styles.MatIcon} name="account-circle"  size={100} />
                 <Text style={styles.HeaderText}>
@@ -52,6 +59,7 @@ export default function CustomerDrawer({navigation}) {
             <TouchableOpacity style={[styles.TouchOpp,(screen==='Home') ? styles.Active: null]} onPress={navigateToScreen('Home')} activeOpacity={0.3}>
                 <MCIcon style={[styles.FAIcon,(screen==='Home') ? styles.ActiveLogo: null]} name='home' size={24}/>
                 <Text style={[styles.TextDraw,(screen==='Home') ? styles.ActiveText: null]}>
+                    {/* {navigation.state.routes.map((item)=>console.log(item.key))} */}
                     Home
                 </Text>
             </TouchableOpacity>

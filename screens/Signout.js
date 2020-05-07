@@ -1,6 +1,9 @@
 import React from "react";
-import { StyleSheet, Alert, View, Button} from "react-native";
+import { StyleSheet, Alert, View, ImageBackground, Image, TextInput, Button, TouchableOpacity, } from "react-native";
+import LoginStack from '../routes/LoginStack';
 import firebase from "../assets/DatabaseConfig" ;
+import auth from "@react-native-firebase/auth" ;
+import database from "@react-native-firebase/database" ;
 
 
 export default function Shopping({navigation}) {
@@ -19,6 +22,7 @@ export default function Shopping({navigation}) {
               navigation.navigate("LoginStack")
             })
             .catch(function(error) {
+              // console.log(error)
               alert(error)
             })
           }
@@ -33,7 +37,9 @@ export default function Shopping({navigation}) {
   
   return (
     <View style={styles.Screen}>
+
       <Button title="signout" onPress={onSignoutPress}> </Button>
+
     </View>
 
 
@@ -42,9 +48,19 @@ export default function Shopping({navigation}) {
 
 
 const styles = StyleSheet.create({
+  // confirmbutton: {
+  //   flexDirection: 'row',
+  //   // width: "30%",
+  //   padding: 50,
+  //   alignItems: 'center',
+  //   justifyContent: 'center',
+  // },
   Screen: {
+    // flexDirection: "column",
     height: '100%',
     padding: '10%',
     backgroundColor: '#d3d3d3',
-},
+
+    // flex: '20%',
+  },
 });

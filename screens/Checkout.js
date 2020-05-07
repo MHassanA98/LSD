@@ -1,6 +1,8 @@
 import React,{useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Button, TouchableOpacity,Dimensions, Alert} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import SwitchExample from './switch1.js';
+import Category from './PickerList.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Picker} from '@react-native-community/picker';
 import { NavigationEvents } from 'react-navigation';
@@ -8,6 +10,7 @@ import firebase from "../assets/DatabaseConfig"
 
 
 export default function Checkout({navigation}) {
+
   const [RedPts,setRedPts]=useState(0)
   const [Total,setTotal]=useState(0)
   const [Subtotal,setSubtotal]=useState(0)
@@ -191,6 +194,7 @@ const Press2=()=>{
     {
       setRedPts(0)
       setTotal(Total=>Total+RedPtsStore)
+
     }
   };
 
@@ -227,24 +231,31 @@ const Press2=()=>{
     
   },[AddRedPts])
 
+
     return (
       
       
-      <View style={styles.container}>        
+      <View style={styles.container}>
+        {/*Heading Container*/}
+        
         <NavigationEvents
         onWillFocus={() => 
           {
             setSubtotal(navigation.getParam('Subtotal'))
             setTotal(navigation.getParam('Subtotal')+Delivery)
             setProducts(navigation.getParam('Products'))
-            LoadData()            
+            
+            LoadData()
+
           }
         }
         
         />
 
+        {/*Main Body*/}
         <View style={styles.body}>
           <View style={styles.textbox}>
+            {/* <Category /> */}
             <Picker
               selectedValue={Location}
               style={[styles.containerpicker]}
@@ -403,15 +414,17 @@ const styles = StyleSheet.create({
     height: 50,
     elevation: 2,
     marginLeft:8,
+    
   },
 
   container: {
+    
     width: '100%',
     backgroundColor: '#e8e8e8',
     alignItems: 'center',
     padding: '10%',
+    
   },
-
   heading: {
     height: '2%',
     width: '90%',
@@ -422,11 +435,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#e8e8e8',
+    
+    
   },
-
   textbox: {
     marginTop: 20,
+    
     marginLeft: '5%',
+    
     width: '90%',
     height: 56,
     elevation: 5,
@@ -438,21 +454,25 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     fontFamily: 'Roboto-Bold',
   },
-
   textbox2: {
     marginTop: 20,
+    
     marginLeft: '5%',
+    
     width: '90%',
     height: 56,
+    
     borderRadius: 5,
+    
+    
     justifyContent: 'center',
     borderBottomWidth: 0,
     backgroundColor: 'white',
     fontFamily: 'Roboto-Bold',
   },
-
   lower_body: {
     marginTop: 0,
+    
     marginLeft: '5%',
     width: '90%',
     height: 150,
@@ -462,7 +482,6 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     borderRadius: 5,
   },
-
   textbox1: {
     marginTop: 0,
     borderRadius: 5,
@@ -475,9 +494,11 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     fontFamily: 'Roboto-Bold',
   },
-
   Confirmbutton: {
+    
+    
     padding: '5%',
+    
     paddingHorizontal: 15,
     backgroundColor: '#d00f16',
     borderRadius: 20,
@@ -487,26 +508,31 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 2, height: 4},
     shadowOpacity: 0.9,
     shadowRadius: 6,
+    
+    
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     elevation: 2,
   },
-
   bigbuttontext: {
     fontWeight: 'bold',
     color: 'white',
     fontFamily: 'Roboto-Bold',
     fontSize: 20,
     textAlign: 'center',
-  },
+    
+    
 
+    
+  },
   bigbutton: {
     paddingHorizontal: '23%',
+    
     alignItems: 'center',
     marginTop:"30%"
+    
   },
-
   write_on_the_edges: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -516,7 +542,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor:'rgba(00,00,00,0.05)',
     marginTop:8,
+    
     alignSelf:'center',
     width:Dimensions.get('window').width/2
   },
 });
+
+

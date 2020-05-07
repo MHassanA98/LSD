@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {StyleSheet} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {Picker} from '@react-native-community/picker';
 
 export default function SubCategory() {
   const [selectedValue, setSelectedValue] = useState('Choose a subcategory');
   return (
+    // <TouchableOpacity raised style={styles.viewstyle}>
     <Picker
       selectedValue={selectedValue}
       style={styles.container}
@@ -14,12 +15,14 @@ export default function SubCategory() {
       <Picker.Item label="Stationary" value="stationary" />
       <Picker.Item label="Grocery" value="grocery" />
     </Picker>
+    // </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // paddingTop: 40,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -29,13 +32,17 @@ const styles = StyleSheet.create({
     elevation: 2,
   },
   viewstyle: {
+    // padding: 30,
     width: '100%',
     alignItems: 'center',
     borderColor: 'black',
     backgroundColor: 'white',
     borderWidth: 0,
     borderRadius: 10,
+    // padding: 30,
+    // alignItems: 'center',
     shadowColor: 'darkgrey',
     shadowOpacity: 20,
+    // sha,
   },
 });
