@@ -22,6 +22,8 @@ export default function Checkout({navigation}) {
   const [OutStock,setOutStock]=useState(" ")
   const [AddRedPts,setAddRedPts]=useState()
 
+  // console.log("asdaksdhkjashdkjahsdkjhaskhasdk")
+
   const handlePress=async ()=>{
 
     if (Location=="null"){
@@ -59,7 +61,7 @@ export default function Checkout({navigation}) {
         Qty:item.available-item.quantity
 
       })
-      .catch((e)=>Alert.alert("Checkout Failed","Please check your Internet connection"))
+      .catch((e)=>{Alert.alert("Checkout Failed","Please check your Internet connection")})
   
   
   })
@@ -91,7 +93,7 @@ const Press2=()=>{
           }
 
           
-        }).catch((e)=>Alert.alert("Checkout Failed","Please check your Internet connection"))
+        }).catch((e)=>{Alert.alert("Checkout Failed","Please check your Internet connection")})
     
   }
   
@@ -175,7 +177,7 @@ const Press2=()=>{
 
       
     }).then(Alert.alert("Checkout Successful!","Your order has been placed."))
-    .catch((e)=>Alert.alert("Checkout Failed","Please check your Internet connection"))
+    .catch((e)=>{Alert.alert("Checkout Failed","Please check your Internet connection")})
 
   }
 
@@ -521,10 +523,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     fontSize: 20,
     textAlign: 'center',
-    
-    
 
-    
   },
   bigbutton: {
     paddingHorizontal: '23%',
