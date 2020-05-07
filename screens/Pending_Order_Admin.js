@@ -3,46 +3,15 @@ import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {NavigationEvents} from 'react-navigation';
 import {FlatList} from 'react-native-gesture-handler';
 import firebase from '../assets/DatabaseConfig';
-import { createIconSetFromFontello } from 'react-native-vector-icons';
-
-
-//Made by Shahzil
-//The list of items feels very dubios need to rewamp the whole list of items otherwise showing like this is hard because:
-//1- The alignment isn't good when used for varying name length
-//2- What will we do if someone orders 20 items and the scroll down is well faulty just a thought okok
-//How to make this scrollable
-//Remade by jawad
-//backend fully added by patel
 
 export default function Pending_Order_Admin({navigation}) {
   const [product, setProduct] = useState([ ]);
-    // {name: 'pencil', price: '10'},
-    // {name: 'ruler', price: '50'},
-    // {name: 'sharpener', price: '5'},
-    // {name: 'eraser', price: '4'},
-    // {name: 'pen', price: '54'},
-    // {name: 'marker', price: '22'},
-    // {name: 'tape', price: '44'},
-    // {name: 'ribbon', price: '22'},
-    // {name: 'pillow', price: '21'},
-    // {name: 'toy', price: '10'},
-    // {name: 'car', price: '11'},
-    // {name: 'box', price: '12'},
-  // ]);
 
   const [deets, setDeets] = useState([ ]);
-  //   {
-  //     name: "why",
-  //     phone: "meow",
-
-  //   },
-  // ])
 
   const [order, setorder] = useState([ ]);
   
   async function getOrder() {
-    // console.log("MEOW")
-    // console.log(navigation.getParam('orderid'))
     let prodarr = []
     mydb = firebase.database().ref('/Orders/'+navigation.getParam('orderid'));
     mydb.once('value').then(function(snapshot) {
@@ -57,7 +26,6 @@ export default function Pending_Order_Admin({navigation}) {
       })
 
       snapshot.child("Products").forEach(function (childsnapshot) {
-        // console.log(childsnapshot.child("name"))
         let prod = {
           name: childsnapshot.child('name').val(),
           price: childsnapshot.child('price').val(),
@@ -93,7 +61,6 @@ export default function Pending_Order_Admin({navigation}) {
 
   }
 
-  //Main Container View//
   return (
     <View style={styles.container}>
       <NavigationEvents onWillFocus={() => { getOrder() }} />
@@ -145,9 +112,6 @@ export default function Pending_Order_Admin({navigation}) {
               Price
             </Text>
           </View>
-
-          {/*Items will come down below here*/}
-          {/* <SafeAreaView> */}
           <FlatList
             data={product}
             keyExtractor={item => item.name}
@@ -156,10 +120,8 @@ export default function Pending_Order_Admin({navigation}) {
                 style={{
                   flexDirection: 'row',
                   justifyContent: 'space-between',
-                  // borderBottomWidth: 0.2,
                   marginVertical: 5,
                   height: 30,
-
                   paddingBottom: 5,
                 }}
                 >
@@ -190,7 +152,6 @@ export default function Pending_Order_Admin({navigation}) {
                   style={{
                     flex: 1,
                     alignItems: 'flex-end',
-                    // paddingRight: '10%',
                   }}>
                   <Text
                     style={{
@@ -206,8 +167,6 @@ export default function Pending_Order_Admin({navigation}) {
               </View>
             )}
           />
-          {/* </SafeAreaView> */}
-
           <View style={styles.write_on_the_edges1}>
             <Text
               style={{
@@ -272,7 +231,6 @@ export default function Pending_Order_Admin({navigation}) {
 
         <View style={styles.bigbutton}>
           <TouchableOpacity
-            // disabled="false"
             onPress={dispatch_buttonhandler}
             style={styles.Confirmbutton}>
             <Text style={styles.bigbuttontext}>Dispatch</Text>
@@ -301,11 +259,9 @@ const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: '#e8e8e8',
     marginTop: 20,
-    // padding: 20,
   },
   textbox: {
     marginTop: 20,
-    // marginVertical: 20,
     borderRadius: 5,
     marginLeft: '10%',
     width: '80%',
@@ -350,7 +306,6 @@ const styles = StyleSheet.create({
   },
   Confirmbutton: {
     padding: '5%',
-    // marginVertical: 10,
     paddingHorizontal: 15,
     backgroundColor: '#d00f16',
     borderRadius: 20,
@@ -361,11 +316,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.9,
     shadowRadius: 6,
     elevation: 5,
-    // minHeight: '6%',
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
-    // elevation: 2,
   },
   bigbuttontext: {
     fontWeight: 'bold',
@@ -373,12 +326,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     fontSize: 20,
     textAlign: 'center',
-
-    // opacity: 1,
   },
   bigbutton: {
-    // padding: '50%',
-    // marginVertical: 10,
     paddingHorizontal: '23%',
     flex: 2,
     alignItems: 'center',

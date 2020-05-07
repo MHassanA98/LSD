@@ -1,20 +1,14 @@
 import React, {useState} from 'react';
-// import { AppLoading } from 'expo';
-// import Navigator from './route/NavigDraw'
 import {
   StyleSheet,
   Text,
   View,
-  Image,
   ImageBackground,
   Dimensions,
   TouchableOpacity,
-  Button,
   ScrollView,
 } from 'react-native';
 import firebase from '../assets/DatabaseConfig';
-import auth from '@react-native-firebase/auth';
-import database from '@react-native-firebase/database';
 
 export default function Kitchen({navigation}) {
   const [SubCat, setSubCat] = useState([
@@ -24,7 +18,6 @@ export default function Kitchen({navigation}) {
   ]);
 
   const handleDesifood = () => {
-    // setSubCat("Stationery")
     email = firebase.auth().currentUser.email;
     mydb = firebase.database().ref('/Users/' + email.substr(0, 8));
     mydb.once('value').then(function(snapshot) {
@@ -38,7 +31,6 @@ export default function Kitchen({navigation}) {
   };
 
   const handleFastfood = () => {
-    // setSubCat("Stationery")
     email = firebase.auth().currentUser.email;
     mydb = firebase.database().ref('/Users/' + email.substr(0, 8));
     mydb.once('value').then(function(snapshot) {
@@ -52,7 +44,6 @@ export default function Kitchen({navigation}) {
   };
 
   const handleJuices = () => {
-    // setSubCat("Stationery")
     email = firebase.auth().currentUser.email;
     mydb = firebase.database().ref('/Users/' + email.substr(0, 8));
     mydb.once('value').then(function(snapshot) {
@@ -105,8 +96,6 @@ export default function Kitchen({navigation}) {
           </View>
         </ImageBackground>
       </TouchableOpacity>
-
-      {/* <Button title= 'Goto /> */}
     </ScrollView>
   );
 }
@@ -137,8 +126,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginBottom: 12,
   },
-
-  // button:{
-
-  // }
 });

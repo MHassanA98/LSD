@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {Picker} from '@react-native-community/picker';
 
 export default function Category() {
   const [selectedValue, setSelectedValue] = useState('Choose a category');
   return (
-    // <TouchableOpacity raised style={styles.viewstyle}>
     <Picker
       selectedValue={selectedValue}
       style={styles.container}
@@ -15,14 +14,12 @@ export default function Category() {
       <Picker.Item label="SDSB" value="SDSB" />
       <Picker.Item label="Female Barrier" value="Female Barrier" />
     </Picker>
-    // </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // paddingTop: 40,
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -31,17 +28,16 @@ const styles = StyleSheet.create({
     height: 50,
     elevation: 2,
   },
+
   viewstyle: {
-    // padding: 30,
     width: '100%',
     alignItems: 'center',
     borderColor: 'black',
     backgroundColor: 'white',
     borderWidth: 0,
     borderRadius: 10,
-    // padding: 30,
-    // alignItems: 'center',
     shadowColor: 'darkgrey',
     shadowOpacity: 20,
-  },
+  }
+  
 });

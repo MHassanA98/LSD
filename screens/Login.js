@@ -3,8 +3,6 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  KeyboardAvoidingView,
   ImageBackground,
   Image,
   TextInput,
@@ -16,34 +14,16 @@ import backg from '../assets/images/backg.png';
 import lsdlogo from '../assets/images/lsdlogo.png';
 import AsyncStorage from '@react-native-community/async-storage';
 import firebase from '../assets/DatabaseConfig';
-// import auth from "@react-native-firebase/auth" ;
-// import database from "@react-native-firebase/database" ;
-
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-// import {NavigationEvents} from 'react-navigation';
 
 function END(mail) {
   return mail.endsWith('@lums.edu.pk');
 }
 
 export default function Login({navigation}) {
-  // async function emptyitems(name) {
-  //   try {
-  //     const item = await AsyncStorage.removeItem(name)
-  //   } catch(e) {
-  //     console.log(e)
-  //   }
-
-  // }
 
   async function removeData() {
     try {
-      // const value = await AsyncStorage.getAllKeys()
-      // if(value !== null) {
-      //   value.forEach(function(name) {
-      //     emptyitems(name)
-      //   })
-      // }
       const keys = await AsyncStorage.getAllKeys();
       await AsyncStorage.multiRemove(keys);
     } catch (e) {
@@ -68,10 +48,6 @@ export default function Login({navigation}) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  // const [repassword, setRepassword] = useState("");
-  // const [username, setUsername] = useState("");
-  // const [phone, setPhone] = useState("");
-  // const [errorMessage, setErrorMessage] = useState();
 
   const emailInputHandler = inputEmail => {
     setEmail(inputEmail);
@@ -80,10 +56,6 @@ export default function Login({navigation}) {
   const passwordInputHandler = inputPassword => {
     setPassword(inputPassword);
   };
-
-  // const errorMessageInputHandler = (inputError) => {
-  //   setErrorMessage(inputError);
-  // };
 
   const handleFpPress = () => {
     navigation.navigate('Forgotpwemail');
@@ -101,7 +73,6 @@ export default function Login({navigation}) {
     } else {
       emaillums = END(email);
       if (emaillums) {
-        // if (password.length>=8) {
         mydb = firebase.database().ref('/Users/' + email.substr(0, 8));
         mydb.once('value').then(function(snapshot) {
           let banstat = snapshot.child('BanStatus').val();
@@ -112,44 +83,10 @@ export default function Login({navigation}) {
             alert('You are banned for misconduct.');
           }
         });
-        // .catch(e=>console.log(e))
-        // }
-        // else {
-        //   alert("Please enter 8 or more characters for password.")
-        // }
       } else {
         alert('Please enter your LUMS email.');
       }
     }
-
-    // emaillums = END(email)
-    // if (emaillums){
-    //   if (password.length>=8) {
-    //     mydb = firebase.database().ref('/Users/'+email.substr(0,8))
-    //     mydb.once("value")
-    //     .then(function(snapshot) {
-
-    //       let banstat = snapshot.child("BanStatus").val()
-
-    //       if (!banstat) {
-    //             handleLogin()
-    //       }
-
-    //       else {
-    //         alert("You are banned for misconduct.")
-    //       }
-
-    //     })
-    //     .catch(e=>console.log(e))
-    //   }
-    //   else {
-    //     alert("Please enter 8 or more characters for password.")
-    //   }
-    // }
-
-    // else {
-    //   alert("Please enter your LUMS email.")
-    // }
   };
 
   async function handleLogin() {
@@ -168,15 +105,6 @@ export default function Login({navigation}) {
         alert(error);
       });
   }
-
-  // function loginexists() {
-  //   meow = firebase.auth().onAuthStateChanged(function(user) {
-  //     if (user) {
-  //       LoginPress();
-  //     }
-  //   });
-  // }
-
   return (
     <ImageBackground source={backg} style={styles.bgimage}>
       <TouchableWithoutFeedback
@@ -184,11 +112,6 @@ export default function Login({navigation}) {
           Keyboard.dismiss();
         }}>
         <View style={styles.container} scrollEnabled={false}>
-        {/* <NavigationEvents
-          onDidFocus={() => {
-            loginexists();
-          }}
-        /> */}
           <View style={styles.maincontainer}>
             <Image style={styles.stretch} source={lsdlogo} />
             <View style={styles.inputbox}>
@@ -247,11 +170,8 @@ export default function Login({navigation}) {
 
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: "white",
     flex: 1,
     flexDirection: 'column',
-    // justifyContent: 'center',
-    // alignItems:'center',
   },
 
   bgimage: {
@@ -262,11 +182,9 @@ const styles = StyleSheet.create({
 
   inputbox: {
     color: 'grey',
-    // paddingTop: '6%',
     flexDirection: 'row',
     backgroundColor: 'white',
     borderRadius: 6,
-    // justifyContent: 'flex-start',
     alignItems: 'center',
     paddingHorizontal: '2%',
     width: 280,
@@ -278,28 +196,23 @@ const styles = StyleSheet.create({
 
   inputicon: {
     flex: 2,
-    // paddingTop: '3%',
-    // paddingLeft: '2%',
   },
+
   inputicon2: {
     flex: 2,
-    // paddingTop: '3%',
-    // paddingRight: '1%',
     paddingLeft: 1,
   },
+
   inputtext: {
-    // marginLeft: 5,
     flex: 20,
     fontSize: 14,
-    // width: '70%',
     marginLeft: 3,
     fontFamily: 'Roboto-Medium',
   },
+
   inputtext2: {
-    // marginLeft: 5,
     flex: 20,
     fontSize: 14,
-    // width: '70%',
     marginLeft: 2,
     fontFamily: 'Roboto-Medium',
   },
@@ -311,7 +224,6 @@ const styles = StyleSheet.create({
   },
 
   maincontainer: {
-    // backgroundColor: "white",
     alignItems: 'center',
     justifyContent: 'flex-end',
     paddingTop: '10%',
@@ -339,8 +251,6 @@ const styles = StyleSheet.create({
     opacity: 0.8,
     paddingTop: 16,
     flexDirection: 'row',
-    // textAlign: 'left',
-    // paddingBottom: 40,
     marginLeft: '47%',
     marginRight: '13%',
     flex: 1,
@@ -352,7 +262,6 @@ const styles = StyleSheet.create({
     marginLeft: '35%',
     flex: 1,
     alignItems: 'baseline',
-    // backgroundColor: "yellow",
   },
 
   bigbutton: {
@@ -364,8 +273,6 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 2, height: 4},
     shadowOpacity: 0.9,
     shadowRadius: 6,
-    // elevation: 2,
-    // minHeight: '6%',
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',

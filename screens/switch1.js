@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Text, View, Switch, StyleSheet} from 'react-native';
+import {View, Switch} from 'react-native';
 
 export default (SwitchExample = props => {
   const [isEnabled, setIsEnabled] = useState(false);
@@ -12,7 +12,6 @@ export default (SwitchExample = props => {
         trackColor={{true: 'red', false: '#e8e8e8'}}
         thumbColor={isEnabled ? 'ffffff' : '#e8e8e8'}
         disabled={props.REDPTS==0}
-        //   thumbTintColor="#d00f16"
       />
     </View>
   );
