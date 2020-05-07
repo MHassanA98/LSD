@@ -18,7 +18,7 @@ import firebase from '../assets/DatabaseConfig';
 export default function Orders({navigation}) {
   
   const handlePress = (orderid) => {
-    navigation.navigate('Pending_Order_Admin', orderid);
+    navigation.navigate('Pending_Order_Admin', {orderid: orderid});
   };
   
   const [order, setorder] = useState([ ]);

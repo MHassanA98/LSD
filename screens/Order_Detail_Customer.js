@@ -254,6 +254,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
   },
   lower_body: {
+    // flex: 5,
     marginTop: 20,
     marginLeft: '10%',
     width: '80%',
