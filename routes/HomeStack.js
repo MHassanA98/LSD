@@ -59,10 +59,7 @@ const screens = {
         title: 'Shopping Cart',
         headerTintColor:'white',
         headerRight:()=>null,
-<<<<<<< HEAD
        
-=======
->>>>>>> cc3fd6c1f1a1994b45e6a14270ea06e7e0109c5f
       }
     }
   },
