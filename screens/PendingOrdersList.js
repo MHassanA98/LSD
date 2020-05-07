@@ -12,32 +12,42 @@ import {
 } from 'react-native';
 import {FlatList} from 'react-native-gesture-handler';
 import {NavigationEvents} from 'react-navigation';
-// import DropDownItem from "react-native-drop-down-item";
-// import {
-//   TouchableHighlight,
-//   BorderlessButton,
-// } from "react-native-gesture-handler"
+import firebase from '../assets/DatabaseConfig';
+
 
 export default function Orders({navigation}) {
-  const handlePress = () => {
-    navigation.navigate('Pending_Order_Admin');
+  
+  const handlePress = (orderid) => {
+    navigation.navigate('Pending_Order_Admin', {orderid: orderid});
   };
-  const [order, setorder] = useState([
-    {name: 'jawadg01', orderid: '1'},
-    {name: 'jawadg02', orderid: '2'},
-    {name: 'jawadg03', orderid: '3'},
-    {name: 'jawadg04', orderid: '4'},
-    {name: 'jawadg05', orderid: '5'},
-    {name: 'jawadg06', orderid: '6'},
-    {name: 'jawadg07', orderid: '7'},
-    {name: 'jawadg08', orderid: '8'},
-    {name: 'jawadg09', orderid: '9'},
-    {name: 'jawadg010', orderid: '10'},
-    {name: 'jawadg011', orderid: '11'},
-    {name: 'jawadg012', orderid: '12'},
-  ]);
+  
+  const [order, setorder] = useState([ ]);
+
+  function getOrders() {
+    // console.log("meow")
+    mydb = firebase.database().ref('/Orders');
+    mydb.once('value').then(function(snapshot) {
+      // product = []
+      let orderarr = [];
+      snapshot.forEach(function(childsnapshot) {
+        let order = {
+          // name: childsnapshot.child('Username').val(),
+          orderid: childsnapshot.key,
+        };
+        // console.log(childsnapshot)
+        orderarr.push(order);
+      });
+      setorder(orderarr);
+    });
+
+  }
+
+
+
+
   return (
     <View style={styles.Screen}>
+      <NavigationEvents onWillFocus={() => { getOrders() }} />
       {/* <View style={styles.TopBar}>
         <TouchableOpacity style={styles.TopBarBack}>
           <Icon name="arrow-left" size={32} color="white" />
@@ -61,7 +71,7 @@ export default function Orders({navigation}) {
         data={order}
         keyExtractor={item => item.orderid}
         renderItem={({item}) => (
-          <TouchableOpacity style={styles.TextInputbox} onPress={handlePress}>
+          <TouchableOpacity style={styles.TextInputbox} onPress={() => handlePress(item.orderid)}>
             <Text style={{fontSize: 16, fontFamily: 'Roboto-Bold'}}>
               {'OrderID ' + item.orderid}
             </Text>

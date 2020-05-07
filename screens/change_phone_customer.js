@@ -16,14 +16,10 @@ import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 
 export default function Change_Phone({navigation}) {
-  //updatePassword
-  const [oldphone, setold] = useState('');
+  
   const [phone, setPhone] = useState('');
   const [rephone, setRephone] = useState('');
 
-  const oldPhoneHandler = oldinput => {
-    setold(oldinput);
-  };
   const phoneInputHandler = inputPhone => {
     setPhone(inputPhone);
   };
@@ -84,13 +80,6 @@ export default function Change_Phone({navigation}) {
           />
         </View>
         <View style={{paddingTop: '5%'}}>
-          <TextInput
-            style={styles.textbox}
-            keyboardType="numeric"
-            placeholder="Old Phone Number"
-            onChangeText={oldPhoneHandler}
-            value={oldphone}
-          />
           {/* </View> */}
           {/* <View style={styles.textbox}> */}
           <TextInput

@@ -1,213 +1,252 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, StyleSheet, Button} from 'react-native';
+import {FlatList} from 'react-native-gesture-handler';
+import {NavigationEvents} from 'react-navigation';
+import firebase from '../assets/DatabaseConfig';
 
 //Made by Shahzil
 //The list of items feels very dubios need to rewamp the whole list of items otherwise showing like this is hard because:
 //1- The alignment isn't good when used for varying name length
 //2- What will we do if someone orders 20 items and the scroll down is well faulty just a thought okok
+//Remade by jawad
+//backend fully added by patel
 
-class Order_Detail_Customer extends React.Component {
-  state = {
-    Order_ID: '52',
-    Order_Status: 'Confirmed',
-    Location: 'Lums',
-    Time: 'Bad time',
-    Subtotal: '10',
-    Points_discount: '20',
-    Delivery_Charges: '10',
-    Total: '100',
-  };
-  Order_ID_fetch = () => {
-    this.setState({
-      Order_ID: 'ID',
-    });
-  };
-  Order_status_fetch = () => {
-    this.setState({
-      Order_Status: 'Username',
-    });
-  };
-  Location_status_fetch = () => {
-    this.setState({
-      Location: 'Email',
-    });
-  };
-  Time_status_fetch = () => {
-    this.setState({
-      Time: 'Phone',
-    });
-  };
-  points_fetch = () => {
-    this.setState({
-      points: 0,
-    });
-  };
+export default function Pending_Order_Admin({navigation}) {
+  const [order, setorder] = useState([
+    {
+      Order_ID: '52',
+      Order_Status: 'Confirmed',
+      Location: 'Lums',
+      Time: 'Bad time',
+      Subtotal: '10',
+      Points_discount: '20',
+      Delivery_Charges: '10',
+      Total: '100',
+    },
+  ]);
+  const [product, setProduct] = useState([ ]);
 
-  render() {
-    //Main Container View//
-    return (
-      <View style={styles.container}>
-        {/* Heading Container
-                    <View style= {styles.heading}>
-                        <Text style = {{marginLeft: 50,fontSize:35, color: 'white'}}> OrderID {this.state.Order_ID} </Text>
-                    </View> */}
+  async function getOrder() {
+    // console.log("MEOW")
+    // console.log(navigation.getParam('orderid'))
+    let emailcheck = firebase.auth().currentUser.email;
+    let prodarr = []
+    mydb = firebase.database().ref('/Orders/'+emailcheck.substr(0, 8));
+    mydb.once('value').then(function(snapshot) {
+      setorder({
+        Delivery_Charges: snapshot.child('Delivery').val(),
+        Location: snapshot.child('Location').val(),
+        Order_Status: snapshot.child('OrderStatus').val(),
+        Points_discount: snapshot.child('RedPts').val(),
+        Subtotal: snapshot.child('Subtotal').val(),
+        Time: snapshot.child('Time').val(),
+        Total: snapshot.child('Total').val(),
+      })
 
-        {/*Main Body*/}
-        <View style={styles.body}>
-          <View style={styles.textbox}>
-            <View style={styles.write_on_the_edges}>
-              <Text style={{color: 'black', fontSize: 18, marginLeft: 20}}>
-                Order Status
-              </Text>
-              <Text style={{fontSize: 18, marginRight: 20}}>
-                {this.state.Order_Status}
-              </Text>
-            </View>
+      snapshot.child("Products").forEach(function (childsnapshot) {
+        // console.log(childsnapshot.child("name"))
+        let prod = {
+          name: childsnapshot.child('name').val(),
+          price: childsnapshot.child('price').val(),
+          quantity: childsnapshot.child('quantity').val(),
+        };
+        prodarr.push(prod)
+      });
+      setProduct(prodarr)
+    });
+  }
+
+
+
+
+  //Main Container View//
+  return (
+    <View style={styles.container}>
+    <NavigationEvents onWillFocus={() => { getOrder() }} />
+      {/* Heading Container
+                  <View style= {styles.heading}>
+                      <Text style = {{marginLeft: 50,fontSize:35, color: 'white'}}> OrderID {this.state.Order_ID} </Text>
+                  </View> */}
+
+      {/*Main Body*/}
+      <View style={styles.body}>
+        <View style={styles.textbox}>
+          <View style={styles.write_on_the_edges}>
+            <Text style={{color: 'black', fontSize: 16, marginLeft: 20, fontFamily: 'Roboto',}}>
+              Order Status
+            </Text>
+            <Text style={{fontSize: 16, marginRight: 20, fontFamily: 'Roboto',}}>
+              {order.Order_Status}
+            </Text>
           </View>
+        </View>
 
-          <View style={styles.textbox}>
-            <View style={styles.write_on_the_edges}>
-              <Text style={{fontSize: 18, marginLeft: 20}}>Location</Text>
-              <Text style={{fontSize: 18, marginRight: 20}}>
-                {this.state.Location}
-              </Text>
-            </View>
+        <View style={styles.textbox}>
+          <View style={styles.write_on_the_edges}>
+            <Text style={{fontSize: 16, marginLeft: 20, fontFamily: 'Roboto',}}>Location</Text>
+            <Text style={{fontSize: 16, marginRight: 20, fontFamily: 'Roboto',}}>
+              {order.Location}
+            </Text>
           </View>
+        </View>
 
-          <View style={styles.textbox}>
-            <View style={styles.write_on_the_edges}>
-              <Text style={{fontSize: 18, marginLeft: 20}}>Time</Text>
-              <Text style={{fontSize: 18, marginRight: 20}}>
-                {this.state.Time}
-              </Text>
-            </View>
+        <View style={styles.textbox}>
+          <View style={styles.write_on_the_edges}>
+            <Text style={{fontSize: 16, marginLeft: 20, fontFamily: 'Roboto',}}>Time</Text>
+            <Text style={{fontSize: 16, marginRight: 20, fontFamily: 'Roboto',}}>{order.Time}</Text>
           </View>
+        </View>
 
-          <View style={styles.lower_body}>
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-              <Text
-                style={{
-                  fontSize: 12,
-                  marginLeft: 20,
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}>
-                Items:
-              </Text>
-              <Text style={{fontSize: 12, marginTop: 10, marginBottom: 5}}>
-                Qty
-              </Text>
-              <Text
-                style={{
-                  fontSize: 12,
-                  marginRight: 20,
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}>
-                Total Price
-              </Text>
-            </View>
-
-            {/*Items will come down below here*/}
-            <View
+        <View style={styles.lower_body}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <Text
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                borderBottomWidth: 0.5,
-                paddingBottom: 5,
+                fontSize: 12,
+                marginLeft: 20,
+                marginTop: 10,
+                marginBottom: 5,
+                fontFamily: 'Roboto',
               }}>
-              <Text
-                style={{
-                  fontSize: 18,
-                  marginLeft: 20,
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}>
-                Eggs
-              </Text>
-              <Text
-                style={{
-                  fontSize: 18,
-                  marginRight: 30,
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}>
-                6
-              </Text>
-              <Text
-                style={{
-                  fontSize: 18,
-                  marginRight: 30,
-                  marginTop: 10,
-                  marginBottom: 5,
-                  color: '#d00c16',
-                }}>
-                70
-              </Text>
-            </View>
+              Items:
+            </Text>
+            <Text style={{fontSize: 12, marginTop: 10, marginBottom: 5}}>
+              Qty
+            </Text>
+            <Text
+              style={{
+                fontSize: 12,
+                marginRight: 20,
+                marginTop: 10,
+                marginBottom: 5,
+                fontFamily: 'Roboto',
+              }}>
+              Total Price
+            </Text>
+          </View>
 
-            <View style={styles.write_on_the_edges}>
-              <Text
+          {/*Items will come down below here*/}
+          <FlatList
+            // style={{flex: 1}}
+            data={product}
+            keyExtractor={item => item.name}
+            renderItem={({item}) => (
+              <View
                 style={{
-                  fontSize: 15,
-                  marginLeft: 20,
-                  marginTop: 10,
-                  marginBottom: 5,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  // borderBottomWidth: 0.5,
+                  height: 40,
+                  paddingBottom: 5,
                 }}>
-                Subtotal
-              </Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  marginRight: 20,
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}>
-                Rs. {this.state.Subtotal}
-              </Text>
-            </View>
-            <View style={styles.write_on_the_edges}>
-              <Text style={{fontSize: 15, marginLeft: 20, marginBottom: 5}}>
-                Points Discount
-              </Text>
-              <Text style={{fontSize: 15, marginRight: 20, marginBottom: 5}}>
-                -Rs. {this.state.Points_discount}
-              </Text>
-            </View>
-            <View style={styles.write_on_the_edges}>
-              <Text style={{fontSize: 15, marginLeft: 20, marginBottom: 5}}>
-                Delivery Charges
-              </Text>
-              <Text style={{fontSize: 15, marginRight: 20, marginBottom: 5}}>
-                Rs. {this.state.Delivery_Charges}
-              </Text>
-            </View>
-            <View style={styles.write_on_the_edges}>
-              <Text
-                style={{
-                  fontSize: 15,
-                  marginLeft: 20,
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}>
-                Total
-              </Text>
-              <Text
-                style={{
-                  fontSize: 15,
-                  marginRight: 20,
-                  marginTop: 10,
-                  marginBottom: 5,
-                }}>
-                Rs. {this.state.Total}
-              </Text>
-            </View>
+                <View style={{flex: 1}}>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      marginLeft: 20,
+                      marginTop: 10,
+                      marginBottom: 5,
+                      fontFamily: 'Roboto',
+                    }}>
+                    {item.name}
+                  </Text>
+                </View>
+                <View style={{flex: 1, alignItems: 'center'}}>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      marginRight: 30,
+                      marginTop: 10,
+                      marginBottom: 5,
+                      fontFamily: 'Roboto',
+                    }}>
+                    {item.quantity}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: 'flex-end',
+                    // paddingRight: '10%',
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      marginRight: 30,
+                      marginTop: 10,
+                      marginBottom: 5,
+                      fontFamily: 'Roboto',
+                    }}>
+                    {item.price}
+                  </Text>
+                </View>
+              </View>
+            )}
+          />
+
+          <View style={styles.write_on_the_edges1}>
+            <Text
+              style={{
+                fontSize: 15,
+                marginLeft: 20,
+                marginTop: 10,
+                marginBottom: 5,
+                fontFamily: 'Roboto',
+              }}>
+              Subtotal
+            </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                marginRight: 20,
+                marginTop: 10,
+                marginBottom: 5,
+                fontFamily: 'Roboto',
+              }}>
+              Rs. {order.Subtotal}
+            </Text>
+          </View>
+          <View style={styles.write_on_the_edges}>
+            <Text style={{fontSize: 15, marginLeft: 20, marginBottom: 5, fontFamily: 'Roboto',}}>
+              Points Discount
+            </Text>
+            <Text style={{fontSize: 15, marginRight: 20, marginBottom: 5, fontFamily: 'Roboto',}}>
+              -Rs. {order.Points_discount}
+            </Text>
+          </View>
+          <View style={styles.write_on_the_edges}>
+            <Text style={{fontSize: 15, marginLeft: 20, marginBottom: 5, fontFamily: 'Roboto',}}>
+              Delivery Charges
+            </Text>
+            <Text style={{fontSize: 15, marginRight: 20, marginBottom: 5, fontFamily: 'Roboto',}}>
+              Rs. {order.Delivery_Charges}
+            </Text>
+          </View>
+          <View style={styles.write_on_the_edges}>
+            <Text
+              style={{
+                fontSize: 15,
+                marginLeft: 20,
+                marginTop: 10,
+                marginBottom: 5,
+                fontFamily: 'Roboto',
+              }}>
+              Total
+            </Text>
+            <Text
+              style={{
+                fontSize: 15,
+                marginRight: 20,
+                marginTop: 10,
+                marginBottom: 5,
+                fontFamily: 'Roboto',
+              }}>
+              Rs. {order.Total}
+            </Text>
           </View>
         </View>
       </View>
-    );
-  }
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -230,16 +269,18 @@ const styles = StyleSheet.create({
     paddingTop: '10%',
   },
   textbox: {
-    marginTop: 20,
+    marginTop: 16,
     marginLeft: '10%',
     width: '80%',
-    height: '8%',
+    height: 56,
+    borderRadius: 4,
     justifyContent: 'center',
     borderBottomWidth: 0,
     backgroundColor: 'white',
     fontFamily: 'Roboto-Bold',
   },
   lower_body: {
+    // flex: 5,
     marginTop: 20,
     marginLeft: '10%',
     width: '80%',
@@ -253,6 +294,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  write_on_the_edges1: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderTopWidth: 1,
+  },
 });
-
-export default Order_Detail_Customer;
