@@ -62,7 +62,7 @@ const screens = {
     navigationOptions:({navigation})=>{
 
       return{
-        title: 'LSD',
+        title: 'Home',
         headerTintColor:'white',
         headerLeft:() => (
           <TouchableOpacity
@@ -107,18 +107,31 @@ const screens = {
 
   AdminMenu:{
     screen:AdminMenu,
-    HeaderTitle:"Items"
+    navigationOptions:({navigation})=>{
+
+      return{
+        title: navigation.getParam('Sub'),
+        headerTintColor:'white',
+      }
+    }
+    
   },
 
   AddItem:{
       screen: AddItem,
-      HeaderTitle:"Add an item"
+      navigationOptions:({navigation})=>{
+
+        return{
+          title: 'Add item',
+          headerTintColor:'white',
+        }
+      }
   },
 
   UpdateItem:{
       screen:UpdateItem,
       navigationOptions:{
-              title:"Item name"
+              title:"Update Item"
             }
       // title:"Item Name"
   }

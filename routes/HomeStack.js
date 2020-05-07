@@ -132,7 +132,7 @@ const screens = {
     navigationOptions:({navigation})=>{
 
       return{
-        title: 'Home',
+        title: 'Shopping Cart',
         headerTintColor:'white',
         headerRight:()=>null,
         // headerRight:()=>(

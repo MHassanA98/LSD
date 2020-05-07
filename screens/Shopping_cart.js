@@ -133,11 +133,15 @@ export default function Shopping({navigation}) {
       // const value = await AsyncStorage.getAllKeys()
       if (item !== null) {
         let myitem = JSON.parse(item);
+        console.log(myitem)
 
         let newprod = {
           name: name,
           price: parseInt(myitem.price),
           quantity: parseInt(myitem.quantity),
+          CAT: myitem.category,
+          SUB: myitem.subcat,
+          available: myitem.available
         };
 
         // console.log(myitem.price+10)
@@ -252,7 +256,6 @@ export default function Shopping({navigation}) {
       <View style={{width: '100%', height: 480, marginVertical:12}}>
         <FlatList
           data={product}
-          //   extraData={quantity}
           keyExtractor={item => item.name}
           renderItem={({item}) => (
             <Swipeable renderLeftActions={()=>leftActions(item)}>

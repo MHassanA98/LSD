@@ -9,6 +9,7 @@ import {
   TouchableOpacity,
   TextInput,
   Image,
+  Alert
   // Button,
   // Picker,
 } from 'react-native';
@@ -73,7 +74,10 @@ export default function AdminMenu({navigation}) {
       setProduct(prodarr);
     });
   }
-  const leftActions = props => {
+
+
+
+  const leftActions = (item) => {
     return (
       <View style={{flexDirection: 'row', marginVertical: 5, width: '35%'}}>
         <TouchableOpacity
@@ -90,7 +94,7 @@ export default function AdminMenu({navigation}) {
             navigation.navigate('UpdateItem', {
               CAT: navigation.getParam('Cat'),
               SUB: navigation.getParam('Sub'),
-              ITEM: props,
+              ITEM: item,
             });
           }}>
           <Icon name="edit" color="white" size={24} />
@@ -104,12 +108,52 @@ export default function AdminMenu({navigation}) {
             alignItems: 'center',
             justifyContent: 'center',
             // marginVertical: 5,
-          }}>
+          }}
+          onPress={()=>{
+
+              Alert.alert(
+                'Remove '+item.name+"?",
+                'The item will be deleted permanently',
+                [
+                  {
+                    text: 'Cancel',
+                    // style:"destructive"
+                    type: 'destructive',
+                  },
+          
+                  {
+                    text: 'Confirm',
+                    onPress: () => removeItem(item),
+                  },
+                ],
+          
+                {cancelable: false},
+              );
+          }}
+          >
           <Icon name="delete" color="white" size={24} />
         </TouchableOpacity>
       </View>
     );
   };
+
+  const removeItem=(item)=>{
+    setProduct(()=>{
+      return product.filter((I)=>I.name!=item.name)
+
+    })
+
+    mydb = firebase
+      .database()
+      .ref(
+        '/Inventory/' +
+          navigation.getParam('Cat') +
+          '/' +
+          navigation.getParam('Sub') +
+          '/'+item.name,
+      ).remove()
+    
+  }
 
   return (
     <View style={styles.Screen}>
@@ -123,7 +167,7 @@ export default function AdminMenu({navigation}) {
           data={product}
           keyExtractor={item => item.name}
           renderItem={({item}) => (
-            <Swipeable renderRightActions={leftActions}>
+            <Swipeable renderRightActions={()=>leftActions(item)}>
               <View raised style={styles.TextInputbox}>
                 <View style={{width: 100, height: 100}}>
                   <Image

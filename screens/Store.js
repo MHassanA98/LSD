@@ -168,7 +168,7 @@ export default function Store({navigation}) {
           source={require('../assets/images/Electronics.png')}
           style={styles.image}>
           <View style={styles.textcontainer}>
-            <Text style={styles.text}>Electronis</Text>
+            <Text style={styles.text}>Electronics</Text>
           </View>
         </ImageBackground>
       </TouchableOpacity>

@@ -104,8 +104,8 @@ export default function AddItem({navigation}) {
       .database()
       .ref('/Inventory/' + Category + '/' + SubCategory + '/' + ProductName)
       .set({
-        Price: ProductPrice,
-        Qty: ProductQuantity,
+        Price: parseInt(ProductPrice),
+        Qty: parseInt(ProductQuantity),
       })
       .then(() => {
         setProductName('');
@@ -116,7 +116,7 @@ export default function AddItem({navigation}) {
 
         alert('Item added successfully');
       })
-      .catch(alert('Add item failed. Please check your internet connection'));
+      .catch((e)=>alert('Add item failed. Please check your internet connection'));
   }
 
   // console.log(Category.getS)

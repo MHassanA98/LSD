@@ -21,7 +21,7 @@ import firebase from '../assets/DatabaseConfig';
 import database from '@react-native-firebase/database';
 
 export default function UpdateItem({navigation}) {
-  console.log(navigation.getParam('ITEM').name);
+  console.log(navigation.getParam('ITEM'));
 
   const [ProductName, setProductName] = useState(
     navigation.getParam('ITEM').name,
@@ -38,13 +38,17 @@ export default function UpdateItem({navigation}) {
     //   alert("Name field cannot be empty")
     // }
     if (ProductPrice == '') {
-      alert('Price field cannot be empty');
+      alert('Price field cannot be empty')
+      return
     } else if (ProductQuantity == '') {
       alert('Quantity field cannot be empty');
+      return
     } else if (ProductPrice < 0) {
       alert('Price must be greater than 0');
+      return
     } else if (ProductQuantity < 0) {
       alert('Quantity must be greater than 0');
+      return
     } else {
       console.log('sadasd');
 
@@ -59,8 +63,8 @@ export default function UpdateItem({navigation}) {
             navigation.getParam('ITEM').name,
         )
         .update({
-          Price: ProductPrice,
-          Qty: ProductQuantity,
+          Price: parseInt(ProductPrice),
+          Qty: parseInt(ProductQuantity),
         })
         .then(() => {
           alert('Item successfully updated');
@@ -130,10 +134,10 @@ export default function UpdateItem({navigation}) {
         {/* <View style={{width: '100%'}}> */}
         <TextInput
           style={styles.TextInputbox}
-          placeholder="Product Name"
-          placeholderTextColor="black"
+          placeholder={ProductName}
+          placeholderTextColor="grey"
           onChangeText={ProductName => setProductName(ProductName)}
-          defaultValue={ProductName}
+          // defaultValue={ProductName}
           editable={false}
           // keyboardType="numeric"
         />
@@ -152,8 +156,8 @@ export default function UpdateItem({navigation}) {
           style={styles.TextInputbox}
           placeholder="Product Price"
           placeholderTextColor="black"
-          onChangeText={ProductPrice => setProductPrice(ProductPrice)}
-          defaultValue={ProductPrice}
+          onChangeText={ProductPrice => setProductPrice(parseInt(ProductPrice))}
+          // defaultValue={ProductPrice}
           keyboardType="numeric"
         />
         {/* </View> */}
@@ -169,10 +173,10 @@ export default function UpdateItem({navigation}) {
         {/* <View style={{width: '100%'}}> */}
         <TextInput
           style={styles.TextInputbox}
-          placeholder="Product Price"
+          placeholder="Product Quantity"
           placeholderTextColor="black"
-          onChangeText={ProductQuantity => setProductQuantity(ProductQuantity)}
-          defaultValue={ProductQuantity}
+          onChangeText={ProductQuantity => setProductQuantity(parseInt(ProductQuantity))}
+          // defaultValue={ProductQuantity}
           keyboardType="numeric"
         />
         {/* </View> */}

@@ -19,11 +19,13 @@ export default function CustMenu({navigation}) {
     // {name: 'meow', price: 0, quantity: 0},
   ]);
 
-  async function storeData(name, price) {
+  async function storeData(name, price, avail) {
     try {
+      console.log(" CustomerMENU: ", navigation.getParam('Sub'), navigation.getParam('Cat'))
+
       await AsyncStorage.setItem(
         name,
-        JSON.stringify({price: parseInt(price), quantity: 1}),
+        JSON.stringify({price: parseInt(price), quantity: 1, available:avail, category:navigation.getParam('Cat'), subcat: navigation.getParam('Sub')}),
       );
       // await AsyncStorage.removeItem("@storage_Key")
     } catch (e) {
@@ -48,12 +50,12 @@ export default function CustMenu({navigation}) {
   //   }
   // }
 
-  function handleaddcart(name, price) {
+  function handleaddcart(name, price, avail) {
     // ShoppingCart.apply(frommenu(3))
     // Shopping({navigation}).frommenu(5)
     // function1()
 
-    storeData(name, price);
+    storeData(name, price, avail);
     // getData()
   }
 
@@ -75,7 +77,7 @@ export default function CustMenu({navigation}) {
         let newprod = {
           name: childsnapshot.key,
           price: childsnapshot.child('Price').val(),
-          quantity: 0,
+          avail: childsnapshot.child('Qty').val(),
         };
         // console.log(newprod)
         prodarr.push(newprod);
@@ -160,7 +162,7 @@ export default function CustMenu({navigation}) {
             <View style={{justifyContent: 'center', alignItems: 'flex-end'}}>
               <TouchableOpacity
                 onPress={() => {
-                  handleaddcart(item.name, item.price);
+                  handleaddcart(item.name, item.price, item.avail);
                   alert('Added to Cart');
                 }}>
                 <Icon name="add-shopping-cart" color="red" size={24} />

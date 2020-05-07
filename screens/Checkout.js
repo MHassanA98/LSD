@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import {Text, View, StyleSheet, Button, TouchableOpacity,Dimensions, Alert} from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import SwitchExample from './switch1.js';
@@ -11,14 +11,6 @@ import firebase from "../assets/DatabaseConfig"
 
 export default function Checkout({navigation}) {
 
-  // const [state,setState]=useState({
-  //   switch1Value: false,
-  //   // location: null,
-  //   // subtotal: 0,
-  //   // RedemptionPoints: 0,
-  //   Delivery_Charges: 20,
-  //   // Total: 0,
-  // })
   const [RedPts,setRedPts]=useState(0)
   const [Total,setTotal]=useState(0)
   const [Subtotal,setSubtotal]=useState(0)
@@ -27,27 +19,56 @@ export default function Checkout({navigation}) {
   const [Switch,setSwitch]=useState(false)
   const [Delivery,setDelivery]=useState(20)
   const [Products, setProducts]=useState([])
+  const [OutStock,setOutStock]=useState(" ")
+  const [AddRedPts,setAddRedPts]=useState()
 
-
-
-  // constructor() {
-  //   super();
-  //   this.state = {
-  //     switch1Value: false,
-  //     location: null,
-  //     Subtotal: 10,
-  //     Points_discount: 20,
-  //     Delivery_Charges: 20,
-  //     Total: 100,
-  //   };
-  // }
-  const handlePress=()=>{
+  const handlePress=async ()=>{
 
     if (Location=="null"){
       alert("Please choose a location")
       return
     }
 
+
+    else if (OutStock!=" "){
+      let al=  OutStock+" is out of stock"
+      Alert.alert("Apologies",al)
+      return
+    }
+
+    Press2()
+    const keys=await AsyncStorage.getAllKeys()
+    await AsyncStorage.multiRemove(keys).then(navigation.navigate('Home'))
+    
+  }
+
+  const Press=()=>{
+
+    Products.forEach((item)=>{
+      firebase
+      .database()
+      .ref(
+        '/Inventory/' +
+          item.CAT +
+          '/' +
+          item.SUB +
+          '/' +
+          item.name
+      )
+      .update({
+        Qty:item.available-item.quantity
+
+      })
+      .catch(()=>Alert.alert("Checkout Failed","Please check your Internet connection"))
+  
+  
+  })
+
+}
+
+const Press2=()=>{
+
+   
     let Email=firebase.auth().currentUser.email.substr(0, 8)
 
     firebase
@@ -56,37 +77,66 @@ export default function Checkout({navigation}) {
         .once('value')
         .then(snapshot => {
           console.log('HERERE');
-          // console.log(value)
+          
           console.log(snapshot.exists());
-          if (snapshot.exists()) {
-            // console.log('EXISTS');
-            ExistsAlert();
-          } else {
-            PlaceOrder(Email);
-            // console.log('NOT EXISTS');
+          
+            
+          if (snapshot.exists()){
+            ExistsAlert()
           }
+          else{
+            Press()
+            PlaceOrder(Email);
+
+          }
+
+          
         }).catch((e)=>Alert.alert("Checkout Failed","Please check your Internet connection"))
     
   }
   
+  
+  
+  
+  
   function ExistsAlert(){
-    Alert.alert("Checkout failed", "You already have a pending order")
+    Alert.alert("Checkout failed", "You already have an order in progress")
   }
+
+
   
-  
-  
-  
-  
-  
-  
-  
-  
-  const PlaceOrder=(Email)=>{
-    console.log(Products)
+  function ProdQty(){
+
+    for (let i=0; i<Products.length; i++){
+
+      ProdQtyGet(i)
+      if (OutStock!=" ")
+      {
+        break
+      }
+
+  }
+}
+
+
+  function ProdQtyGet(i){
 
     
+    if (Products[i].quantity>Products[i].available){
+      setOutStock(Products[i].name)
+    }
 
-    // let Email=firebase.auth().currentUser.email.substr(0, 8)
+  }
+  
+  const PlaceOrder=(Email)=>{
+
+    Products.forEach((item)=>{
+      
+      delete item.CAT
+      delete item.SUB
+      delete item.available
+    })
+
 
     let Hour=new Date().getHours()
     let Min=new Date().getMinutes()
@@ -111,43 +161,32 @@ export default function Checkout({navigation}) {
         })
 
       }
+      else{
+
+        
+
+        firebase.database().ref('/Users/'+Email).once("value").then((snapshot)=>{
+          
+          setAddRedPts((Total*0.4)+snapshot.child("Redemptionpoints").val())
+          
+        })
+ 
+      }
 
       
     }).then(Alert.alert("Checkout Successful!","Your order has been placed."))
-    .catch((e)=>Alert.alert("Checkout Failed","Please check your Internet connection"))
+    .catch((e)=>Alert.alert(e))
 
   }
 
-
-
-
-
-
-
-
   function toggleSwitch1(value) {
-    // let emailcheck = firebase.auth().currentUser.email;
-    // mydb = firebase.database().ref('/Users/' + emailcheck.substr(0, 8));
-    // mydb.once('value').then(function(snapshot) {
-    //   // let custflag = snapshot.child('Customerflag').val();
-    //   // let username = snapshot.child('Username').val();
-    //   // if (custflag) {
-    //   //   removeData();
-    //   //   navigation.navigate('CustomerDrawer', {user: username});
-    //   // } else {
-    //   //   navigation.navigate('AdminDrawer', {user: username});
-    //   // }
-    //   let RedPoints=snapshot.child('Redemptionpoints')
-      
-    // })
-
-    // setState({...state,switch1Value: value});
+ 
     setSwitch(value)
-    // state.set
+    
     console.log('Switch 1 is: ' + value);
     if (value==true)
     {
-      // setState({...state, RedemptionPoints:RedPts})
+      
       setRedPts(RedPtsStore)
       setTotal(Total=>Total-RedPtsStore)
     }
@@ -159,152 +198,40 @@ export default function Checkout({navigation}) {
     }
   };
 
-  // state = {
-  //   Subtotal: '10',
-  //   Points_discount: '20',
-  //   Delivery_Charges: '10',
-  //   Total: '100',
-  // };
 
-  function points_fetch () {
-    setState({...state,
-      points: 0
-    });
-  };
+  async function LoadData() {
 
-  // async function getitem(name,Total) {
-  //   // console.log("yeqwyriuyweiruwieyriweyriuweri")
-  //   console.log("TOTOTOTOOTOTOTOTOTOTOTOTOOTOT", Total)
-  //   try {
-  //     const item = await AsyncStorage.getItem(name)
-  //     console.log("NAME",name)
-  //     // const value = await AsyncStorage.getAllKeys()
-  //     if(item !== null) {
-  //       let myitem = JSON.parse(item)
-  //       console.log(myitem)
-
-  //       // let newprod = {
-  //       //   name: name,
-  //       //   price: parseInt(myitem.price),
-  //       //   quantity: parseInt(myitem.quantity),
-  //       // };
-
-  //       // console.log(myitem.price+10)
-  //       // console.log(myitem.price*myitem.quantity)
-  //       // console.log("SUBTOTAL1: ",state.subtotal)
-  //       Total=Total+(myitem.price*myitem.quantity)
-  //       console.log("SUBTOTA2: ",Subtotal)
-  //       console.log("ITEM TOTAL",Total)
-  //       let SUB=Total+state.subtotal
-  //       console.log("RESULT:    ",SUB)
-  //       // setState({...state, subtotal:SUB})
-  //       setSubtotal(SUB)
-  //       // console.log("TOTAL    ",Total)
-
-  //       // console.log(newprod)
-
-  //       // prodarr.push(newprod)
-  //     }
-  //   } catch (e) {
-  //     console.log(e);
-  //     // error reading value
-  //   }
-
-  //   // prodarr.push(newprod)
-  // }
-  // // componentDidMount(){
-  // //   console.log("asdasd")
-  // //   this.getData()
-  // // }
-
-  // async function getData() {
-  //   // console.log("!@#$%^&         ",product)
-  //   setSubtotal(0)
-  //   try {
-  //     const value = await AsyncStorage.getAllKeys()
-  //     console.log("VALVALVLAVLAVLLVALAV", value)
-  //     if(value !== null) {
-  //       // console.log("VALLL",value)
-  //       // let prodarr  = []
-  //       let Total=0
-  //       value.forEach(function(name) {
-  //         // let newprod = getitem(name, prodarr)
-  //         console.log("asdasdasd",name)
-  //         getitem(name, Total)
-  //         // .then(()=>{
-  //         //   // console.log("1PROD",prodarr)
-  //         //   // console.log("PRODDDDD",product)
-  //         //   // setProduct(prodarr)   
-
-  //         // })
-          
-         
-          
-  //         // console.log(prodarr)
-
-  //         // prodarr.push(newprod)
-
-  //         // console.log(name)
-  //       })
-
-  //       console.log("VALVALVLAVLAVLLVALAV", Total)
-
-
-  //     }
-  //   } catch (e) {
-  //     // error reading value
-  //   }
-  // }
-
-  function LoadData() {
-
-    // firebase.database().ref('Users').orderByChild('Customerflag').equalTo(false)
+    
 
     let emailcheck = firebase.auth().currentUser.email;
     let RedPoints=0
-    mydb =firebase.database().ref('/Users/' + emailcheck.substr(0, 8))
+    mydb = await firebase.database().ref('/Users/' + emailcheck.substr(0, 8))
     .once('value').then(function(snapshot) {
-      // let custflag = snapshot.child('Customerflag').val();
-      // let username = snapshot.child('Username').val();
-      // if (custflag) {
-      //   removeData();
-      //   navigation.navigate('CustomerDrawer', {user: username});
-      // } else {
-      //   navigation.navigate('AdminDrawer', {user: username});
-      // }
+      
       RedPoints= snapshot.child('Redemptionpoints').val()
       setRedPtsStore(RedPoints)
 
-      // console.log(RedPoints)
-      
     })
 
-    // setRedPts(RedPoints)
-
-    // console.log("UEUEAUEUE",RedPoints)
-    // let NEW=Object.entries(state)
-    //   console.log(NEW)
-    //   // NEW[2][1]=navigation.getParam("Subtotal")
-    //   NEW[3][1]=RedPoints
-    //   // NEW[5][1]=NEW[2][1]+NEW[4][1]
-    // let STATA=Object.fromEntries(NEW)
-    // console.log(STATA)
-    // setState(STATA)
-    // console.log(state)
-
-    // return RedPoints
-    // setState
-
-
-    // setState({...state,subtotal:navigation.getParam('Subtotal'), RedemptionPoints:RedPoints, Total:navigation.getParam('Subtotal')+state.Delivery_Charges})
-
-    
   }
 
+  useEffect(()=>{
+    ProdQty()
+  },[Products])
+
+  useEffect(()=>{
+
+    let Email=firebase.auth().currentUser.email.substr(0, 8)
+
+       
+    firebase.database().ref('/Users/'+Email).update({
+          Redemptionpoints:AddRedPts
+          
+    })
+    
+  },[AddRedPts])
 
 
-  // render() {
-    //Main Container View//
     return (
       
       
@@ -317,13 +244,12 @@ export default function Checkout({navigation}) {
             setSubtotal(navigation.getParam('Subtotal'))
             setTotal(navigation.getParam('Subtotal')+Delivery)
             setProducts(navigation.getParam('Products'))
-            // setState({...state,subtotal:navigation.getParam('Subtotal'), Total:navigation.getParam('Subtotal')+state.Delivery_Charges})
-            LoadData()            
-
-            // setState({...state,RedemptionPoints:Red})
+            
+            LoadData()
 
           }
         }
+        
         />
 
         {/*Main Body*/}
@@ -415,7 +341,7 @@ export default function Checkout({navigation}) {
             <View style={styles.write_on_the_edges}>
               <Text
                 style={{
-                  // fontSize: 16,
+                  
                   marginLeft: 16,
                   marginTop: 10,
                   marginBottom: 5,
@@ -426,7 +352,7 @@ export default function Checkout({navigation}) {
               </Text>
               <Text
                 style={{
-                  // fontSize: 16,
+                  
                   marginRight: 16,
                   marginTop: 10,
                   marginBottom: 5,
@@ -474,12 +400,12 @@ export default function Checkout({navigation}) {
       </View>
     );
   }
-// }
+
 
 const styles = StyleSheet.create({
   containerpicker: {
     flex: 1,
-    // paddingTop: 40,
+    
     alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -488,16 +414,16 @@ const styles = StyleSheet.create({
     height: 50,
     elevation: 2,
     marginLeft:8,
-    // color:"red"
+    
   },
 
   container: {
-    // flex: 1,
+    
     width: '100%',
     backgroundColor: '#e8e8e8',
     alignItems: 'center',
     padding: '10%',
-    // marginVertical: 10,
+    
   },
   heading: {
     height: '2%',
@@ -509,14 +435,14 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     backgroundColor: '#e8e8e8',
-    // marginVertical: 10,
-    // marginTop: 50,
+    
+    
   },
   textbox: {
     marginTop: 20,
-    // width: '72%',
+    
     marginLeft: '5%',
-    // paddingBottom: 10,
+    
     width: '90%',
     height: 56,
     elevation: 5,
@@ -530,15 +456,15 @@ const styles = StyleSheet.create({
   },
   textbox2: {
     marginTop: 20,
-    // width: '72%',
+    
     marginLeft: '5%',
-    // paddingBottom: 10,
+    
     width: '90%',
     height: 56,
-    // elevation: 5,
+    
     borderRadius: 5,
-    // shadowColor: 'darkgrey',
-    // shadowOpacity: 20,
+    
+    
     justifyContent: 'center',
     borderBottomWidth: 0,
     backgroundColor: 'white',
@@ -546,7 +472,7 @@ const styles = StyleSheet.create({
   },
   lower_body: {
     marginTop: 0,
-    // padding: 10,
+    
     marginLeft: '5%',
     width: '90%',
     height: 150,
@@ -569,10 +495,10 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
   },
   Confirmbutton: {
-    // padding: 20,
-    // paddingBottom: 20,
+    
+    
     padding: '5%',
-    // marginVertical: 10,
+    
     paddingHorizontal: 15,
     backgroundColor: '#d00f16',
     borderRadius: 20,
@@ -582,8 +508,8 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 2, height: 4},
     shadowOpacity: 0.9,
     shadowRadius: 6,
-    // elevation: 5,
-    // minHeight: '6%',
+    
+    
     textAlign: 'center',
     justifyContent: 'center',
     alignItems: 'center',
@@ -595,17 +521,17 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     fontSize: 20,
     textAlign: 'center',
-    // paddingTop: '2%',
-    // paddingBottom:'2%'
+    
+    
 
-    // opacity: 1,
+    
   },
   bigbutton: {
     paddingHorizontal: '23%',
-    // flex: 2,
+    
     alignItems: 'center',
     marginTop:"30%"
-    // justifyContent: 'flex-end',
+    
   },
   write_on_the_edges: {
     flexDirection: 'row',
@@ -616,10 +542,10 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor:'rgba(00,00,00,0.05)',
     marginTop:8,
-    // marginBottom:8,
+    
     alignSelf:'center',
     width:Dimensions.get('window').width/2
   },
 });
 
-// export default Checkout;
+
