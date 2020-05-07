@@ -22,8 +22,6 @@ export default function Checkout({navigation}) {
   const [OutStock,setOutStock]=useState(" ")
   const [AddRedPts,setAddRedPts]=useState()
 
-  // console.log("asdaksdhkjashdkjahsdkjhaskhasdk")
-
   const handlePress=async ()=>{
 
     if (Location=="null"){
@@ -61,7 +59,7 @@ export default function Checkout({navigation}) {
         Qty:item.available-item.quantity
 
       })
-      .catch((e)=>{Alert.alert("Checkout Failed","Please check your Internet connection")})
+      .catch(()=>{Alert.alert("Checkout Failed","Please check your Internet connection")})
   
   
   })
@@ -78,9 +76,9 @@ const Press2=()=>{
         .ref('/Orders/' + Email)
         .once('value')
         .then(snapshot => {
-          console.log('HERERE');
+          // console.log('HERERE');
           
-          console.log(snapshot.exists());
+          // console.log(snapshot.exists());
           
             
           if (snapshot.exists()){
@@ -143,7 +141,7 @@ const Press2=()=>{
     let Hour=new Date().getHours()
     let Min=new Date().getMinutes()
     let time=Hour+":"+Min
-    console.log(time)
+    // console.log(time)
     firebase.database().ref('/Orders/'+Email).set({
       Subtotal: Subtotal,
       RedPts:RedPts,
@@ -177,7 +175,7 @@ const Press2=()=>{
 
       
     }).then(Alert.alert("Checkout Successful!","Your order has been placed."))
-    .catch((e)=>{Alert.alert("Checkout Failed","Please check your Internet connection")})
+    .catch((e)=>{Alert.alert(e)})
 
   }
 
@@ -227,7 +225,7 @@ const Press2=()=>{
 
        
     firebase.database().ref('/Users/'+Email).update({
-          Redemptionpoints:parseInt(AddRedPts)
+          Redemptionpoints:AddRedPts
           
     })
     
@@ -523,13 +521,16 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Bold',
     fontSize: 20,
     textAlign: 'center',
+    
+    
 
+    
   },
   bigbutton: {
     paddingHorizontal: '23%',
     
     alignItems: 'center',
-    marginTop:"30%"
+    marginTop:"10%"
     
   },
   write_on_the_edges: {
